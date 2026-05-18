@@ -1,6 +1,5 @@
 {
-  // For more information, visit: https://angular.dev/ai/mcp
-  "servers": {
+  "mcpServers": {
     "angular-cli": {
       "command": "pnpm",
       "args": ["exec", "ng", "mcp"]
