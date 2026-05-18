@@ -24,7 +24,7 @@ There are specific style guides for:
 ### Must do
 
 - run [**Prettier**](https://prettier.io/) on save and before committing
-  - use config from /prettier.config.js
+  - use config from `/.prettierrc.json`
   - use for these endings: {css,html,js,json,md,scss,ts}
 - use **LF endings**
 - use **UTF-8** (no BOM)

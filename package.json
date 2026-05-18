@@ -10,7 +10,8 @@
     "test": "ng test",
     "serve:ssr:ng-agentic": "node dist/ng-agentic/server/server.mjs",
     "format": "prettier --write .",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "ng:update": "ng update @angular/cli @angular/core angular-eslint @angular-eslint/builder"
   },
   "lint-staged": {
     "*.{html,js,ts}": [
