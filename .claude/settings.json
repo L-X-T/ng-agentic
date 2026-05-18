@@ -1,0 +1,4 @@
+{
+  "enabledMcpjsonServers": ["angular-cli", "spartan-ui", "chrome-devtools", "figma", "figma-desktop"],
+  "enableAllProjectMcpServers": true
+}

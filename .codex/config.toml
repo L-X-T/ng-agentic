@@ -1,0 +1,26 @@
+[mcp_servers.angular-cli]
+command = "pnpm"
+args = [ "exec", "ng", "mcp" ]
+
+[mcp_servers.spartan-ui]
+command = "npx"
+args = [ "-y", "@spartan-ng/mcp" ]
+
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = [ "-y", "chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222" ]
+
+[mcp_servers.figma]
+url = "https://mcp.figma.com/mcp"
+
+[mcp_servers.figma-desktop]
+command = "npx"
+args = [ "-y", "@pyroprompts/mcp-stdio-to-streamable-http-adapter" ]
+env = { URI = "http://127.0.0.1:3845/mcp" }
+
+[features]
+multi_agent = true
+
+[agents.ci-monitor-subagent]
+description = "CI helper for /monitor-ci. Fetches CI status, retrieves fix details, or updates self-healing fixes. Executes one MCP tool call and returns the result."
+config_file = "agents/ci-monitor-subagent.toml"
