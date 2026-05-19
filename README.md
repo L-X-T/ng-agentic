@@ -88,3 +88,9 @@ pnpm exec lint-staged
 ```
 
 This way, we can maintain code quality without having to remember to run the commands manually.
+
+### Extend ESLint configuration
+
+By adding more rules to our flat ESLint configuration in `eslint.config.js`, we can enforce better
+coding practices and catch potential issues early. Look at `eslint.config.js` to see my
+recommendations.
