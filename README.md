@@ -59,3 +59,28 @@ ng add @angular-eslint/schematics
 ```
 
 This way, we can maintain code quality without having to remember to run the command manually.
+
+### Lint-staged
+
+We configured Angular ESLint to run as part of our development workflow, ensuring that any new code adheres to our coding standards before it's committed to the repository.
+
+```shell
+pnpm add -D lint-staged
+```
+
+In our `package.json`, we added the following configuration to run ESLint on staged files:
+
+```json
+{
+  "lint-staged": {
+    "*.{html,js,ts}": ["eslint --fix", "prettier --write"],
+    "*.{css,json,md,scss}": ["prettier --write"]
+  }
+}
+```
+
+We updated our Husky pre-commit hook to run lint-staged:
+
+```shell
+pnpm lint-staged
+```
