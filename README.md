@@ -16,4 +16,17 @@ This sets up the basic structure of your Angular application, including configur
 
 ### fix initial commit
 
-We fixed the initial commit by removing unnecessary duplications of the `AGENTS.md` instructions.
+We fixed the initial commit by removing unnecessary duplications of the `AGENTS.md` instructions and running the following command:
+
+```
+pnpm format
+```
+
+which then executes:
+
+```aiignore
+prettier --write .
+```
+
+To avoid doing this manually every time, we can set up a pre-commit hook using Husky to automatically run the formatter before each commit.
+
