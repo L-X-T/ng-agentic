@@ -112,3 +112,11 @@ There are two remaining issues that we need to fix manually:
 ```
 
 Because these are mechanical fixes, we can ask `codex` or another agent to make them for us.
+
+## Angular Coding Style Guide
+
+Find our [Angular Coding Style Guide](style-guide/style-guide.md) in the `style-guide` folder.
+
+It contains general guidelines for writing clean and maintainable code in Angular projects, as well as specific style guides for different file types such as Git commits, HTML templates, NPM packages, SCSS styling files, and TypeScript files.
+
+Anyone who copies and pastes this style guide should replace the `lxt-` class-name prefix with a prefix that is meaningful for her or his own app.
