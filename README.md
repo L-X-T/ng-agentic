@@ -30,3 +30,30 @@ prettier --write .
 
 To avoid doing this manually every time, we can set up a pre-commit hook using Husky to automatically run the formatter before each commit.
 
+## Install & setup Husky
+
+### Install Husky
+
+```shell
+pnpm add -D husky
+```
+
+### Initialize Husky
+
+```shell
+pnpm exec husky init
+```
+
+### Update .husky/pre-commit
+
+```shell
+pnpm format
+```
+
+## Install Angular ESLint
+
+To ensure code quality and consistency, we install Angular ESLint in our project. This tool helps us identify and fix issues in our TypeScript code according to best practices.
+
+Since we haven't got pre-commit hooks set up yet, we can run the following command to install Angular ESLint:
+
+This way, we can maintain code quality without having to remember to run the command manually.

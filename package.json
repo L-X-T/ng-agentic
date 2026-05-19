@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:ng-agentic": "node dist/ng-agentic/server/server.mjs",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "packageManager": "pnpm@10.29.3",
   "dependencies": {
@@ -30,6 +31,8 @@
     "@angular/compiler-cli": "^22.0.0",
     "@types/express": "^5.0.1",
     "@types/node": "^24.13.1",
+    "angular-eslint": "21.4.0",
+    "eslint": "^10.3.0",
     "jsdom": "^29.1.1",
     "prettier": "^3.8.1",
     "typescript": "~6.0.3",
