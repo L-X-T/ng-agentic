@@ -51,3 +51,14 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Project Style Guide
+
+- Follow the repository style guide in `style-guide/style-guide.md`.
+- Load the specific guide for the file or decision being touched:
+  - TypeScript and Angular code: `style-guide/style-guide.ts.md`
+  - Angular templates: `style-guide/style-guide.html.md`
+  - SCSS: `style-guide/style-guide.scss.md`
+  - NPM dependencies: `style-guide/style-guide.npm.md`
+  - Markdown documentation: `style-guide/style-guide.md.md`
+  - Git commits: `style-guide/style-guide.git.md`
