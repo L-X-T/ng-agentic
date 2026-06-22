@@ -10,7 +10,6 @@
     "serve:ssr:ng-agentic": "node dist/ng-agentic/server/server.mjs",
     "format": "prettier --write ."
   },
-  "private": true,
   "packageManager": "pnpm@10.29.3",
   "dependencies": {
     "@angular/common": "^22.0.0",
