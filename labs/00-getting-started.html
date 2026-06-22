@@ -1,0 +1,433 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Getting Started</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      .tree { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); white-space: pre; line-height: 1.5; }
+      .tree b { color: var(--ink); font-weight: 600; }
+      .tree .c { color: var(--ink-faint); }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+      hr.soft { border: none; border-top: 1px solid var(--line); margin: 8px 0 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>Getting Started with the <span class="grad">Workshop</span></h1>
+        <p class="lede">
+          The on-ramp before the hands-on labs. In a few minutes you'll get the workspace's dependencies
+          installed and running, and – just as important – <em>pick the project you'll work on</em> throughout
+          the rest of the workshop. The setup you build in the following labs only pays off when you point it at
+          something you actually care about.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Angular</b> v22</span>
+          <span class="chip"><b>Package manager</b> pnpm 10</span>
+          <span class="chip"><b>Node</b> 22+ (target 26)</span>
+          <span class="chip"><b>Est. time</b> 15–20 min</span>
+          <span class="chip"><b>Level</b> beginner</span>
+        </div>
+      </header>
+
+      <!-- ABOUT -->
+      <h2>About this lab</h2>
+      <p>
+        This is <strong>Lab 00</strong> – the warm-up. Before you reproduce the agentic tooling in
+        <a href="01-setup.html">Lab 01</a>, two things need to be in place: the project must <strong>install and
+        run</strong> on your machine, and you need a <strong>project of your own</strong> to apply everything to. A
+        workshop sticks far better when every exercise nudges a real goal forward instead of a throwaway demo.
+      </p>
+
+      <div class="callout why">
+        <span class="tag">Why this matters</span>
+        <p style="margin:6px 0 0">
+          Agentic engineering is learned by doing. If you carry a small, personal project through the labs, each
+          new piece of tooling – the linter, the style guide, the MCP servers, the agent itself – lands on code you
+          understand and want to improve. That context is what turns "I followed the steps" into "I can do this on my
+          own work."
+        </p>
+      </div>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Install the workspace's dependencies so the app builds and serves.</li>
+        <li>Confirm your toolchain is ready: Node, a package manager, and at least one AI coding agent.</li>
+        <li>Choose a <strong>small project or work package</strong> to carry through the workshop.</li>
+        <li>Write down a <strong>concrete goal</strong> to aim for – realistic or not.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Node.js 22+ installed (<code>node -v</code> to check).</li>
+        <li>A package manager – <code>npm</code> ships with Node; this workspace standardizes on <code>pnpm</code>.</li>
+        <li>Git installed and configured (name + email).</li>
+        <li>At least one AI coding agent installed (e.g. Claude Code or Codex).</li>
+        <li>A terminal and your editor of choice (VS Code / JetBrains recommended).</li>
+      </ul>
+
+      <div class="callout tip">
+        <span class="tag">How to work through this lab</span>
+        <p style="margin:6px 0 0">
+          Each step has a <b>Goal</b>, some <b>background</b>, a <b>Your task</b> box, a collapsible
+          <b>Solution</b> where useful, and a <b>Checkpoint</b> to confirm you're done. Steps&nbsp;3 and&nbsp;4 have
+          no single "right answer" – the deliverable is <em>your</em> project and <em>your</em> goal, written down.
+        </p>
+      </div>
+
+      <!-- TOC -->
+      <h2>Steps</h2>
+      <nav class="toc">
+        <ol>
+          <li><a href="#s1">Install the project dependencies</a></li>
+          <li><a href="#s2">Verify your setup runs</a></li>
+          <li><a href="#s3">Choose your workshop project</a></li>
+          <li><a href="#s4">Write down your goal</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#done">Definition of Done</a> · <a href="#next">Next lab</a></p>
+      </nav>
+
+      <!-- STEP 1 -->
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Install the project dependencies</h3>
+        <p class="goal"><b>Goal:</b> pull down everything the workspace needs so it can build, serve, lint and format.</p>
+
+        <p>You've cloned (or downloaded) the <code>ng-agentic</code> repository. Before anything will run, the
+          dependencies listed in <code>package.json</code> have to be installed into <code>node_modules</code>.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>From the repository root, install the dependencies.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution</summary>
+          <div class="body">
+            <pre><span class="lang">shell</span><code>npm install</code></pre>
+            <p>That's it – npm reads <code>package.json</code> and downloads everything into
+              <code>node_modules/</code>.</p>
+          </div>
+        </details>
+
+        <div class="callout tip">
+          <span class="tag">Tip – this workspace uses pnpm</span>
+          <p style="margin:6px 0 0">The project standardizes on <code>pnpm</code> and commits a
+            <code>pnpm-lock.yaml</code>. If you have pnpm installed, prefer <code>pnpm install</code> so you resolve the
+            exact same dependency versions everyone else does (and you avoid creating a stray
+            <code>package-lock.json</code>). Don't have pnpm yet? <code>npm i -g pnpm</code> or enable Corepack with
+            <code>corepack enable</code>.</p>
+        </div>
+
+        <div class="callout why">
+          <span class="tag">Why first</span>
+          <p style="margin:6px 0 0">Every later command – <code>start</code>, <code>build</code>, <code>lint</code>,
+            <code>format</code> – depends on these packages being present. Get this green before moving on.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> the install finishes without errors and a <code>node_modules/</code> folder exists at
+            the repo root.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Verify your setup runs</h3>
+        <p class="goal"><b>Goal:</b> prove the app serves and your toolchain is ready before you build on top of it.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Start the dev server and open the app in a browser.</li>
+            <li>Check your Node and package-manager versions.</li>
+            <li>Confirm at least one AI coding agent is installed and can open this folder.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution</summary>
+          <div class="body">
+            <pre><span class="lang">shell</span><code>npm start          # serves on http://localhost:4200
+node -v            # expect v22 or newer
+npm -v             # or: pnpm -v</code></pre>
+            <p>Open <a href="http://localhost:4200" target="_blank" rel="noopener noreferrer">http://localhost:4200</a>
+              – you should see the running app. Stop the server with <code>Ctrl&nbsp;+&nbsp;C</code> when you're done.</p>
+            <p>Then make sure your agent is available, e.g. <code>claude</code> or <code>codex</code> on your PATH, and
+              that it can read this repository.</p>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">If it doesn't start</span>
+          <p style="margin:6px 0 0">A failed <code>npm start</code> almost always traces back to Step&nbsp;1 (re-run the
+            install) or a Node version that's too old (<code>node -v</code> must be 22+). Fix it here – every following
+            lab assumes a working app.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> the app loads at <code>localhost:4200</code>, <code>node -v</code> reports 22+, and your
+            agent can open the project folder.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Choose your workshop project</h3>
+        <p class="goal"><b>Goal:</b> decide <em>what you'll actually work on</em> for the rest of the workshop – before
+          we dive into the tooling.</p>
+
+        <p>The labs are far more valuable when you apply them to something real instead of a disposable example. So pick
+          a project now. It doesn't have to be big – a focused work package is perfect.</p>
+
+        <div class="callout why">
+          <span class="tag">Pick something that fits these</span>
+          <p style="margin:6px 0 0">
+            <strong>Small.</strong> Define a small project or a single work package – something you could meaningfully
+            move forward in a workshop, not a quarter.<br />
+            <strong>Yours.</strong> Relate it to your <em>work</em>, a <em>hobby</em>, or a <em>side project</em> – the
+            more you care, the more the labs stick.
+          </p>
+        </div>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Write down a short description of the project you'll carry through the workshop. Capture:</p>
+          <ul style="margin:8px 0 0">
+            <li><b>Name</b> – a working title for the project or work package.</li>
+            <li><b>What it is</b> – one or two sentences on what you're building or improving.</li>
+            <li><b>Why it's yours</b> – is it from work, a hobby, or a side project? Why does it matter to you?</li>
+            <li><b>Scope</b> – what's deliberately <em>in</em>, and what you'll leave out for now.</li>
+          </ul>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – example project briefs</summary>
+          <div class="body">
+            <p>Any of these would make a great workshop project:</p>
+            <ul>
+              <li><b>Recipe box</b> – a side project: a small Angular app to save and search my favourite recipes.
+                Scope: list + detail + add form. Out of scope: accounts, sync.</li>
+              <li><b>Team on-call dashboard</b> – from work: a single page that shows who's on call this week.
+                Scope: read-only view from a JSON feed. Out of scope: editing the schedule.</li>
+              <li><b>Board-game score tracker</b> – a hobby: log scores for game nights and show a leaderboard.
+                Scope: add a game, add scores, show standings. Out of scope: stats over time.</li>
+            </ul>
+            <p>Notice the pattern: one clear feature set, a named reason it's <em>yours</em>, and an explicit "out of
+              scope" so it stays small.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> you have a written, one-paragraph brief for a <b>small</b> project that's connected to
+            your work, a hobby, or a side project.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" id="s4">
+        <h3><span class="num">4</span> Write down your goal</h3>
+        <p class="goal"><b>Goal:</b> turn the project into a concrete target you can aim at – realistic or not.</p>
+
+        <p>A project is a direction; a goal is a finish line. Writing it down – even an ambitious or unrealistic one –
+          gives every lab something to push toward and makes it obvious when you've made progress.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Write a single sentence that states what you want to have achieved by the end of the workshop. Then add an
+            optional "stretch" version that's deliberately bigger than what feels realistic.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – example goals</summary>
+          <div class="body">
+            <table>
+              <tr><th>Project</th><th>Realistic goal</th><th>Stretch goal (realistic or not)</th></tr>
+              <tr>
+                <td>Recipe box</td>
+                <td>Have an agent build the list + detail views following the project conventions.</td>
+                <td>Ship a fully accessible, tested app with search and tagging.</td>
+              </tr>
+              <tr>
+                <td>On-call dashboard</td>
+                <td>Render the current on-call person from a static JSON feed.</td>
+                <td>Live data, dark mode, and a one-click "page me" button.</td>
+              </tr>
+              <tr>
+                <td>Score tracker</td>
+                <td>Add scores and show a leaderboard for one game.</td>
+                <td>Multi-game stats, charts, and shareable links.</td>
+              </tr>
+            </table>
+            <p>Keep the goal visible while you work the labs – it's your reference for whether the agentic setup is
+              actually moving your project forward.</p>
+          </div>
+        </details>
+
+        <div class="callout tip">
+          <span class="tag">Tip</span>
+          <p style="margin:6px 0 0">Don't over-think it. A goal you can revise later beats a perfect goal you never
+            write down. The point is to have a target before Lab&nbsp;01.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> you've written one sentence stating your goal (and, optionally, a stretch goal) for the
+            workshop.</p>
+        </div>
+      </section>
+
+      <!-- DONE -->
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">You're ready for Lab 01 when…</h3>
+        <ul>
+          <li>✅ <code>npm install</code> (or <code>pnpm install</code>) completed without errors.</li>
+          <li>✅ <code>npm start</code> serves the app at <code>localhost:4200</code> and <code>node -v</code> reports 22+.</li>
+          <li>✅ At least one AI coding agent is installed and can open this repository.</li>
+          <li>✅ You've written a one-paragraph brief for a <b>small</b> project tied to your work, hobby, or side project.</li>
+          <li>✅ You've written down a concrete goal (and optionally a stretch goal) for the workshop.</li>
+        </ul>
+      </section>
+
+      <!-- NEXT -->
+      <h2 id="next">Next lab</h2>
+      <section class="step">
+        <h3 style="font-size:18px">Continue with the setup</h3>
+        <p style="margin:6px 0 0">With your machine ready and a project in mind, head to
+          <a href="01-setup.html">Lab 01 – Set up an Angular project for Agentic Engineering</a>, where you'll build the
+          tooling and conventions that make working with AI agents safe and productive.</p>
+      </section>
+
+      <footer>
+        <p>Built from the <code>ng-agentic</code> workshop materials. Pick a project you care about – the labs are most
+          useful when they move your own work forward. Angular is © Google LLC.</p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>

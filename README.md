@@ -160,3 +160,15 @@ Some tools, including Codex, provide an internal browser that agents can use for
 ### E2E Testing
 
 E2E tests exercise real user flows in the browser, so they catch integration and interaction bugs that linting and builds miss. When a Playwright or Cypress run fails, screenshots, traces, logs, and failure messages become focused feedback that an agent can use to repair the feature.
+
+With that in place, the setup is ready to take for a spin – see [Step 10 (review & experiment)](labs/01-setup.html#s10) of the hands-on lab.
+
+## Hands-on Labs
+
+The workshop labs are designed to be applied to your own Angular workspace, not just this
+repository:
+
+- [Lab 00 – Getting Started](labs/00-getting-started.html): install this workspace, verify the
+  toolchain, and choose the project you will carry through the workshop.
+- [Lab 01 – Set up an Angular project for Agentic Engineering](labs/01-setup.html): recreate this
+  workspace's agentic setup in your own project.
