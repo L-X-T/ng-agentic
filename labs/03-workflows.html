@@ -1,0 +1,389 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Workflows</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      .workflow-figure {
+        margin: 18px 0;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #101522;
+        overflow: hidden;
+      }
+      .workflow-figure img { display: block; width: 100%; height: auto; }
+      .workflow-figure figcaption { padding: 10px 14px; color: var(--ink-faint); font-size: 13px; border-top: 1px solid var(--line); }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>Choosing <span class="grad">Agentic Workflows</span></h1>
+        <p class="lede">
+          Skills give an agent repeatable capabilities. Workflows decide how much structure a task needs before the
+          agent starts editing. In this lab you'll practice three levels: a tiny task, a feature, and a bonus app built
+          from scratch.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Focus</b> Workflows</span>
+          <span class="chip"><b>Builds on</b> Labs 00–02</span>
+          <span class="chip"><b>Est. time</b> 45–75 min</span>
+          <span class="chip"><b>Bonus</b> app workflow</span>
+        </div>
+      </header>
+
+      <!-- ABOUT -->
+      <h2>About this lab</h2>
+      <p>
+        This is <strong>Lab 03</strong>. You already chose a project in
+        <a href="00-getting-started.html">Lab 00</a>, prepared it for agentic engineering in
+        <a href="01-setup.html">Lab 01</a>, and tried skills in <a href="02-skills.html">Lab 02</a>. Now you decide how
+        much process each request deserves.
+      </p>
+      <p>
+        The rule is simple: every workflow starts with <strong>Prompt and optionally grilling</strong> and ends with
+        <strong>Review including commit</strong>. The middle grows with scope. A bugfix can go straight to
+        implementation; a feature needs a spec and a plan; a new app needs idea shaping, research, phases, and QA.
+      </p>
+
+      <div class="callout why">
+        <span class="tag">Why this matters</span>
+        <p style="margin:6px 0 0">
+          Most bad agent output starts before implementation. The task was too vague, the workflow was too thin, or the
+          human skipped the review boundary. Choosing the right workflow keeps speed without giving up control.
+        </p>
+      </div>
+
+      <h2>The workflow pyramid</h2>
+      <figure class="workflow-figure">
+        <img
+          src="../WORKFLOWS.png"
+          width="1330"
+          height="810"
+          loading="lazy"
+          alt="Workflow pyramid showing task, work package, feature, epic, and app levels with progressively more steps"
+        />
+        <figcaption>
+          Each level can be agentic-only or keep a human in the loop. Bigger work needs more explicit structure.
+        </figcaption>
+      </figure>
+
+      <table>
+        <tr><th>Level</th><th>Workflow</th></tr>
+        <tr><td><b>Task / issue / bugfix</b></td><td>Prompt and optionally grilling → Implement → Review including commit</td></tr>
+        <tr><td><b>Work package</b></td><td>Prompt and optionally grilling → Spec → Implement → Review including commit</td></tr>
+        <tr><td><b>Feature</b></td><td>Prompt and optionally grilling → Spec → Plan → Implement → Review including commit</td></tr>
+        <tr><td><b>Epic</b></td><td>Prompt and optionally grilling → Spec → Plan → Phases → Implement → Review including commits</td></tr>
+        <tr><td><b>App</b></td><td>Prompt and optionally grilling → Idea → Research → Spec → Plan → Phases → Implement → QA → Review including commits</td></tr>
+      </table>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Pick a workflow level based on task size, ambiguity, and review risk.</li>
+        <li>Run a top-level workflow for a tiny task, issue, or bugfix.</li>
+        <li>Run a feature workflow with a spec and plan before implementation.</li>
+        <li>Understand when a new app needs idea shaping, research, phases, and QA.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Finished <a href="00-getting-started.html">Lab 00</a> – you have a project to carry through the workshop.</li>
+        <li>Finished <a href="01-setup.html">Lab 01</a> – the target project is agent-ready.</li>
+        <li>Finished <a href="02-skills.html">Lab 02</a> – you have tried skills and created at least one of your own.</li>
+        <li>A clean Git working tree in the project you will use for the assignments.</li>
+      </ul>
+
+      <div class="callout tip">
+        <span class="tag">Default target</span>
+        <p style="margin:6px 0 0">
+          Use the project you chose in Lab 00 for the required assignments. Fall back to this repository only when you
+          do not have a suitable task or feature in your own project.
+        </p>
+      </div>
+
+      <!-- TOC -->
+      <h2>Assignments</h2>
+      <nav class="toc">
+        <ol>
+          <li><a href="#s1">Top workflow – task, issue, or bugfix</a></li>
+          <li><a href="#s2">Middle workflow – feature</a></li>
+          <li><a href="#s3">Bonus workflow – new app</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#done">Definition of Done</a> · <a href="../WORKFLOWS.md">Workflow guide</a></p>
+      </nav>
+
+      <!-- ASSIGNMENT 1 -->
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Top workflow</h3>
+        <p class="goal"><b>Goal:</b> complete one tiny task with the shortest safe workflow.</p>
+
+        <p>
+          Pick a task, issue, or bugfix from your Lab 00 project. It should be small enough that a spec would feel like
+          paperwork: a typo, a small style fix, a broken test, a missing aria label, or a tiny docs correction.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Write a precise prompt. Add grilling if anything is unclear.</li>
+            <li>Let the agent implement the change.</li>
+            <li>Review the diff yourself, run the relevant check, and commit it.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show example prompt</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>Use the top workflow: prompt and optionally grilling, implement,
+then review including commit.
+
+In my Lab 00 project, fix the missing accessible label on the icon-only
+settings button. First inspect the component and ask me if anything is unclear.
+If it is straightforward, implement the smallest safe change and show me the diff.</code></pre>
+            <p>If you need a fallback in this repo, use a tiny documentation wording fix instead of source-code work.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> one tiny change is reviewed by you, the relevant check passed, and you made the commit.</p>
+        </div>
+      </section>
+
+      <!-- ASSIGNMENT 2 -->
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Middle workflow</h3>
+        <p class="goal"><b>Goal:</b> complete one feature with a spec and plan before implementation.</p>
+
+        <p>
+          Pick a small feature in your Lab 00 project. It should be user-visible and concrete, but not large enough to
+          need phases. Good candidates are a new filter, a simple settings panel, an empty state, or one well-bounded
+          form improvement.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Prompt the agent and grill the feature until the expected behavior is precise.</li>
+            <li>Have the agent write a short spec.</li>
+            <li>Have the agent turn that spec into a plan.</li>
+            <li>Approve the plan, let the agent implement, then review and commit the result.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show example prompts</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>Use the feature workflow:
+Prompt and optionally grilling -> Spec -> Plan -> Implement ->
+Review including commit.
+
+Feature: add an empty state to the project list when there are no projects.
+Start by grilling the behavior and edge cases. Do not implement yet.</code></pre>
+            <pre><span class="lang">prompt</span><code>Now write the short spec and then a concrete implementation plan.
+Keep it scoped to this feature. Wait for my approval before editing files.</code></pre>
+            <pre><span class="lang">prompt</span><code>I approve the plan. Implement it in small diffs, run the relevant
+checks, and summarize what I need to review before I commit.</code></pre>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">Do not skip the plan</span>
+          <p style="margin:6px 0 0">
+            A feature has enough moving parts that implementation order matters. The plan is where you catch missing
+            states, unclear ownership, and test gaps before the diff exists.
+          </p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> the feature has a spec, an approved plan, reviewed implementation, passing checks, and a user-made commit.</p>
+        </div>
+      </section>
+
+      <!-- ASSIGNMENT 3 -->
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Bonus workflow</h3>
+        <p class="goal"><b>Goal:</b> create a new app from scratch with the full app workflow.</p>
+
+        <p>
+          This is intentionally bigger than the required assignments. Start outside this repository, in a new sibling
+          workspace or scratch directory. The point is not to finish a production app; it is to feel why app-sized work
+          needs idea shaping, research, phases, QA, and multiple review commits.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Turn a rough app idea into a clear prompt, and grill it until the scope is honest.</li>
+            <li>Research constraints and comparable approaches.</li>
+            <li>Write a spec, plan the app, split it into phases, and implement phase by phase.</li>
+            <li>Run QA, review every phase, and commit at meaningful boundaries.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show example prompt</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>Use the app workflow:
+Prompt and optionally grilling -> Idea -> Research -> Spec -> Plan ->
+Phases -> Implement -> QA -> Review including commits.
+
+I want to create a tiny Angular app for tracking conference talk ideas.
+Start by grilling the idea and reducing scope until it can be built in a few
+small phases. Do not scaffold yet.</code></pre>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> you have a small new app with a spec, phase plan, QA notes, and reviewed commits per phase.</p>
+        </div>
+      </section>
+
+      <!-- DONE -->
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">You've completed Lab 03 when…</h3>
+        <ul>
+          <li>✅ You completed one top-workflow task in your Lab 00 project or a justified fallback.</li>
+          <li>✅ You completed one feature workflow with a spec, plan, implementation, review, and commit.</li>
+          <li>✅ You can explain why tasks, features, epics, and apps need different workflow weight.</li>
+          <li>✅ Bonus: you tried the full app workflow in a new workspace and committed phase by phase.</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>
+          Built from the <code>ng-agentic</code> workshop materials. Pick the smallest workflow that protects the work.
+          Angular is © Google LLC.
+        </p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>

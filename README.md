@@ -176,6 +176,16 @@ or `assets/` support files loaded just in time, split into **custom** skills aut
 See [`SKILLS.md`](SKILLS.md) for the full directory – every skill with a one-line description,
 grouped into custom and third-party.
 
+## Agentic Workflows
+
+Skills define reusable capabilities; workflows decide how much structure a request needs before an
+agent starts editing. The workflow pyramid in [`WORKFLOWS.md`](WORKFLOWS.md) uses
+[`workflows.png`](workflows.png) as the model: every level starts with prompt and optional grilling,
+then adds the right middle steps for the size of the work, and ends with review including the user
+commit or commits.
+
+Practice that decision in [Lab 03 – Workflows](labs/03-workflows.html).
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -187,3 +197,5 @@ repository:
   workspace's agentic setup in your own project.
 - [Lab 02 – Agent Skills](labs/02-skills.html): use two or three skills on your own project, then
   create a custom skill for a repeatable process.
+- [Lab 03 – Workflows](labs/03-workflows.html): choose the right workflow for tasks, features, and
+  app-sized work.
