@@ -1,0 +1,672 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Agent Skills</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      .tree { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); white-space: pre; line-height: 1.5; }
+      .tree b { color: var(--ink); font-weight: 600; }
+      .tree .c { color: var(--ink-faint); }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+      hr.soft { border: none; border-top: 1px solid var(--line); margin: 8px 0 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>Working with <span class="grad">Agent Skills</span></h1>
+        <p class="lede">
+          Skills turn an agent from an improviser into a specialist: a folder of instructions it loads on demand and
+          follows the same way every time. In this lab you'll first put a few of this workspace's skills to work on
+          <em>your own</em> project, then author a brand-new skill for something you do over and over.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Angular</b> v22</span>
+          <span class="chip"><b>Focus</b> Agent Skills</span>
+          <span class="chip"><b>Est. time</b> 30–45 min</span>
+          <span class="chip"><b>Level</b> intermediate</span>
+          <span class="chip"><b>Builds on</b> Labs 00–01</span>
+        </div>
+      </header>
+
+      <!-- ABOUT -->
+      <h2>About this lab</h2>
+      <p>
+        This is <strong>Lab 02</strong>. By now you have a project of your own (<a href="00-getting-started.html"
+          >Lab 00</a
+        >) and the agentic tooling in place (<a href="01-setup.html">Lab 01</a>). Skills are the next layer: reusable,
+        version-controlled capabilities your agent can invoke. The lab has two parts –
+        <strong>use a few skills</strong>, then <strong>build one of your own</strong>.
+      </p>
+      <ul>
+        <li>
+          <strong>Part 1 – consume.</strong> Try <b>two or three</b> of the dozen-plus skills in this repo on your own
+          project.
+        </li>
+        <li>
+          <strong>Part 2 – create.</strong> Author a custom skill for a repeatable process, using the
+          <code>create-a-skill</code> meta-skill.
+        </li>
+      </ul>
+
+      <div class="callout why">
+        <span class="tag">Why this matters</span>
+        <p style="margin:6px 0 0">
+          A good prompt helps once; a good skill helps every time. Encoding a repeated process as a skill makes the
+          agent's work <em>repeatable, reviewable, and shareable</em> – the same reason you write a script instead of
+          retyping commands. Using a handful of skills teaches you what "good" feels like; writing one teaches you how
+          it works.
+        </p>
+      </div>
+
+      <!-- BACKGROUND -->
+      <h2>Background – what is a skill?</h2>
+      <p>
+        A skill is a folder under <code>.agents/skills/</code> containing a <code>SKILL.md</code> – the instructions the
+        agent follows – and, optionally, bundled reference files or scripts. The agent keeps each skill's
+        <code>name</code> and <code>description</code> in view and loads the full <code>SKILL.md</code> only when your
+        request matches, so the right process kicks in without you spelling it out. Browse the full catalogue in
+        <a href="../SKILLS.md"><code>SKILLS.md</code></a
+        >: a dozen-plus skills split into <strong>custom</strong> ones authored here and
+        <strong>third-party</strong> ones adapted from public sources.
+      </p>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Read a skill's frontmatter and body to judge whether it fits a task.</li>
+        <li>Make a skill available to your agent inside your own project and invoke it.</li>
+        <li>Compare two or three skills and tell when a defined process beats an ad-hoc prompt.</li>
+        <li>Author a new skill – frontmatter, a triggering description, and a tight body.</li>
+        <li>Document and index it so it's discoverable and reusable.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>
+          Finished <a href="00-getting-started.html">Lab 00</a> – you have a small project of your own and a written
+          goal.
+        </li>
+        <li>Finished <a href="01-setup.html">Lab 01</a> – agentic tooling and an AI coding agent are working.</li>
+        <li>
+          This <code>ng-agentic</code> repo checked out locally, so you can read and copy its skills under
+          <code>.agents/skills/</code>.
+        </li>
+      </ul>
+
+      <div class="callout tip">
+        <span class="tag">How to work through this lab</span>
+        <p style="margin:6px 0 0">
+          Same rhythm as the other labs: each step has a <b>Goal</b>, a <b>Your task</b> box, an optional collapsible
+          <b>Solution</b>, and a <b>Checkpoint</b>. Both parts are open-ended – the deliverables are
+          <em>your</em> project moved forward by a few skills, and <em>your</em> new skill. There's no single right
+          answer.
+        </p>
+      </div>
+
+      <!-- TOC -->
+      <h2>Steps</h2>
+      <nav class="toc">
+        <p style="margin:0 0 6px;color:var(--ink-faint)"><b>Part 1 – Use a few skills on your project</b></p>
+        <ol>
+          <li><a href="#s1">Pick two or three skills that fit your project</a></li>
+          <li><a href="#s2">Make them available to your agent</a></li>
+          <li><a href="#s3">Run them and compare</a></li>
+        </ol>
+        <p style="margin:14px 0 6px;color:var(--ink-faint)"><b>Part 2 – Build your own skill</b></p>
+        <ol start="4">
+          <li><a href="#s4">Find a process worth capturing</a></li>
+          <li><a href="#s5">Author the skill</a></li>
+          <li><a href="#s6">Make it trigger, then document it</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#done">Definition of Done</a> · <a href="#next">Next lab</a></p>
+      </nav>
+
+      <!-- PART 1 -->
+      <h2 id="p1">Part 1 – Use a few skills on your project</h2>
+
+      <!-- STEP 1 -->
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Pick two or three skills that fit your project</h3>
+        <p class="goal">
+          <b>Goal:</b> choose two or three skills whose jobs match real tasks in the project you brought to the
+          workshop.
+        </p>
+
+        <p>
+          Open <a href="../SKILLS.md"><code>SKILLS.md</code></a> and skim the catalogue. Match skills to the goal you
+          wrote in Lab 00 – not the other way around. Two or three is plenty; you're sampling the toolbox, not
+          exhausting it.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ul style="margin:8px 0 0">
+            <li>Browse <code>SKILLS.md</code> and open the <code>SKILL.md</code> of a few candidates.</li>
+            <li>Pick <b>two or three</b> that map to concrete tasks on your project.</li>
+            <li>Jot down which task each one will tackle.</li>
+          </ul>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – matching skills to tasks</summary>
+          <div class="body">
+            <table>
+              <tr>
+                <th>If a task on your project is…</th>
+                <th>Try</th>
+              </tr>
+              <tr>
+                <td>Build a component / feature the idiomatic way</td>
+                <td><code>angular-developer</code></td>
+              </tr>
+              <tr>
+                <td>Add a form with validation</td>
+                <td><code>ng-forms</code></td>
+              </tr>
+              <tr>
+                <td>Make it accessible / pass axe</td>
+                <td><code>ng-accessibility</code></td>
+              </tr>
+              <tr>
+                <td>Modernize old code to signals / standalone</td>
+                <td><code>ng-migrate</code></td>
+              </tr>
+              <tr>
+                <td>Speed up load or runtime</td>
+                <td><code>ng-performance</code></td>
+              </tr>
+              <tr>
+                <td>Review the architecture</td>
+                <td><code>ng-review-architecture</code></td>
+              </tr>
+              <tr>
+                <td>Write a browser e2e test</td>
+                <td><code>create-e2e-tests</code></td>
+              </tr>
+              <tr>
+                <td>Harden against XSS / CSP issues</td>
+                <td><code>ng-security</code></td>
+              </tr>
+            </table>
+            <p>
+              Pick a spread that tells a story – e.g. build something with <code>angular-developer</code>, then
+              <code>ng-accessibility</code> and <code>create-e2e-tests</code> to harden and test it.
+            </p>
+          </div>
+        </details>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p>
+            <b>Checkpoint:</b> you've named two or three skills and the specific task on <em>your</em> project each one
+            will tackle.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Make them available to your agent</h3>
+        <p class="goal"><b>Goal:</b> get your chosen skills in front of your agent inside your own project.</p>
+
+        <p>
+          A skill is just a portable folder. To use ones from this repo in <em>your</em> project, copy them into the
+          place your agent looks for skills.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>
+            Copy your two or three chosen skill folders into your project's skills directory, then restart your agent so
+            it picks them up.
+          </p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – copy the skills in</summary>
+          <div class="body">
+            <pre><span class="lang">shell</span><code># from your own project's root – adjust the path to where you cloned ng-agentic
+# Claude Code reads skills from .claude/skills/ ; this repo's tool-agnostic home is .agents/skills/
+mkdir -p .claude/skills
+cp -R ../ng-agentic/.agents/skills/angular-developer  .claude/skills/
+cp -R ../ng-agentic/.agents/skills/ng-accessibility   .claude/skills/
+cp -R ../ng-agentic/.agents/skills/create-e2e-tests   .claude/skills/</code></pre>
+            <p>Restart the agent so it re-reads the skill catalogue, then confirm it can see them.</p>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">Where skills live depends on your agent</span>
+          <p style="margin:6px 0 0">
+            Claude Code discovers skills in <code>.claude/skills/</code> (project) or
+            <code>~/.claude/skills/</code> (personal); other agents differ. This repo keeps a tool-agnostic copy in
+            <code>.agents/skills/</code>. If a skill doesn't trigger, check it's in a directory your agent actually
+            scans, and restart the agent.
+          </p>
+        </div>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p>
+            <b>Checkpoint:</b> your chosen skills are in your project's skills directory and your agent can see them.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Run them as quality gates and compare</h3>
+        <p class="goal">
+          <b>Goal:</b> invoke each skill on its task and notice how a defined process changes the result. Skills like
+          accessibility audits and e2e tests act as repeatable <em>quality gates</em> – the same checks run the same way
+          every time.
+        </p>
+
+        <p>
+          Trigger each skill by describing the task in its own words – the matching <code>description</code> is what
+          makes it fire. Then look at <em>how</em> it worked, not just what it produced.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Invoke each of your two or three skills on the task you picked for it.</li>
+            <li>Let each one drive – answer its questions, but let it follow its own process.</li>
+            <li>For each, note one thing it did that you'd have forgotten to ask for.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – triggering a skill</summary>
+          <div class="body">
+            <p>Describe the job the way the skill advertises it, one request at a time:</p>
+            <pre><span class="lang">text</span><code>Build a booking-list component following the project conventions.
+Now make that component accessible and pass an axe audit.
+Write a Playwright e2e test for the booking list.</code></pre>
+            <p>
+              Each request matches a different skill's <code>description</code>, so the right process kicks in for each.
+            </p>
+          </div>
+        </details>
+
+        <div class="callout tip">
+          <span class="tag">Tip – read the body alongside the run</span>
+          <p style="margin:6px 0 0">
+            Open each skill's <code>SKILL.md</code> while you review the agent's transcript. Seeing the instructions
+            next to the behaviour is the fastest way to learn what makes a skill effective – useful ammunition for Part
+            2.
+          </p>
+        </div>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p>
+            <b>Checkpoint:</b> each chosen skill ran on your project, and you can name what its process gave you over a
+            bare prompt.
+          </p>
+        </div>
+      </section>
+
+      <!-- PART 2 -->
+      <h2 id="p2">Part 2 – Build your own skill</h2>
+
+      <!-- STEP 4 -->
+      <section class="step" id="s4">
+        <h3><span class="num">4</span> Find a process worth capturing</h3>
+        <p class="goal">
+          <b>Goal:</b> pick one task you do <em>repeatedly</em>, or a custom process with definite steps, to turn
+          into a skill.
+        </p>
+
+        <p>
+          The best first skill is small and real: a chore you've explained to an agent more than once, or a team
+          convention you keep restating. If you do it on autopilot, it's a candidate.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Write down, in plain language:</p>
+          <ul style="margin:8px 0 0">
+            <li><b>Trigger</b> – when should the agent reach for this? (this becomes the <code>description</code>)</li>
+            <li><b>Process</b> – the ordered steps you take, including the "always / never" rules.</li>
+            <li><b>Done</b> – how you know the task is finished.</li>
+          </ul>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – example skill ideas</summary>
+          <div class="body">
+            <ul>
+              <li>
+                <b>conventional-commit</b> – turn a diff into a Conventional Commits message following the repo's git
+                style guide.
+              </li>
+              <li>
+                <b>new-feature-scaffold</b> – generate a feature folder (component + route + test) the way your team
+                structures them.
+              </li>
+              <li><b>pr-checklist</b> – review a branch against your own "definition of done" before opening a PR.</li>
+              <li><b>release-notes</b> – summarize merged PRs since the last tag into changelog entries.</li>
+            </ul>
+            <p>Notice the shape: a clear trigger, a short repeatable process, and an obvious finish line.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p>
+            <b>Checkpoint:</b> you have a one-paragraph description of a repeatable process, with its trigger and
+            steps.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step" id="s5">
+        <h3><span class="num">5</span> Author the skill</h3>
+        <p class="goal">
+          <b>Goal:</b> create a working <code>SKILL.md</code> – frontmatter plus a tight body – using the
+          <code>create-a-skill</code> meta-skill.
+        </p>
+
+        <p>
+          Let the repo's own <a href="../.agents/skills/create-a-skill/SKILL.md"><code>create-a-skill</code></a> skill
+          guide you: it knows about triggering descriptions, leading words, and keeping the body to the steps that earn
+          their place. Push optional detail into a bundled reference file only if you truly need it.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>
+              Invoke <code>create-a-skill</code> and have it scaffold
+              <code>.agents/skills/&lt;your-skill&gt;/SKILL.md</code>.
+            </li>
+            <li>Write a <code>description</code> that names the triggers – the words you'd actually say.</li>
+            <li>Write the body as numbered steps, each ending in a clear "done" condition.</li>
+            <li>Add the project's frontmatter convention (<code>license</code> + <code>metadata.author</code>).</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – a minimal SKILL.md skeleton</summary>
+          <div class="body">
+            <pre><span class="lang">markdown</span><code>---
+name: conventional-commit
+description: Write a Conventional Commits message for the staged changes, following the
+  repo's git style guide. Use when the user asks for a commit message, says "commit this",
+  or wants to format a commit subject/body.
+license: MIT
+metadata:
+  author: Your Name
+  version: '1.0'
+---
+
+# Conventional commit
+
+Turn the staged diff into one Conventional Commits message.
+
+## Process
+
+### 1. Read the staged changes
+Run `git diff --staged`. If nothing is staged, stop and say so.
+
+### 2. Classify
+Pick the type (feat, fix, docs, refactor, test, chore) and an optional scope from the paths touched.
+
+### 3. Write the message
+Imperative subject under 72 chars; add a body only if the "why" isn't obvious. Never invent
+changes that aren't in the diff.
+
+_Done when_ a valid `type(scope): subject` message is proposed for the user to commit.
+</code></pre>
+            <p>
+              That's a complete skill – body only, no bundled files. Add a reference file (e.g.
+              <code>references/examples.md</code>) only when the body would otherwise bloat.
+            </p>
+          </div>
+        </details>
+
+        <div class="callout tip">
+          <span class="tag">Tip – the description is the most important line</span>
+          <p style="margin:6px 0 0">
+            A skill only helps if it <em>triggers</em>. Front-load the <code>description</code> with the words a user
+            would actually use, and say when <em>not</em> to use it. Vague descriptions are why skills sit unused.
+          </p>
+        </div>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p>
+            <b>Checkpoint:</b> a <code>SKILL.md</code> exists under <code>.agents/skills/&lt;your-skill&gt;/</code> with
+            valid frontmatter and a numbered body.
+          </p>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="step" id="s6">
+        <h3><span class="num">6</span> Make it trigger, then document it</h3>
+        <p class="goal">
+          <b>Goal:</b> confirm the skill fires on a natural request, refine it, and add it to the index so it's
+          discoverable.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Start a fresh agent session and make a request in your own words – does the skill trigger?</li>
+            <li>If it doesn't, sharpen the <code>description</code>'s leading words and try again.</li>
+            <li>
+              Run <code>update-skills-directory</code> to validate the new <code>SKILL.md</code> and link it from
+              <code>SKILLS.md</code>.
+            </li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – verify &amp; index</summary>
+          <div class="body">
+            <p>
+              Test triggering by describing the task, <em>not</em> by naming the skill – that's how it'll be used for
+              real:
+            </p>
+            <pre><span class="lang">text</span><code>Commit this for me with a proper message.</code></pre>
+            <p>Then keep the docs honest:</p>
+            <pre><span class="lang">text</span><code>Use the update-skills-directory skill to validate and index my new skill.</code></pre>
+            <p>
+              It checks the <code>SKILL.md</code> and support-file structure, then links your skill into <code>SKILLS.md</code> – the same
+              index you browsed in Step 1.
+            </p>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">Iterate – first drafts rarely trigger</span>
+          <p style="margin:6px 0 0">
+            If the agent ignores your skill, the description is almost always the culprit. Add the exact phrases you'd
+            say, and a "use when…" clause. Triggering reliability is a wording problem, not a logic problem.
+          </p>
+        </div>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p>
+            <b>Checkpoint:</b> a natural request triggers your skill, and it has a <code>SKILL.md</code> linked from
+            <code>SKILLS.md</code>.
+          </p>
+        </div>
+      </section>
+
+      <!-- DONE -->
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">You've completed Lab 02 when…</h3>
+        <ul>
+          <li>
+            ✅ You ran <b>two or three skills from this repo on your own project</b> and saw each follow its process.
+          </li>
+          <li>✅ You can explain what a skill's process gave you over a plain prompt.</li>
+          <li>
+            ✅ You <b>authored a new skill</b> for a repeatable process, with valid frontmatter and a numbered body.
+          </li>
+          <li>✅ A <b>natural request triggers</b> your skill (you tuned the description until it did).</li>
+          <li>
+            ✅ Your skill has a <code>SKILL.md</code> and is linked from
+            <a href="../SKILLS.md"><code>SKILLS.md</code></a
+            >.
+          </li>
+        </ul>
+      </section>
+
+      <!-- NEXT -->
+      <h2 id="next">Next steps</h2>
+      <section class="step">
+        <h3 style="font-size: 18px">Keep going</h3>
+        <p style="margin: 6px 0 0">
+          Skills compound. Promote the conventions you keep repeating into skills, share them with your team by
+          committing them under <code>.agents/skills/</code>, and revisit
+          <a href="../SKILLS.md"><code>SKILLS.md</code></a>
+          whenever you add one. For the anatomy of a great skill – leading words, information hierarchy, branches –
+          study
+          <a href="../.agents/skills/create-a-skill/SKILL.md"><code>create-a-skill</code></a
+          >.
+        </p>
+      </section>
+
+      <footer>
+        <p>
+          Built from the <code>ng-agentic</code> workshop materials. The best skills come from your own repeated work –
+          keep a list as you go. Angular is © Google LLC.
+        </p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>

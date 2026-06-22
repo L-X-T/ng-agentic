@@ -163,6 +163,19 @@ E2E tests exercise real user flows in the browser, so they catch integration and
 
 With that in place, the setup is ready to take for a spin – see [Step 10 (review & experiment)](labs/01-setup.html#s10) of the hands-on lab.
 
+## Angular Skills
+
+Beyond the shared conventions, this workspace ships a library of **agent skills** under
+`.agents/skills/` – focused, reusable capabilities an AI agent can invoke for Angular work
+(components, signal forms, migrations, accessibility, performance and security reviews,
+prototyping) and for working in this repo (skill authoring, e2e tests, handover, git stack
+rewrites). Each skill is a folder with a `SKILL.md` plus optional `references/`, `scripts/`,
+or `assets/` support files loaded just in time, split into **custom** skills authored here
+(MIT-licensed) and **third-party** skills adapted from public sources with their origins recorded.
+
+See [`SKILLS.md`](SKILLS.md) for the full directory – every skill with a one-line description,
+grouped into custom and third-party.
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -172,3 +185,5 @@ repository:
   toolchain, and choose the project you will carry through the workshop.
 - [Lab 01 – Set up an Angular project for Agentic Engineering](labs/01-setup.html): recreate this
   workspace's agentic setup in your own project.
+- [Lab 02 – Agent Skills](labs/02-skills.html): use two or three skills on your own project, then
+  create a custom skill for a repeatable process.
