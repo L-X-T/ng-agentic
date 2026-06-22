@@ -1,0 +1,81 @@
+// Styles for native input and ng-select to match the previous lxt component look
+
+lxt-tab-demo {
+  input[type='text'],
+  input[type='checkbox'] {
+    font-family: var(--g-font-family--default), sans-serif;
+    font-size: 1rem;
+  }
+
+  input[type='text'] {
+    background-color: var(--t-input-field__background-color, #fff);
+    border: var(--g-border-width--slim, 1px) solid var(--t-input-field__border-color, #ccc);
+    border-radius: var(--g-border-radius-md, 4px);
+    color: var(--t-input-field__foreground-color, #333);
+    padding-block: var(--g-spacing-x, 0.25rem);
+    padding-inline: var(--g-spacing-x2, 0.5rem);
+
+    &:focus-visible {
+      border-color: var(--t-input-field--focus__border-color, #0078d4);
+      outline-color: var(--t-input-field--focus__outline-color, #0078d4);
+      outline-style: solid;
+    }
+
+    &:hover:not(:disabled):not(:focus-visible) {
+      border-color: var(--t-input-field--hover__border-color, #999);
+    }
+  }
+
+  label {
+    font-family: var(--g-font-family--default), sans-serif;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .ng-select {
+    min-width: 180px;
+    font-family: var(--g-font-family--default), sans-serif;
+    font-size: 1rem;
+
+    .ng-select-container {
+      background-color: var(--t-input-field__background-color, #fff);
+      border: var(--g-border-width--slim, 1px) solid var(--t-input-field__border-color, #ccc);
+      border-radius: var(--g-border-radius-md, 4px);
+      min-height: 2rem;
+      padding-block: var(--g-spacing-x, 0.25rem);
+      padding-inline: var(--g-spacing-x2, 0.5rem);
+      color: var(--t-input-field__foreground-color, #333);
+    }
+
+    &.ng-select-focused .ng-select-container {
+      border-color: var(--t-input-field--focus__border-color, #0078d4);
+      outline: solid var(--t-input-field--focus__outline-color, #0078d4);
+    }
+
+    &:hover:not(.ng-select-focused) .ng-select-container {
+      border-color: var(--t-input-field--hover__border-color, #999);
+    }
+
+    .ng-dropdown-panel {
+      background-color: var(--t-input-field__background-color, #fff);
+      border: var(--g-border-width--slim, 1px) solid var(--t-input-field__border-color, #ccc);
+      border-radius: var(--g-border-radius-md, 4px);
+
+      .ng-option {
+        padding: var(--g-spacing-x3, 8px);
+        font-family: var(--g-font-family--default), sans-serif;
+        font-size: 1rem;
+
+        &.ng-option-marked {
+          background-color: var(--t-input-field--hover__background-color, #f0f0f0);
+        }
+
+        &.ng-option-selected {
+          background-color: var(--t-input-field--focus__background-color, #e0e0e0);
+        }
+      }
+    }
+  }
+}

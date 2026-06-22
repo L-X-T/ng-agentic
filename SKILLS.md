@@ -68,6 +68,7 @@ Authored in this repository; each row summarizes what the skill does and links t
 | [ng-migrate](.agents/skills/ng-migrate/SKILL.md)                           | Runs Angular updates and official migration schematics, one verified checkpoint at a time.                  |
 | [ng-performance](.agents/skills/ng-performance/SKILL.md)                   | Optimizes Angular initial-load and runtime performance (bundles, lazy loading, change detection, zoneless). |
 | [ng-prototype](.agents/skills/ng-prototype/SKILL.md)                       | Builds a throwaway Angular prototype (terminal logic or UI variations) to answer a design question.         |
+| [ng-refactor](.agents/skills/ng-refactor/SKILL.md)                         | Refactors a dusty Angular component into a clean, modern, signal-based one via a verified 7-step blueprint. |
 | [ng-review-architecture](.agents/skills/ng-review-architecture/SKILL.md)   | Reviews Angular architecture against DDD and module depth.                                                  |
 | [ng-review-style-guide](.agents/skills/ng-review-style-guide/SKILL.md)     | Audits the whole codebase against every project style guide, severity-ranked, then fixes on approval.       |
 | [ng-security](.agents/skills/ng-security/SKILL.md)                         | Hardens Angular apps: sanitization/XSS, CSP & Trusted Types, HttpClient XSRF, auth, SSR/SSRF, dependencies. |

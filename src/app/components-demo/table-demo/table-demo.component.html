@@ -1,0 +1,102 @@
+<main class="content">
+  <h1>Table</h1>
+
+  <div class="container">
+    <form [formGroup]="renderersForm">
+      <label for="formatDate">Date format</label>
+      <input formControlName="formatDate" id="formatDate" type="text" />
+    </form>
+    <lxt-table
+      columnsSizeStrategy="fitGridWidth"
+      rowGroupPanelShow="never"
+      [dateFormat]="renderersForm.controls.formatDate.value"
+      [showAggRow]="true"
+      [tableData]="cellDataTypes"
+    />
+  </div>
+
+  <div class="container">
+    <div style="display: flex; flex-direction: row; gap: 10px">
+      <div>
+        <h2>Row selection</h2>
+        <label><input type="checkbox" [(ngModel)]="isSelectionEnabled" /> Toggle selection mode</label>
+      </div>
+      <div>
+        <h2>Multiselection</h2>
+        <label><input type="checkbox" [(ngModel)]="allowMultiSelection" /> Toggle multiselect mode</label>
+      </div>
+      <div>
+        <h2>Allow row grouping</h2>
+        <label><input type="checkbox" [(ngModel)]="allowRowGrouping" /> Allow row grouping</label>
+      </div>
+      <form style="display: flex; gap: 10px" [formGroup]="testForm">
+        <div>
+          <h2>Strategies</h2>
+          <ng-select
+            bindLabel="type"
+            bindValue="type"
+            formControlName="columsWidth"
+            [items]="strategies"
+            [clearable]="false"
+            [searchable]="false"
+            (change)="onStrategyChanged()"
+          />
+        </div>
+        <div>
+          <h2>Show Row grouping panel</h2>
+          <ng-select
+            bindLabel="type"
+            bindValue="type"
+            formControlName="rowGrouping"
+            [items]="rowGrouping"
+            [clearable]="false"
+            [searchable]="false"
+          />
+        </div>
+      </form>
+    </div>
+    @if (isStrategyReady) {
+      <div>
+        <lxt-table
+          [allowMultiSelection]="allowMultiSelection"
+          [allowRowGrouping]="allowRowGrouping"
+          [columnsSizeStrategy]="testForm.controls['columsWidth'].value"
+          [isSelectionEnabled]="isSelectionEnabled"
+          [rowGroupPanelShow]="testForm.controls['rowGrouping'].value"
+          [tableData]="users"
+          [toolbar]="realToolbar"
+        />
+      </div>
+    } @else {
+      <div style="height: 1700px; width: 700px"></div>
+    }
+  </div>
+
+  <div class="container">
+    <h2>Default</h2>
+    <div style="display: flex; gap: 15px">
+      Language test:
+      <button lxt-button (click)="onChangeLanguage('en')">EN</button>
+      <button lxt-button (click)="onChangeLanguage('de')">DE</button>
+    </div>
+    <lxt-table
+      columnsSizeStrategy="fitGridWidth"
+      [columnTranslations]="columnTranslations"
+      [showAggRow]="true"
+      [tableData]="users"
+      [toolbar]="realToolbar"
+    />
+  </div>
+
+  <div class="container">
+    <h2>Aggregations</h2>
+    <lxt-table [showAggRow]="true" [tableData]="aggregationUsers" />
+  </div>
+
+  <div class="container">
+    <h2>Responsive</h2>
+    <div style="height: 475px; width: 475px">
+      <lxt-table style="max-height: 100%" [tableData]="users" [toolbar]="realToolbar" />
+    </div>
+  </div>
+</main>

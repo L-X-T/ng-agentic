@@ -1,0 +1,27 @@
+<button buttonType="ghost" lxt-button [disabled]="currentPage === 1" (click)="goToPage('first')">
+  <span class="icon i-lxt-move-fast-backward" role="presentation" unselectable="on"></span>
+</button>
+<button buttonType="ghost" lxt-button [disabled]="currentPage === 1" (click)="goToPage('prev')">
+  <span class="icon i-lxt-move-to-previous" role="presentation" unselectable="on"></span>
+</button>
+<span>
+  Page
+  <input
+    class="page-number"
+    type="number"
+    [size]="totalPages.toString().length"
+    [value]="currentPageString"
+    (input)="currentPageString = $any($event.target).value"
+    (focusout)="updatePagination()"
+  />
+  of <b>{{ totalPages }}</b>
+</span>
+<button buttonType="ghost" lxt-button [disabled]="currentPage === totalPages" (click)="goToPage('next')">
+  <span class="icon i-lxt-move-to-next" role="presentation" unselectable="on"></span>
+</button>
+<button buttonType="ghost" lxt-button [disabled]="currentPage === totalPages" (click)="goToPage('last')">
+  <span class="icon i-lxt-move-fast-forward" role="presentation" unselectable="on"></span>
+</button>
+<button class="actions-menu-toggle" lxt-button [buttonType]="'outline'" (click)="onActionsMenuClick()">
+  <span class="icon i-lxt-more"></span>
+</button>

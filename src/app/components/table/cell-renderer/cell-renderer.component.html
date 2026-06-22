@@ -1,0 +1,118 @@
+@if (value || !group) {
+  @switch (columnType) {
+    @case ('boolean') {
+      @if (aggFunc !== 'count' && aggFunc !== 'count_d' && aggFunc !== 'sum') {
+        @if (value) {
+          <span class="icon i-lxt-check cell--center"></span>
+        } @else {
+          <span class="icon i-lxt-cancel cell--center"></span>
+        }
+      } @else {
+        <span>{{ value }}</span>
+      }
+    }
+    @case ('text') {
+      <span>{{ value }}</span>
+    }
+    @case ('number') {
+      <span class="cell--right">{{ value }}</span>
+    }
+    @case ('checkbox') {
+      @if (aggFunc !== 'count' && aggFunc !== 'count_d' && aggFunc !== 'sum') {
+        <div class="cell--checkbox">
+          <input type="checkbox" [checked]="!!value" disabled />
+        </div>
+      } @else {
+        <span>{{ value }}</span>
+      }
+    }
+    @case ('date') {
+      @if (aggFunc !== 'count' && aggFunc !== 'count_d') {
+        <span>{{ value | date: dateFormat }}</span>
+      } @else {
+        <span>{{ value }}</span>
+      }
+    }
+    @case ('ordinalNumber') {
+      @if (aggFunc !== 'count' && aggFunc !== 'count_d' && aggFunc !== 'sum') {
+        <span class="cell--right">{{ value + '.' }}</span>
+      } @else {
+        <span class="cell--right">{{ value }}</span>
+      }
+    }
+    @case ('status') {
+      @switch (value) {
+        @case ('ready') {
+          <div class="status-ellipse status--ready">
+            <span class="icon i-lxt-status-ready"></span>
+            <span>Ready</span>
+          </div>
+        }
+        @case ('active') {
+          <div class="status-ellipse status--active">
+            <span class="icon i-lxt-status-active"></span>
+            <span>Active</span>
+          </div>
+        }
+        @case ('warning') {
+          <div class="status-ellipse status--warning">
+            <span class="icon i-lxt-warning"></span>
+            <span>Warning</span>
+          </div>
+        }
+        @case ('deactivated') {
+          <div class="status-ellipse status--error">
+            <span class="icon i-lxt-status-deactivated"></span>
+            <span>Deactivated</span>
+          </div>
+        }
+        @case ('emergencyStop') {
+          <div class="status-ellipse status--error">
+            <span class="icon i-lxt-status-emergency-stopp"></span>
+            <span>Emergency stop</span>
+          </div>
+        }
+        @case ('maintenance') {
+          <div class="status-ellipse status--maintanence">
+            <span class="icon i-lxt-status-maintenance"></span>
+            <span>Maintenance</span>
+          </div>
+        }
+        @case ('jam') {
+          <div class="status-ellipse status--warning">
+            <span class="icon i-lxt-status-jam"></span>
+            <span>Jam</span>
+          </div>
+        }
+        @case ('error') {
+          <div class="status-ellipse status--error">
+            <span class="icon i-lxt-error"></span>
+            <span>Error</span>
+          </div>
+        }
+        @default {
+          @if (aggFunc !== 'count' && aggFunc !== 'count_d') {
+            <div class="status-ellipse status--unknown">
+              <span class="icon i-lxt-status-unkown"></span>
+              <span>Unknown</span>
+            </div>
+          } @else {
+            <span>{{ value }}</span>
+          }
+        }
+      }
+    }
+    @case ('progress') {
+      @if (aggFunc !== 'count' && aggFunc !== 'count_d') {
+        <div class="progress-bar" style=" width: {{ value }}%;">
+          <span>{{ value }}%</span>
+        </div>
+      } @else {
+        <span>{{ value }}</span>
+      }
+    }
+    @default {
+      <span>{{ value }}</span>
+    }
+  }
+}

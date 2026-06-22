@@ -186,6 +186,20 @@ commit or commits.
 
 Practice that decision in [Lab 03 – Workflows](labs/03-workflows.html).
 
+## Refactoring Angular
+
+Turning a dusty, legacy component into modern, signal-based Angular has its own playbook in
+[`REFACTORING.md`](REFACTORING.md): a repeatable **7-phase blueprint** – Analyse → Declutter →
+Update → Modernize → Type → Refactor → Review – wrapped in AI guardrails and a verify-every-step
+gauntlet (build → lint → format → test). It is driven by the
+[`ng-refactor`](.agents/skills/ng-refactor/SKILL.md) skill (which pairs with
+[`ng-migrate`](.agents/skills/ng-migrate/SKILL.md) for the official migration schematics), and you
+can work it end-to-end on a real component in
+[Lab 04 – Refactoring a Dusty Angular Component](labs/04-refactoring.html).
+
+The fallback table feature in this workspace intentionally carries lint debt for the refactoring
+exercise; record that red baseline before changing production code.
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -199,3 +213,7 @@ repository:
   create a custom skill for a repeatable process.
 - [Lab 03 – Workflows](labs/03-workflows.html): choose the right workflow for tasks, features, and
   app-sized work.
+- [Lab 04 – Refactoring a Dusty Angular Component](labs/04-refactoring.html): use the
+  `ng-refactor` skill on your own legacy codebase first. If you do not have suitable legacy code
+  available, use this workspace's `src/app/components/table/` source files as the fallback
+  exercise.

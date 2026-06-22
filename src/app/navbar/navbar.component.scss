@@ -1,0 +1,14 @@
+.main-header {
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--g-spacing-x2);
+  justify-content: space-between;
+  padding: var(--g-spacing-x4);
+}
+
+.main-header__brand {
+  color: var(--t-main-header__brand__foreground-color);
+  font-size: var(--g-font-size--section-title);
+}

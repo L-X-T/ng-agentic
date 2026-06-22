@@ -1,0 +1,633 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Refactoring a Dusty Angular Component</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      .tree { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); white-space: pre; line-height: 1.5; }
+      .tree b { color: var(--ink); font-weight: 600; }
+      .tree .c { color: var(--ink-faint); }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+      hr.soft { border: none; border-top: 1px solid var(--line); margin: 8px 0 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>Refactoring a <span class="grad">Dusty Angular Component</span></h1>
+        <p class="lede">
+          The payoff lab. You'll take a real, overgrown Angular component – the kind with
+          <code>any</code> everywhere, lifecycle hooks, <code>*ngIf</code>, and an 800-line file – and rebuild it into
+          something small, modern, and signal-based. You won't freestyle it: you'll follow a repeatable
+          <strong>7-step blueprint</strong>, let the AI do the heavy lifting, and review every change like it came from
+          a junior on your team.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Angular</b> v22</span>
+          <span class="chip"><b>Package manager</b> pnpm 10</span>
+          <span class="chip"><b>Skill</b> ng-refactor</span>
+          <span class="chip"><b>Est. time</b> 90–150 min</span>
+          <span class="chip"><b>Level</b> advanced</span>
+        </div>
+      </header>
+
+      <!-- ABOUT -->
+      <h2>About this lab</h2>
+      <p>
+        This is <strong>Lab 04</strong> – where the agentic setup from <a href="01-setup.html">Lab 01</a> and the
+        skill practice from <a href="02-skills.html">Lab 02</a> finally earn their keep. Over years, components
+        collect features, special cases, and workarounds until responsibilities blur between UI, state, and business
+        logic. The result is a <em>dusty</em> component: high mental load, risky to change, slow to onboard to – and,
+        crucially, <strong>harder for an AI agent to grasp</strong> than for a human. Good names, small functions, and
+        precise types reduce both misunderstandings and hallucinations.
+      </p>
+      <p>
+        You'll fix that with the <a href="../.agents/skills/ng-refactor/SKILL.md"><code>ng-refactor</code></a> skill,
+        which encodes a 7-step blueprint:
+        <strong>Analyse → Declutter → Update → Modernize → Type → Refactor → Review</strong>. Each step is verified by
+        the same <strong>gauntlet</strong> (build → lint → format → test) and paused at a clean
+        <strong>checkpoint</strong> for you to review and commit before the next.
+        The full written playbook lives in <a href="../REFACTORING.md"><code>REFACTORING.md</code></a>; this lab turns it
+        into a hands-on run.
+      </p>
+
+      <div class="callout why">
+        <span class="tag">Why this matters</span>
+        <p style="margin:6px 0 0">
+          AI makes rewriting <em>fast</em> – which is exactly why it's dangerous without guardrails. A blueprint turns
+          "rewrite this component" (a recipe for an unreviewable 800-line diff) into a sequence of small, verifiable
+          moves. <strong>AI accelerates the rebuild; the architecture decisions stay human.</strong>
+        </p>
+      </div>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Drive a legacy Angular component through a repeatable, verifiable refactoring blueprint.</li>
+        <li>Use the <code>ng-refactor</code> skill – and pair it with <code>ng-migrate</code> for the official schematics.</li>
+        <li>Replace <code>any</code>, lifecycle hooks, and old patterns with strict types, signals, <code>inject()</code>, control flow, and OnPush.</li>
+        <li>Apply <strong>AI guardrails</strong>: plan first, small reviewable steps, keep comments &amp; domain logic, review before commit.</li>
+        <li>Prove each step with the gauntlet and let the linter act as your checklist.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>You've completed <a href="00-getting-started.html">Lab 00</a> and <a href="01-setup.html">Lab 01</a> – the workspace runs and the agentic tooling is in place (Prettier, ESLint, <code>AGENTS.md</code>, MCP servers, <code>.aiignore</code>).</li>
+        <li>The Angular MCP is connected so the agent works from current docs.</li>
+        <li>An AI coding agent that can read this repo and run commands (Claude Code, Junie, Codex, Cursor, …).</li>
+        <li>A <strong>dusty component to work on</strong> (see "Before you begin").</li>
+        <li>A clean Git working tree (<code>git status</code>) – the blueprint checkpoints after every step.</li>
+      </ul>
+
+      <div class="callout tip">
+        <span class="tag">Before you begin – pick your target</span>
+        <p style="margin:6px 0 0">
+          Choose <strong>one</strong> overgrown component to carry through all seven steps. Start with legacy code in
+          your own project from Lab 00. If you do not have a suitable legacy codebase available, use this workspace as
+          the fallback:
+        </p>
+        <ul style="margin:8px 0 0">
+          <li><b>Your own project</b> (from Lab 00) – the primary path: pick its messiest component.</li>
+          <li><b>This repo</b> – fallback only: <code>src/app/components/table/</code> is a genuinely complex, multi-file feature.</li>
+          <li><b>The workshop example</b> – another fallback: a deliberately dusty component at
+            <a href="https://github.com/L-X-T/ng-days-refactoring-ai" target="_blank" rel="noopener noreferrer">L-X-T/ng-days-refactoring-ai</a>.</li>
+        </ul>
+        <p style="margin:8px 0 0">
+          If you use a fallback target, expect the first lint or test run to expose existing debt. That is the starting
+          point for the exercise: record the failures, add a behavior safety net, and only then start production
+          refactoring.
+        </p>
+      </div>
+
+      <div class="callout tip">
+        <span class="tag">How to work through this lab</span>
+        <p style="margin:6px 0 0">
+          Each step has a <b>Goal</b>, some <b>background</b>, a <b>Your task</b> box, a collapsible <b>Solution</b> with
+          example prompts and commands, and a <b>Checkpoint</b>. This time the agent does most of the typing – your job
+          is to <em>steer and review</em>. Start each step by invoking the skill:
+        </p>
+        <pre style="margin:10px 0 0"><span class="lang">prompt</span><code>Follow the ng-refactor skill. We're on step N (&lt;name&gt;) for &lt;path/to/component&gt;.
+Plan it, ask me anything unclear, then implement – small diffs only.</code></pre>
+      </div>
+
+      <!-- TOC -->
+      <h2>The blueprint – 7 steps</h2>
+      <nav class="toc">
+        <ol>
+          <li><a href="#s1">Analyse – understand it, plan it, record the baseline</a></li>
+          <li><a href="#s2">Declutter (Entschlacken) – delete what's dead</a></li>
+          <li><a href="#s3">Update (NG Update) – modern toolbox</a></li>
+          <li><a href="#s4">Modernize (Modernisieren) – signals, control flow, OnPush</a></li>
+          <li><a href="#s5">Type (Typisierung) – kill <code>any</code></a></li>
+          <li><a href="#s6">Refactor – shrink, split, structure</a></li>
+          <li><a href="#s7">Review – confirm the gains, then commit</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#done">Definition of Done</a> · <a href="#appendix">Appendix</a></p>
+      </nav>
+
+      <!-- STEP 1 -->
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Analyse</h3>
+        <p class="goal"><b>Goal:</b> understand the component, write a plan, record the current baseline, and stand up a safety net.</p>
+
+        <p>Refactoring without a plan and without tests is gambling. First, read the component and its template, styles,
+          and existing tests <em>together</em>. Name the <strong>single responsibility</strong> it should have; everything
+          else is a candidate to extract or delete. Then make sure its behavior is pinned down by a test before you
+          touch production code.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Have the agent analyse the component and list its smells: LoC, lifecycle hooks, <code>any</code>/weak types, old patterns (<code>*ngIf</code>, <code>@Input()</code>, <code>ngClass</code>), template logic, duplication, unclear names.</li>
+            <li>Ask it to propose an <strong>ordered plan</strong> following the blueprint – and to ask you clarifying questions <em>before</em> changing any code.</li>
+            <li>Establish a <strong>safety net</strong>: confirm or add a behavior test, then run the gauntlet and record whether the baseline is green or already red.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – analysis prompt &amp; baseline</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>Follow the ng-refactor skill, step 1 (Analyse), for
+src/app/components/table/table.component.ts (+ html/scss and any existing tests).
+
+Its job is: render a paginated, sortable data table.
+Analyse it, list the smells, and propose an ordered 7-step plan with the
+expected win per step. Ask me clarifying questions first – DO NOT change code.</code></pre>
+            <p>Pin behavior with an e2e test if coverage is thin (see the
+              <a href="../.agents/skills/create-e2e-tests/SKILL.md"><code>create-e2e-tests</code></a> skill), then run
+              the baseline. If it is red in a fallback target, write down the exact failures before changing production code:</p>
+            <pre><span class="lang">shell</span><code>git status            # must be clean – the blueprint checkpoints per step
+pnpm build &amp;&amp; pnpm lint &amp;&amp; pnpm format &amp;&amp; pnpm test   # the gauntlet</code></pre>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">Plan first, then implement</span>
+          <p style="margin:6px 0 0">Resist the urge to let the agent start editing during analysis. A good prompt ends
+            with "ask me clarifying questions first – don't change code yet." The quality of the spec up front decides
+            the quality of everything after.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> you have a written plan, answered the agent's questions, a behavior safety net, and a
+            green or explicitly documented red baseline. <b>No production code changed.</b></p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Declutter <span style="font-size:14px;color:var(--ink-faint);font-weight:400">(Entschlacken)</span></h3>
+        <p class="goal"><b>Goal:</b> remove everything dead – pure subtraction, the lowest-risk change there is.</p>
+
+        <p>Before you modernize or restructure anything, take out the trash. Smaller surface area means every later step
+          has less to reason about – for you and for the agent.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Have the agent delete dead code, unreachable branches, unused imports/inputs/outputs/fields/methods, and
+            commented-out blocks – <strong>but keep</strong> meaningful comments and domain logic. Remove redundant SCSS.
+            Then verify the gauntlet.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – declutter prompt</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>ng-refactor step 2 (Declutter) for the same component.
+Remove dead code, unused members and imports, and commented-out blocks.
+KEEP all meaningful comments and any domain logic. Drop redundant SCSS.
+Behavior must not change. Show me the diff.</code></pre>
+            <pre><span class="lang">shell</span><code>pnpm lint --fix &amp;&amp; pnpm build &amp;&amp; pnpm test</code></pre>
+          </div>
+        </details>
+
+        <div class="callout why">
+          <span class="tag">Keep the meaning</span>
+          <p style="margin:6px 0 0">"Dead code" is not "code I don't understand." If a block looks pointless but encodes
+            a domain rule, leave it and ask. The guardrail is explicit: <em>never delete existing comments or domain
+            logic.</em></p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> only live code remains, behavior is unchanged, and the gauntlet is green. The diff is
+            small and obviously safe.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Update <span style="font-size:14px;color:var(--ink-faint);font-weight:400">(NG Update)</span></h3>
+        <p class="goal"><b>Goal:</b> make the modern toolbox available – a workspace-level step, run once, not per component.</p>
+
+        <p>You can't migrate to APIs your Angular version doesn't have. Bring Angular and its dependencies up to date so
+          Step 4's schematics and modern APIs exist, and let the version's automatic migrations run.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Update Angular and the CLI/ESLint packages; review the automatic migrations they apply.</li>
+            <li>Bring other npm packages along – and handle security while versions move (CSP, Trusted Types, 3rd-party packages).</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – update commands</summary>
+          <div class="body">
+            <pre><span class="lang">shell</span><code>pnpm ng:update     # ng update @angular/cli @angular/core angular-eslint @angular-eslint/builder
+# or, in an Nx workspace:
+nx migrate latest &amp;&amp; nx migrate --run-migrations</code></pre>
+            <p>Review what the automatic migrations changed, then verify:</p>
+            <pre><span class="lang">shell</span><code>pnpm build &amp;&amp; pnpm lint &amp;&amp; pnpm test</code></pre>
+            <p>For cadence and the automatic-migration list, see
+              <a href="../.agents/skills/ng-refactor/references/modern-angular.md"><code>modern-angular.md</code></a>.</p>
+          </div>
+        </details>
+
+        <div class="callout tip">
+          <span class="tag">Cadence</span>
+          <p style="margin:6px 0 0">Keep Angular current: at least 2× a year for majors, ideally every couple of months
+            for minors. Staying close to latest makes every future refactoring cheaper.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> Angular is current, automatic migrations are applied and reviewed, dependencies are
+            updated, and the gauntlet is green.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" id="s4">
+        <h3><span class="num">4</span> Modernize <span style="font-size:14px;color:var(--ink-faint);font-weight:400">(Modernisieren)</span></h3>
+        <p class="goal"><b>Goal:</b> adopt modern Angular – official schematics first, then the changes they don't cover.</p>
+
+        <p>Prefer Angular's <strong>official</strong> migration schematics over hand-edits: they rewrite deterministically
+          and update every reference (templates, tests, call sites). Delegate them to the
+          <a href="../.agents/skills/ng-migrate/SKILL.md"><code>ng-migrate</code></a> skill, <strong>one migration per
+          checkpoint</strong>. Then do the manual modernization the schematics can't.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Run the schematics one at a time, verifying after each: standalone, control flow (<code>@if</code>/<code>@for</code>), <code>inject()</code>, signal <code>input()</code>/<code>output()</code>/queries, self-closing tags, <code>ngClass</code>/<code>ngStyle</code> → bindings, lazy routes, unused-import cleanup.</li>
+            <li>Replace lifecycle hooks: move setup into the field initializer / <code>constructor</code>; <code>takeUntilDestroyed()</code> for manual subscriptions; <code>effect()</code> / <code>afterNextRender()</code> / <code>afterRenderEffect()</code> instead of <code>ngAfterViewInit</code> / <code>ngOnChanges</code>. Best of all: no hook.</li>
+            <li>Switch to <code>ChangeDetectionStrategy.OnPush</code>; use <code>computed()</code> for derived state.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – migrate &amp; modernize</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>Use the ng-migrate skill to run the official schematics for this component,
+one migration per checkpoint, gauntlet-green each time:
+standalone → control-flow → inject → signal-input → signal-queries →
+outputs → self-closing-tag → ngclass-to-class → ngstyle-to-style →
+cleanup-unused-imports.</code></pre>
+            <pre><span class="lang">prompt</span><code>Now ng-refactor step 4: remove the remaining lifecycle hooks.
+Move ngOnInit setup into field initializers; convert manual subscriptions to
+takeUntilDestroyed(); replace ngOnChanges with computed() off signal inputs.
+Set changeDetection to OnPush. Small diffs, show me each.</code></pre>
+            <p>Mapping table and rule-by-rule notes:
+              <a href="../.agents/skills/ng-refactor/references/modern-angular.md"><code>modern-angular.md</code></a>.</p>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">One migration, one checkpoint</span>
+          <p style="margin:6px 0 0">Don't let the agent chain ten migrations into one diff. Each schematic gets its own
+            gauntlet and its own review – that's how you keep a green, bisectable history when something breaks.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> chosen migrations applied (each gauntlet-green and checkpointed), no replaceable lifecycle
+            hooks remain, and the component is OnPush.</p>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step" id="s5">
+        <h3><span class="num">5</span> Type <span style="font-size:14px;color:var(--ink-faint);font-weight:400">(Typisierung)</span></h3>
+        <p class="goal"><b>Goal:</b> turn types into a safety net – the first real lever in legacy code.</p>
+
+        <p>Now that structure and APIs are modern, make the compiler your ally. Replacing fuzzy types with explicit ones
+          surfaces hidden bugs and makes the structural cut in Step 6 safe.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Have the agent replace every <code>any</code>, add explicit return and parameter types, prefer
+            <code>unknown</code> over <code>any</code> and <code>type</code> over <code>interface</code>, and extract
+            small precisely-named types into their own files. Precisely type the inputs and outputs.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – typing prompt &amp; check</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>ng-refactor step 5 (Type) for this component.
+Remove every `any`; add explicit return and parameter types.
+Prefer `unknown` over `any` and `type` over `interface`.
+Extract non-trivial types into their own files (Rule of One).
+Type the inputs/outputs precisely. Don't change behavior.</code></pre>
+            <p>The linter is the checklist – these must be clean:</p>
+            <pre><span class="lang">shell</span><code>pnpm lint   # no @typescript-eslint/no-explicit-any, explicit-function-return-type</code></pre>
+          </div>
+        </details>
+
+        <div class="callout why">
+          <span class="tag">Before / after</span>
+          <p style="margin:6px 0 0"><code>items: any[]</code> + <code>sel: any</code> + <code>save(data: any)</code>
+            becomes an <code>OrderItem</code> type in its own file, with <code>selectItem(item: OrderItem)</code> and an
+            early-return guard. Same behavior – but the compiler now guards every use, and the names carry meaning. See
+            <a href="../.agents/skills/ng-refactor/references/clean-code-and-structure.md"><code>clean-code-and-structure.md</code></a>.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> no <code>any</code> remains, <code>no-explicit-any</code> and
+            <code>explicit-function-return-type</code> are clean, and the gauntlet is green.</p>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="step" id="s6">
+        <h3><span class="num">6</span> Refactor</h3>
+        <p class="goal"><b>Goal:</b> the real structural work – small functions, clear ownership, readable top-to-bottom.</p>
+
+        <p>With dead code gone, APIs modern, and types tight, the structural changes are now safe and obvious. Work in
+          small, reviewable diffs – and make every change <em>earn its keep</em>.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ul>
+            <li><b>Shrink functions.</b> Split big event handlers (validation + mapping + state + UI side effects) into small, intent-revealing functions (<code>buildRequest</code>, <code>validateInput</code>, <code>updateSelection</code>).</li>
+            <li><b>DRY.</b> Lift shared logic into services, directives, pipes, utils, or sub-components.</li>
+            <li><b>SRP &amp; Rule of One.</b> Split an oversized component into smaller focused ones, each its own file, each ≤ ~400 LoC.</li>
+            <li><b>Structure.</b> Reorder members to the canonical order; thin the template (logic → <code>computed()</code>/methods, complexity ≤ 10); prefer <code>private</code>, <code>readonly</code>, <code>const</code>.</li>
+          </ul>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – refactor prompt &amp; member order</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>ng-refactor step 6 (Refactor). One concern at a time, show each diff:
+1) describe the flow of the big handler, then split it into named functions;
+2) extract shared logic into a service/util;
+3) if the file is &gt; ~400 LoC, split into focused sub-components;
+4) reorder members to the canonical order and thin the template.
+Every change must reduce complexity, clarify responsibility, or modernize.</code></pre>
+            <p>Canonical member order (full details in
+              <a href="../.agents/skills/ng-refactor/references/clean-code-and-structure.md"><code>clean-code-and-structure.md</code></a>):</p>
+            <div class="tree">decorator (@Component)
+class (extends &amp; implements)
+members
+  ├─ injects → input → model → output → queries → signals → other
+methods
+  └─ static → constructor → other methods</div>
+          </div>
+        </details>
+
+        <div class="callout tip">
+          <span class="tag">Let AI describe, then cut</span>
+          <p style="margin:6px 0 0">The agent is especially strong at function extraction when you ask it to
+            <em>describe the steps first</em> and only then slice them into named functions. Make it narrate before it
+            edits.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> each unit has one responsibility, no file exceeds ~400 LoC, functions are small and named,
+            the template is logic-light, and every diff was gauntlet-green and checkpointed.</p>
+        </div>
+      </section>
+
+      <!-- STEP 7 -->
+      <section class="step" id="s7">
+        <h3><span class="num">7</span> Review</h3>
+        <p class="goal"><b>Goal:</b> confirm the gains, write down the <em>why</em>, and hand the result to a human – you.</p>
+
+        <p>Read the finished component top-to-bottom as if you were onboarding to it fresh. The agent's work is treated
+          like a junior's: <strong>you review and commit every change.</strong></p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Walk the review checklist, summarize what changed and <em>why</em> (the benefit per change), note follow-ups,
+            and only then commit. For a large scope, run a deeper architectural pass.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – review checklist</summary>
+          <div class="body">
+            <ul>
+              <li>Reads top-to-bottom; one clear responsibility; canonical member order.</li>
+              <li>No <code>any</code>; small named functions; no file &gt; ~400 LoC; OnPush; no leftover lifecycle hooks.</li>
+              <li>Comments and domain logic intact; tests green <strong>and still meaningful</strong> (behavior, not internals).</li>
+              <li>Every change delivered a real gain – less complexity, clearer responsibility, or modern.</li>
+            </ul>
+            <p>For a deeper pass on a large scope, use
+              <a href="../.agents/skills/ng-review-architecture/SKILL.md"><code>ng-review-architecture</code></a>. Then
+              commit through your Git GUI, reviewing the diff one last time.</p>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">The human commits</span>
+          <p style="margin:6px 0 0">The skill never stages or commits for you. Review the diff, then commit it yourself –
+            this is the final guardrail that keeps AI a contributor, not an unchecked author.</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> you've reviewed the full diff, the gauntlet is green, the gains are written down, and the
+            change is committed by you.</p>
+        </div>
+      </section>
+
+      <!-- DONE -->
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">Your component is refactored when…</h3>
+        <ul>
+          <li>✅ You drove it through all seven steps, each gauntlet-green and checkpointed.</li>
+          <li>✅ No <code>any</code>, no replaceable lifecycle hooks, no <code>*ngIf</code>/<code>@Input()</code>/<code>ngClass</code> – strict types, signals, <code>inject()</code>, control flow, OnPush instead.</li>
+          <li>✅ Functions are small and named; no file exceeds ~400 LoC; the template is logic-light.</li>
+          <li>✅ Comments and domain logic are intact; behavior is unchanged and still covered by tests.</li>
+          <li>✅ You reviewed every change and committed it yourself, with a note on the gains.</li>
+        </ul>
+      </section>
+
+      <!-- APPENDIX -->
+      <h2 id="appendix">Appendix – reference</h2>
+
+      <section class="step">
+        <h3 style="font-size:18px">The blueprint at a glance</h3>
+        <table>
+          <tr><th>#</th><th>Step</th><th>What it does</th><th>Done when</th></tr>
+          <tr><td>1</td><td><b>Analyse</b></td><td>Read, name the one responsibility, catalog smells, write a plan</td><td>Plan + green baseline + safety net; no code changed</td></tr>
+          <tr><td>2</td><td><b>Declutter</b></td><td>Delete dead code &amp; redundant SCSS (keep comments &amp; domain)</td><td>Only live code; behavior unchanged; green</td></tr>
+          <tr><td>3</td><td><b>Update</b></td><td>Update Angular + packages; run automatic migrations</td><td>Angular current; migrations applied; green</td></tr>
+          <tr><td>4</td><td><b>Modernize</b></td><td>Schematics (via ng-migrate); replace hooks; OnPush; computed</td><td>Migrations done; no replaceable hooks; OnPush</td></tr>
+          <tr><td>5</td><td><b>Type</b></td><td>Replace <code>any</code>; explicit types; extract types</td><td>No <code>any</code>; lint clean; green</td></tr>
+          <tr><td>6</td><td><b>Refactor</b></td><td>Shrink functions; DRY; SRP/split; reorder; thin template</td><td>One responsibility/unit; ≤400 LoC; green</td></tr>
+          <tr><td>7</td><td><b>Review</b></td><td>Read top-to-bottom; confirm gains; human commits</td><td>Reviewed, green, gains written, committed</td></tr>
+        </table>
+      </section>
+
+      <section class="step">
+        <h3 style="font-size:18px">The gauntlet &amp; guardrails</h3>
+        <pre><span class="lang">shell</span><code># the gauntlet – run after every step
+pnpm build &amp;&amp; pnpm lint --fix &amp;&amp; pnpm format &amp;&amp; pnpm test</code></pre>
+        <p>
+          In a normal project, do not proceed until this is green. In a deliberately dusty fallback, the Analyse step
+          may start red; record that baseline and make every later checkpoint green or no worse than the documented
+          failures.
+        </p>
+        <ul>
+          <li><b>Treat the agent like a junior</b> – review every change before commit.</li>
+          <li><b>No big-bang rewrite</b> – small, reviewable intermediate steps only.</li>
+          <li><b>Every change earns its keep</b> – less complexity, clearer responsibility, or modernization.</li>
+          <li><b>Preserve meaning</b> – never delete existing comments or domain logic; behavior stays the same.</li>
+          <li><b>Plan first, then implement</b> – ask clarifying questions before editing.</li>
+          <li><b>Git discipline</b> – clean tree to start; checkpoint per step; you commit, not the agent.</li>
+        </ul>
+      </section>
+
+      <section class="step">
+        <h3 style="font-size:18px">Related skills</h3>
+        <table>
+          <tr><th>Skill</th><th>Use it for</th></tr>
+          <tr><td><a href="../.agents/skills/ng-refactor/SKILL.md"><code>ng-refactor</code></a></td><td>The blueprint that drives this whole lab.</td></tr>
+          <tr><td><a href="../.agents/skills/ng-migrate/SKILL.md"><code>ng-migrate</code></a></td><td>The official migration schematics in Step 4.</td></tr>
+          <tr><td><a href="../.agents/skills/ng-review-architecture/SKILL.md"><code>ng-review-architecture</code></a></td><td>Deeper review in Steps 1 &amp; 7.</td></tr>
+          <tr><td><a href="../.agents/skills/create-e2e-tests/SKILL.md"><code>create-e2e-tests</code></a></td><td>The behavior safety net in Step 1.</td></tr>
+          <tr><td><a href="../.agents/skills/ng-forms/SKILL.md"><code>ng-forms</code></a> · <a href="../.agents/skills/ng-security/SKILL.md"><code>ng-security</code></a> · <a href="../.agents/skills/ng-performance/SKILL.md"><code>ng-performance</code></a> · <a href="../.agents/skills/ng-accessibility/SKILL.md"><code>ng-accessibility</code></a></td><td>Focused passes when a refactoring touches forms, security, performance, or a11y.</td></tr>
+        </table>
+      </section>
+
+      <footer>
+        <p>The future is agentic refactoring – let AI do the hard work to modernize your Angular workspaces, one
+          verified step at a time. <strong>What will you refactor?</strong> Built from the
+          <em>"Refactoring verstaubter Angular-Komponenten"</em> workshop. Angular is © Google LLC.</p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>

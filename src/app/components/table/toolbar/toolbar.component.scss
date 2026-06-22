@@ -1,0 +1,197 @@
+:host {
+  align-items: center;
+  display: flex;
+  gap: var(--g-spacing-x2);
+  justify-content: space-between;
+  padding: var(--g-spacing-x2);
+  position: relative;
+
+  &.actions-menu-open {
+    .actions-menu {
+      background-color: var(--c-white);
+      border-radius: var(--g-border-radius-md);
+      display: none;
+      filter: var(--t-universal__shadow);
+      flex-direction: column;
+      font-size: var(--g-font-size--secondary);
+      margin-block: var(--g-outline-width);
+      overflow: visible;
+      position: absolute;
+      z-index: 1;
+
+      border: none;
+      box-shadow: var(--g-shadow);
+      flex-direction: column;
+      padding: 2px;
+
+      & > button {
+        flex-direction: row;
+        flex-grow: 1;
+        font-size: var(--g-font-size--secondary);
+        gap: var(--g-spacing-x3);
+        max-width: 100%;
+        text-align: center;
+        text-wrap: nowrap;
+        width: 200px !important;
+
+        .key-binding {
+          color: var(--c-neutral200);
+          flex: 1;
+          text-align: end;
+        }
+      }
+    }
+  }
+}
+
+.toolbar-actions-menu-toggle {
+  display: flex;
+  flex-shrink: 0;
+  height: 2rem;
+  place-content: center;
+  place-items: center;
+  width: 2rem;
+}
+
+.actions-menu-wrapper {
+  position: relative;
+}
+
+.actions-list {
+  display: flex;
+  gap: var(--g-spacing-x2);
+
+  button {
+    height: 2rem;
+  }
+}
+
+/* [TODO] JS or just CSS for hiding stuff? */
+.actions {
+  display: flex;
+  gap: var(--g-spacing-x2);
+}
+
+.actions-list__item .text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info {
+  align-self: center;
+  display: flex;
+  font-weight: normal;
+  text-wrap: nowrap;
+}
+
+.flex-item + .flex-item {
+  border-left: solid 1px var(--c-neutral150);
+  padding-left: var(--g-spacing-x3);
+}
+
+.search-side {
+  display: flex;
+  flex-direction: row;
+  gap: var(--g-spacing-x3);
+  justify-self: end;
+
+  input {
+    padding-block: var(--g-spacing-x);
+    padding-inline: var(--g-spacing-x2);
+    resize: none;
+
+    &.resizable {
+      resize: vertical !important;
+    }
+    background-color: var(--t-input-field__background-color);
+    border-color: var(--t-input-field__border-color);
+    border-radius: var(--g-border-radius-md);
+    border-style: solid;
+    border-width: var(--g-border-width--slim);
+    cursor: text;
+    color: var(--t-input-field__foreground-color);
+    font-family: var(--g-font-family--default);
+    font-size: 1rem;
+
+    &::placeholder {
+      color: var(--t-input-field-placeholder__foreground-color);
+    }
+
+    &:disabled {
+      background-color: var(--t-input-field--disabled__background-color);
+      border-color: var(--t-input-field--disabled__border-color);
+      cursor: default;
+    }
+
+    &:not(:disabled) {
+      &:focus-visible {
+        border-color: var(--t-input-field--focus__border-color);
+        outline-color: var(--t-input-field--focus__outline-color);
+        outline-style: solid;
+
+        body[browser='Safari'] & {
+          box-shadow: 0 0 0 3px var(--t-input-field--focus__outline-color);
+          outline: none !important;
+        }
+
+        position: relative;
+      }
+
+      &:hover {
+        border-color: var(--t-input-field--hover__border-color);
+      }
+    }
+
+    /* Error */
+
+    .has-error-marker & {
+      border-color: var(--t-input-field--error__border-color);
+    }
+
+    /* Warning */
+
+    .has-warning-marker & {
+      border-color: var(--t-input-field--warning__border-color);
+    }
+
+    width: auto;
+  }
+}
+
+.divider {
+  background-color: var(--c-neutral150);
+  height: 100%;
+  width: 1px;
+}
+
+@container (max-width: 640px) {
+  :host {
+    gap: var(--g-spacing-x1);
+    justify-content: flex-start;
+  }
+
+  .actions-list,
+  .info {
+    display: none !important;
+  }
+
+  .flex-item + .flex-item {
+    border-left: solid 0 var(--c-neutral150);
+  }
+
+  .search-side,
+  .search {
+    flex: 1;
+  }
+
+  .actions-menu-wrapper {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .toolbar-actions-menu-toggle {
+    height: 2rem;
+    justify-content: center;
+    width: 2rem;
+  }
+}
