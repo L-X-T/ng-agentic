@@ -120,3 +120,12 @@ Find our [Angular Coding Style Guide](style-guide/style-guide.md) in the `style-
 It contains general guidelines for writing clean and maintainable code in Angular projects, as well as specific style guides for different file types such as Git commits, HTML templates, NPM packages, SCSS styling files, and TypeScript files.
 
 Anyone who copies and pastes this style guide should replace the `lxt-` class-name prefix with a prefix that is meaningful for her or his own app.
+
+## Opinionated Agent Instructions
+
+This commit turns `AGENTS.md` from a generic Angular guidance file into a repo specific operating contract for AI agents, adding workflow rules for preserving user edits, loading only the narrowest relevant style guides, applying modern Angular v22+ defaults, keeping TypeScript strict, and respecting template, accessibility, service, and testing boundaries.
+
+Two things to keep in mind when adopting these instructions:
+
+- **They are tuned for a specific model generation.** This `AGENTS.md` was developed and tested against Opus 4.5 to Opus 4.8 and GPT-5.2 to GPT-5.5. With newer, more intelligent models arriving – Fable 5, GPT-5.6 – we will have to reevaluate whether the detailed instructions on Angular and TypeScript best practices are still necessary to get high-quality code output, or whether the models already internalize them. Treat this as a constantly evolving instruction set, not a finished artifact.
+- **Less can be more.** Parts of the community argue that shorter instruction files outperform long ones, because every rule competes for the model's attention. So don't copy this file verbatim – play around with the instructions, measure what actually changes your output quality, and fine-tune them for your own projects and workflows.
