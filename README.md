@@ -49,3 +49,15 @@ pnpm exec husky init
 ```shell
 pnpm format
 ```
+
+## Install Angular ESLint
+
+To ensure code quality and consistency, we install Angular ESLint in our project. This tool helps us identify and fix issues in our TypeScript code according to best practices.
+
+Our pre-commit hook only runs the formatter so far, so we add Angular ESLint with the following command:
+
+```shell
+ng add angular-eslint
+```
+
+Besides the `angular-eslint` package itself this also registers the `angular-eslint` schematic collection in `angular.json` and pins `@angular-eslint/builder` as an explicit devDependency, so the lint builder resolves reliably under pnpm.
