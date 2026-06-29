@@ -54,6 +54,8 @@ pnpm format
 
 To ensure code quality and consistency, we install Angular ESLint in our project. This tool helps us identify and fix issues in our TypeScript code according to best practices.
 
-Since we haven't got pre-commit hooks set up yet, we can run the following command to install Angular ESLint:
+```shell
+ng add @angular-eslint/schematics
+```
 
 This way, we can maintain code quality without having to remember to run the command manually.
