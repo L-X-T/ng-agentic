@@ -43,3 +43,8 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 .junie/memory
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
