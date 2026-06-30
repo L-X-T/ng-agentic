@@ -1,0 +1,26 @@
+import { Directive } from '@angular/core';
+import { hlm } from './hlm.util';
+
+const INPUT_CLASS = hlm(
+  'flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base',
+  'shadow-xs transition-[color,box-shadow] outline-none',
+  'placeholder:text-muted-foreground',
+  'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+  'disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+  'aria-invalid:border-destructive aria-invalid:ring-destructive/20',
+);
+
+/**
+ * Local helm-style input directive applying spartan input class tokens.
+ * Use as `<input hlmInput />`.
+ */
+@Directive({
+  selector: 'input[hlmInput]',
+  host: {
+    'data-slot': 'input',
+    '[class]': 'hostClass',
+  },
+})
+export class HlmInput {
+  protected readonly hostClass = INPUT_CLASS;
+}

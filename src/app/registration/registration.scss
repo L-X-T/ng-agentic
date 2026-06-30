@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.lxt-registration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: 1rem;
+}
+
+.lxt-registration__card {
+  width: 20rem;
+}
+
+.lxt-registration__title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.lxt-registration__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lxt-registration__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.lxt-registration__error {
+  margin: 0;
+  color: var(--destructive);
+  font-size: 0.8125rem;
+}
+
+.lxt-registration__actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}

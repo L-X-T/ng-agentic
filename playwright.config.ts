@@ -30,6 +30,14 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
 
+  /* Start the Angular dev server for the tests, reusing one if it is already running. */
+  webServer: {
+    command: 'npm start',
+    url: 'http://localhost:4200',
+    reuseExistingServer: !process.env['CI'],
+    timeout: 120_000,
+  },
+
   /* Configure projects for major browsers */
   projects: [
     {

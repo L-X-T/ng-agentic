@@ -1,0 +1,97 @@
+<main class="lxt-registration">
+  <section hlmCard class="lxt-registration__card">
+    <div hlmCardContent>
+      <h1 class="lxt-registration__title">Create your account</h1>
+
+      <form class="lxt-registration__form" (submit)="onRegister($event)">
+        <div class="lxt-registration__field">
+          <label hlmLabel for="firstName">First name</label>
+          <input
+            hlmInput
+            id="firstName"
+            type="text"
+            autocomplete="given-name"
+            [formField]="registrationForm.firstName"
+          />
+          @if (
+            (registrationForm.firstName().touched() || hasSubmitted()) && registrationForm.firstName().errors().length
+          ) {
+            @for (error of registrationForm.firstName().errors(); track error.kind) {
+              <p class="lxt-registration__error">{{ error.message }}</p>
+            }
+          }
+        </div>
+
+        <div class="lxt-registration__field">
+          <label hlmLabel for="lastName">Last name</label>
+          <input
+            hlmInput
+            id="lastName"
+            type="text"
+            autocomplete="family-name"
+            [formField]="registrationForm.lastName"
+          />
+          @if (
+            (registrationForm.lastName().touched() || hasSubmitted()) && registrationForm.lastName().errors().length
+          ) {
+            @for (error of registrationForm.lastName().errors(); track error.kind) {
+              <p class="lxt-registration__error">{{ error.message }}</p>
+            }
+          }
+        </div>
+
+        <div class="lxt-registration__field">
+          <label hlmLabel for="email">E-mail</label>
+          <input hlmInput id="email" type="email" autocomplete="email" [formField]="registrationForm.email" />
+          @if ((registrationForm.email().touched() || hasSubmitted()) && registrationForm.email().errors().length) {
+            @for (error of registrationForm.email().errors(); track error.kind) {
+              <p class="lxt-registration__error">{{ error.message }}</p>
+            }
+          }
+        </div>
+
+        <div class="lxt-registration__field">
+          <label hlmLabel for="password">Password</label>
+          <input
+            hlmInput
+            id="password"
+            type="password"
+            autocomplete="new-password"
+            [formField]="registrationForm.password"
+          />
+          @if (
+            (registrationForm.password().touched() || hasSubmitted()) && registrationForm.password().errors().length
+          ) {
+            @for (error of registrationForm.password().errors(); track error.kind) {
+              <p class="lxt-registration__error">{{ error.message }}</p>
+            }
+          }
+        </div>
+
+        <div class="lxt-registration__field">
+          <label hlmLabel for="confirmPassword">Confirm password</label>
+          <input
+            hlmInput
+            id="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            [formField]="registrationForm.confirmPassword"
+          />
+          @if (
+            (registrationForm.confirmPassword().touched() || hasSubmitted()) &&
+            registrationForm.confirmPassword().errors().length
+          ) {
+            @for (error of registrationForm.confirmPassword().errors(); track error.kind) {
+              <p class="lxt-registration__error">{{ error.message }}</p>
+            }
+          }
+        </div>
+
+        <div class="lxt-registration__actions">
+          <button hlmBtn type="submit">Register</button>
+          <button hlmBtn variant="secondary" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

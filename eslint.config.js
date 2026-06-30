@@ -103,6 +103,22 @@ module.exports = defineConfig([
     },
   },
   {
+    // Local spartan-ng (helm) components: keep the upstream `hlm` selector prefix and allow
+    // grouping related directives (e.g. card + card-content) in one file.
+    files: ['src/app/ui/**/*.ts'],
+    rules: {
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'hlm',
+          style: 'camelCase',
+        },
+      ],
+      'max-classes-per-file': 'off',
+    },
+  },
+  {
     files: ['**/*.html'],
     extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
     rules: {
