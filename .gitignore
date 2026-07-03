@@ -43,3 +43,6 @@ __screenshots__/
 .DS_Store
 Thumbs.db
 .junie/memory
+
+# Agent-local settings, written per machine by Claude Code
+.claude/settings.local.json

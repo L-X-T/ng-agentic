@@ -2,11 +2,18 @@
 
 ![Agentic Engineering workshop overview](AE-workshop-overview.png)
 
-This sketch outlines the Agentic Engineering workshop arc: choosing AI models and harnesses, setting up an Angular AI workspace with best practices and style guides, building reusable AI skills, applying AI supported workflows, and using those foundations for targeted Angular refactoring. It connects directly to my recent [Agentic Engineering blog post series](https://www.angulararchitects.io/blog/best-llms-for-angular/), where I walk through the model choices, app and harness tradeoffs, costs, data privacy questions, and final setup recommendations behind the workshop.
+This sketch outlines the Agentic Engineering workshop arc: choosing AI models and harnesses, setting up an Angular AI workspace with best practices and style guides, building reusable AI skills, mastering prompting and reviewing – the two bookends of every agentic loop – applying AI supported workflows, and using those foundations for targeted Angular refactoring. The workshop intro slides are available in [AE-intro.pdf](AE-intro.pdf). It connects directly to my recent [Agentic Engineering blog post series](https://www.angulararchitects.io/blog/best-llms-for-angular/), where I walk through the model choices, app and harness tradeoffs, costs, data privacy questions, and final setup recommendations behind the workshop.
 
 A practical Angular workspace starter with modern best practices, AI-ready tooling, and scalable project setup guidance.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.0 on June 6th, 2026.
+
+## Workshop entry point
+
+Start with [Lab 00](labs/00-getting-started.html) and the required path in
+[Lab 01](labs/01-setup.html). [WORKSHOP.md](WORKSHOP.md) explains the chapter checkpoints and
+delivery record; [VERIFICATION.md](VERIFICATION.md) defines the checks used throughout.
+The commands below also document how this repository was built, commit by commit.
 
 ## Generate a new project with the CLI
 
@@ -131,7 +138,7 @@ This commit turns `AGENTS.md` from a generic Angular guidance file into a repo s
 
 Two things to keep in mind when adopting these instructions:
 
-- **They are tuned for a specific model generation.** This `AGENTS.md` was developed and tested against Opus 4.5 to Opus 4.8 and GPT-5.2 to GPT-5.5. With newer, more intelligent models arriving – Fable 5, GPT-5.6 – we will have to reevaluate whether the detailed instructions on Angular and TypeScript best practices are still necessary to get high-quality code output, or whether the models already internalize them. Treat this as a constantly evolving instruction set, not a finished artifact.
+- **They are tuned for a specific model generation.** This `AGENTS.md` was developed and tested against Opus 4.5 to Opus 4.8 and GPT-5.2 to GPT-5.5. Now that the next, more intelligent generation has arrived – Fable 5.1, GPT-5.6 – that reevaluation is due: check whether the detailed instructions on Angular and TypeScript best practices are still necessary to get high-quality code output, or whether the newer models already internalize them. Treat this as a constantly evolving instruction set, not a finished artifact.
 - **Less can be more.** Parts of the community argue that shorter instruction files outperform long ones, because every rule competes for the model's attention. So don't copy this file verbatim – play around with the instructions, measure what actually changes your output quality, and fine-tune them for your own projects and workflows.
 
 ## Finish the AI Setup
@@ -147,7 +154,9 @@ In the last commit we wrapped up the agentic tooling so every AI tool – Claude
   access for unattended runs, and prefer short-lived, scoped credentials.
 - **Registered MCP servers** in `.mcp.json` (Angular CLI, Spartan UI, Chrome DevTools, Figma and
   Figma Desktop) and mirrored them into the tool-specific locations that don't read the root file:
-  `.vscode/mcp.json`, `.junie/mcp/mcp.json` and `.codex/config.toml`.
+  `.vscode/mcp.json`, `.junie/mcp/mcp.json` and `.codex/config.toml`. These five servers are examples
+  that fit this workspace – every team should curate its own set. Each MCP server costs context and
+  trust, so only register servers that earn their place in your project.
 - **Added thin per-agent files** (`.cursorrules`, `.clinerules`, `.junie/AGENTS.md`, `.gemini/GEMINI.md`, `.windsurf/rules/guidelines.md`, `.github/copilot-instructions.md`) that defer to `AGENTS.md`, plus `.claude/settings.json` to enable the project MCP servers.
 - **Renamed `.prettierrc` to `.prettierrc.json`** and added an `ng:update` script to `package.json` for upgrading Angular.
 
@@ -176,11 +185,13 @@ Some tools, including Codex, provide an internal browser that agents can use for
 
 E2E tests exercise real user flows in the browser, so they catch integration and interaction bugs that linting and builds miss. When a Playwright or Cypress run fails, screenshots, traces, logs, and failure messages become focused feedback that an agent can use to repair the feature.
 
+With that in place, the setup is ready to take for a spin – see [Step 8 (take it for a spin: validate the setup)](labs/01-setup.html#s8) of the hands-on lab.
+
 ## Recommended AI Companion Apps
 
 Agentic work changes what you do all day: less typing code, more talking to agents, reviewing diffs, and shuttling context between apps. These eight companion apps support exactly that. None of the links below are referral links, just my pure recommendations – the only exception is the Wispr Flow link, and that one is written out so you can see it.
 
-### Must Use
+### Optional companion apps
 
 #### Wispr Flow
 
@@ -198,7 +209,7 @@ We preferably drive agents from super apps like Codex, Claude Desktop, Cursor, o
 
 You constantly shuttle prompts, snippets, and screenshots between agents, editors, and browsers. [Raycast](https://raycast.com) (mac) or [Ditto](https://ditto-cp.sourceforge.io) (win) make sure you never lose one to the next copy.
 
-### Should Use
+### More optional tools
 
 #### GitHub CLI
 
@@ -215,3 +226,14 @@ Agentic workflows produce a lot of Markdown – plans, reviews, docs like this o
 #### Window Manager / Split Screen Helper
 
 Agent, editor, and browser side by side is the standard layout – [Rectangle](https://rectangleapp.com) (mac) or [FancyZones](https://learn.microsoft.com/en-us/windows/powertoys/fancyzones) (win, part of PowerToys) get you there with one shortcut.
+
+## Hands-on Labs
+
+The workshop labs are designed to be applied to your own Angular workspace, not just this
+repository. [Lab 00](labs/00-getting-started.html) is pre-work – finish it before the workshop
+day so the sessions start with a working toolchain:
+
+- [Lab 00 – Getting Started](labs/00-getting-started.html): install this workspace, verify the
+  toolchain, and choose the project you will carry through the workshop.
+- [Lab 01 – Set up an Angular project for Agentic Engineering](labs/01-setup.html): recreate this
+  workspace's agentic setup in your own project.

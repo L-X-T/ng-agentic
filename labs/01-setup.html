@@ -1,0 +1,707 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Set up an Angular project for Agentic Engineering</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      .tree { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); white-space: pre; line-height: 1.5; }
+      .tree b { color: var(--ink); font-weight: 600; }
+      .tree .c { color: var(--ink-faint); }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+      hr.soft { border: none; border-top: 1px solid var(--line); margin: 8px 0 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>Set up an Angular project for <span class="grad">Agentic Engineering</span></h1>
+        <p class="lede">
+          Reproduce the <code>ng-agentic</code> workspace conventions in your Lab 00 project (or a fresh Angular 22
+          fallback): Prettier, Husky, ESLint, lint-staged, a shared style guide, per-agent instruction files, and MCP
+          servers – a codebase that is safe and productive to work on <em>together with AI coding agents</em>.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Angular</b> v22</span>
+          <span class="chip"><b>Package manager</b> pnpm 10</span>
+          <span class="chip"><b>Node</b> 22.22+/24.15+/26 (target 26)</span>
+          <span class="chip"><b>Est. time</b> 45–60 min</span>
+          <span class="chip"><b>Level</b> intermediate</span>
+        </div>
+      </header>
+
+      <h2>About this lab</h2>
+      <p>
+        "Agentic engineering" means treating AI coding agents (Claude Code, Codex, Gemini, Junie, Copilot, Cursor,
+        Cline, Windsurf, …) as first-class teammates. An agent with no guardrails produces inconsistent "AI slop"; an
+        agent given a precise style guide, an auto-fixing linter, a pre-commit hook and secret-deny rules
+        becomes a reliable contributor. Each step has a Goal, a task, a collapsible Solution and a Checkpoint – try
+        first, then peek. You cloned this repository in Lab 00; when a solution says "copy the full file from this
+        repo", grab it from your local clone. From Step&nbsp;6 onward, let your AI agent do the typing.
+      </p>
+
+      <section class="step" id="required-path">
+        <h3>Required path and optional extensions</h3>
+        <p>Use one agent, the Angular MCP, AGENTS.md, the relevant style guides and the
+          <a href="../VERIFICATION.md">verification contract</a>. Keep existing working tooling.
+          Steps 2–4 can be demonstrated on the clone when your project already has equivalent checks.
+          In Step 5 start with the index and guides for the files you edit. In Step 6 configure your
+          chosen agent only. In Step 7 connect Angular MCP only.</p>
+        <p>Additional agents, Figma, Spartan, Chrome automation and companion apps are optional.
+          Finish by showing a loaded instruction path, a successful tool call and verified counter
+          behavior. See <a href="../WORKSHOP.md">the delivery record</a> for evidence to save.</p>
+      </section>
+      <section class="step" id="verification-runner">
+        <h3>Use checks that exist in your project</h3>
+        <p>The workshop clone already has <code>pnpm workshop:check</code>. In your own project,
+          first map build, lint, formatting and tests to its actual scripts. If they match this
+          workspace, copy <code>scripts/workshop-check.mjs</code> and <code>VERIFICATION.md</code>
+          from the clone and add <code>"workshop:check": "node scripts/workshop-check.mjs"</code>
+          to package.json scripts. Keep the packageManager field consistent with your chosen pnpm version.</p>
+        <p>If the scripts or test platform differ, run the equivalent commands independently and
+          record them instead of copying the runner unchanged. Missing checks remain explicit.
+          <code>workshop:material</code> is for authors checking this workshop clone; it is not
+          required in a participant project without the labs directory.</p>
+      </section>
+
+      <section class="step" id="harness-map">
+        <h3>What controls what?</h3>
+        <table>
+          <tr><th>Part</th><th>Responsibility</th><th>Evidence</th></tr>
+          <tr><td>Model</td><td>Reasons and proposes actions</td><td>Selected model/version</td></tr>
+          <tr><td>Harness</td><td>Loads context and executes permitted tools</td><td>Settings and transcript</td></tr>
+          <tr><td>Project instructions</td><td>Persistent repository conventions</td><td>Loaded AGENTS.md path</td></tr>
+          <tr><td>Skill</td><td>Task-specific process, loaded when selected</td><td>Selected SKILL.md path</td></tr>
+          <tr><td>Tool or script</td><td>Performs a concrete operation</td><td>Arguments, output, exit status</td></tr>
+          <tr><td>Verification and human review</td><td>Check behavior and accept the result</td><td>Tests, observations, reviewed diff</td></tr>
+        </table>
+        <p>Instruction precedence and discovery differ by harness. Inspect the files actually loaded.
+          A written rule guides behavior; a permission setting controls an operation; neither is proof
+          that the requested feature works.</p>
+      </section>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Enforce formatting and linting automatically with Prettier, ESLint, Husky and lint-staged.</li>
+        <li>Author a <strong>shared, multi-file style guide</strong> that both humans and agents follow.</li>
+        <li>Wire up <strong>per-agent instruction files</strong> that all point at one source of truth (<code>AGENTS.md</code>).</li>
+        <li>Make one successful Angular MCP call; add other tools only when the chosen task needs them.</li>
+        <li><strong>Validate the setup</strong> by having an agent build a feature and checking it follows <code>AGENTS.md</code> and the style guide.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Node.js (22.22+, 24.15+ or 26+) and <code>pnpm</code> (<code>npm i -g pnpm@10.29.3</code>), plus the Angular CLI (<code>pnpm dlx @angular/cli@22.0.0 --version</code>).</li>
+        <li>Git configured (name + email) and at least one AI coding agent installed (e.g. Claude Code or Codex).</li>
+        <li>Your <a href="00-getting-started.html">Lab 00</a> project (or permission to create a fallback), a terminal, and your editor (VS Code / JetBrains).</li>
+      </ul>
+
+      <h2>Steps</h2>
+      <nav class="toc">
+        <ol>
+          <li><a href="#s1">Choose or scaffold the Angular project</a></li>
+          <li><a href="#s2">Clean up &amp; format with Prettier</a></li>
+          <li><a href="#s3">Husky + ESLint + lint-staged (pre-commit hook)</a></li>
+          <li><a href="#s4">Extend the ESLint configuration</a></li>
+          <li><a href="#s5">Add the Angular Coding Style Guide</a></li>
+          <li><a href="#s6">Write <code>AGENTS.md</code> and per-agent files</a></li>
+          <li><a href="#s7">Register MCP servers</a></li>
+          <li><a href="#s8">Take it for a spin: validate the setup</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#done">Definition of Done</a> · <a href="#s-bonus">Bonus lab</a> · <a href="#appendix">Appendix</a></p>
+      </nav>
+
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Choose or scaffold the Angular project</h3>
+        <p class="goal"><b>Goal:</b> work in your Lab 00 project, or create a fresh Angular 22 fallback workspace.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Open your Lab 00 project. If it isn't a suitable Angular workspace, generate a fallback named
+            <code>my-agentic-app</code> (a distinct name, so it can't collide with the <code>ng-agentic</code> repo you
+            cloned in Lab 00) with <code>pnpm</code> as the package manager, then verify it builds and serves.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution</summary>
+          <div class="body">
+            <pre><span class="lang">shell</span><code>ng new my-agentic-app --package-manager pnpm
+cd my-agentic-app
+pnpm start   # serves on http://localhost:4200</code></pre>
+            <p>No global CLI? <code>pnpm dlx @angular/cli@22.0.0 new my-agentic-app --package-manager pnpm</code>.
+              Accept SSR/SSG when prompted to mirror this workspace; keep the zoneless default.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> the workspace runs locally – <code>pnpm start</code> serves the app and <code>git log</code> shows the initial commit.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Clean up the initial commit &amp; format with Prettier</h3>
+        <p class="goal"><b>Goal:</b> remove duplicated boilerplate and run Prettier across the whole repo.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>If <code>ng new</code> generated duplicated per-tool instruction files (<code>CLAUDE.md</code>,
+              <code>GEMINI.md</code>, …), keep a single <code>AGENTS.md</code> – Step 6 rebuilds the thin files properly.</li>
+            <li>Add a <code>format</code> script, a <code>prettier.config.js</code> and a <code>.prettierignore</code>, then run the formatter.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution</summary>
+          <div class="body">
+            <p><code>package.json</code> → <code>scripts</code>:</p>
+            <pre><span class="lang">json</span><code>"format": "prettier --write ."</code></pre>
+            <p>Copy <code>prettier.config.js</code> and <code>.prettierignore</code> from this repo. The essentials:
+              <code>printWidth: 120</code> (matches the ESLint <code>max-len</code> rule, so the tools never fight),
+              <code>singleQuote: true</code>, the <code>angular</code> parser for <code>*.html</code>, and ignores for
+              <code>.angular</code>/<code>coverage</code>/<code>dist</code>/<code>node_modules</code>.</p>
+            <pre><span class="lang">shell</span><code>pnpm format   # runs: prettier --write .</code></pre>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> <code>pnpm format</code> completes and re-running it reports no further changes.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Husky + ESLint + lint-staged</h3>
+        <p class="goal"><b>Goal:</b> lint and format <em>staged files only</em> before every commit – the safety net
+          that keeps agent-generated commits clean even when the agent forgets to format.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Install Husky and initialize it (<code>pnpm exec husky init</code>).</li>
+            <li>Add Angular ESLint via the schematic and run a first lint pass.</li>
+            <li>Install <code>lint-staged</code>, configure per-filetype commands, and point the pre-commit hook at it.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution</summary>
+          <div class="body">
+            <pre><span class="lang">shell</span><code>pnpm add -D husky
+pnpm exec husky init
+
+ng add angular-eslint               # creates eslint.config.js + a lint target
+pnpm lint          # runs: ng lint
+pnpm lint --fix    # auto-fix where possible
+
+pnpm add -D lint-staged</code></pre>
+            <p>Add to <code>package.json</code>:</p>
+            <pre><span class="lang">json</span><code>"lint-staged": {
+  "*.{html,js,ts}": ["eslint --fix", "prettier --write"],
+  "*.{css,json,md,scss}": ["prettier --write"]
+}</code></pre>
+            <p>Replace the contents of <code>.husky/pre-commit</code> with:</p>
+            <pre><span class="lang">shell</span><code>pnpm exec lint-staged</code></pre>
+            <p>Code files get <code>eslint --fix</code> <em>then</em> <code>prettier</code>; non-code files only get
+              Prettier. ESLint fixes logic/style; Prettier owns layout. One caveat: hooks are advisory – anyone can
+              bypass them with <code>--no-verify</code> – so mirror the same checks in CI once your project has a
+              pipeline.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> a <code>.husky/</code> folder and <code>eslint.config.js</code> exist, and staging a
+            messy <code>.ts</code> file then committing auto-fixes and reformats it.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s4">
+        <h3><span class="num">4</span> Extend the ESLint configuration</h3>
+        <p class="goal"><b>Goal:</b> go beyond the defaults – encode this workspace's stricter Angular, TypeScript and
+          template rules (signals, standalone, OnPush, explicit return types, ordered attributes, control-flow syntax).</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Extend <code>eslint.config.js</code> with three blocks – a global <code>ignores</code> list, a TypeScript
+            block and an HTML template block – then run <code>pnpm lint --fix</code> and fix the few remaining issues by
+            hand, or have your agent do it.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – <code>eslint.config.js</code></summary>
+          <div class="body">
+            <p>The shape of the config:</p>
+            <pre><span class="lang">js</span><code>module.exports = defineConfig([
+  { ignores: ['.angular', '.nx', 'coverage', 'dist', '**/*.json'] },
+  {
+    files: ['**/*.ts'],
+    extends: [ /* eslint + tseslint (recommended, stylistic) + angular.configs.tsRecommended */ ],
+    rules: { '@angular-eslint/prefer-signals': 'warn' /* … ~40 more Angular/TS/JS/security rules */ },
+  },
+  {
+    files: ['**/*.html'],
+    extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
+    rules: { /* prefer-control-flow, attributes-order, use-track-by-function, … */ },
+  },
+]);</code></pre>
+            <p><strong>Copy the full file from this repo's <code>eslint.config.js</code></strong> and adjust the
+              selector prefix (this repo uses <code>lxt</code> and ignores <code>labs/</code> – use <code>app</code>
+              or your own prefix, drop the <code>labs/</code> ignore).</p>
+            <pre><span class="lang">shell</span><code>ng lint --fix</code></pre>
+            <p>Two issues typically remain for hand-fixing (or your agent): OnPush change detection on
+              <code>app.ts</code>, and a missing return type in <code>main.server.ts</code>.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> <code>pnpm lint</code> passes (warnings allowed, no errors) after manual fixes.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s5">
+        <h3><span class="num">5</span> Add the Angular Coding Style Guide</h3>
+        <p class="goal"><b>Goal:</b> create a <code>style-guide/</code> folder – one index plus per-topic files – that
+          both humans and agents read. ESLint can't express everything (naming intent, commit format, a11y expectations);
+          a written guide captures those judgement calls, split so an agent loads only what's relevant.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Create the <code>style-guide/</code> folder with these files, then fill the topic files with your team's
+            rules (the "Key rules" column summarizes what each covers in this workspace).</p>
+        </div>
+
+        <table>
+          <tr><th>File</th><th>Key rules</th></tr>
+          <tr><td><code>style-guide.md</code></td><td>Index + global "Do / Don't": Prettier on save, LF, UTF-8, KISS, human-in-the-loop, "don't commit AI slop".</td></tr>
+          <tr><td><code>style-guide.ts.md</code></td><td>Booleans <code>is/has/show</code>; events <code>on…</code>; <code>private</code> + <code>readonly</code> by default; annotate public APIs, infer locals; avoid lifecycle hooks, prefer <code>afterNextRender()</code>; <code>Type[]</code> over <code>Array&lt;Type&gt;</code>.</td></tr>
+          <tr><td><code>style-guide.html.md</code></td><td>Control flow <code>@if/@for</code>; attribute order; <code>[class.x]</code>/<code>[style.x]</code> over <code>ngClass</code>/<code>ngStyle</code>; stable <code>track</code>; self-closing tags; max complexity 10.</td></tr>
+          <tr><td><code>…scss/a11y/spec/git/npm/md</code></td><td>SCSS nesting + tokens; WCAG 2.x AA + zero AXE violations; Vitest + Playwright conventions; Conventional Commits; dependency hygiene (<code>pnpm audit</code>, lockfile); Markdown rules – full rules in this repo's <code>style-guide/</code>.</td></tr>
+        </table>
+
+        <details class="solution">
+          <summary>Show solution – <code>style-guide/style-guide.md</code> (the index)</summary>
+          <div class="body">
+            <p>The index in outline – copy the full folder from this repo's <code>style-guide/</code>:</p>
+            <pre><span class="lang">markdown</span><code># Angular Coding Style Guide
+
+Targets **Angular v22+**, **TypeScript 6**, **Node 26**, a **zoneless** app,
+and **Vitest + Playwright** for tests. Usable by humans and AI agents.
+
+There are specific style guides for:
+- [TypeScript (Angular) Files](style-guide.ts.md) · … and a11y, git, html, md, npm, scss, spec
+
+## Do – Prettier on save · LF endings · UTF-8 · consistency · KISS · human-in-the-loop
+## Don't – commit AI slop; always review and edit AI-generated code first</code></pre>
+            <p>Keep every file short and skimmable; link topic files back to the index. A great moment to <em>use</em> an agent: let it draft the topic files from your conventions – then review.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> <code>style-guide/style-guide.md</code> links to every topic file and each topic file
+            links back to the index.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s6">
+        <h3><span class="num">6</span> Write <code>AGENTS.md</code> and per-agent instruction files</h3>
+        <p class="goal"><b>Goal:</b> one canonical instruction file (<code>AGENTS.md</code>) plus thin per-agent files
+          that all defer to it – update the rules once and every agent stays in sync.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Create <code>AGENTS.md</code> at the repo root with your TypeScript/Angular/a11y best practices and a
+              "Project Style Guide" section mapping file types to the topic files.</li>
+            <li>Create the thin file for your chosen agent from the table below, each deferring to <code>AGENTS.md</code> (Codex reads
+              <code>AGENTS.md</code> natively, so its row is config only).</li>
+            <li>Reduce accidental secret reads per tool – there is no cross-vendor ignore standard yet, so configure
+              each tool deliberately: copy the <code>permissions.deny</code> block from this repo's
+              <code>.claude/settings.json</code> (Claude Code) and the <code>no-secrets</code> profile from
+              <code>.codex/config.toml</code> (Codex), covering <code>.env*</code>, <code>*.pem</code>,
+              <code>*.key</code>, <code>src/environments/</code>. Claude Code's deny rules guard its built-in file
+              tools but may not cover shell commands; Codex's filesystem profile applies its deny patterns across
+              filesystem access, including shell commands, while that profile is active. Neither is a complete
+              security boundary. Test the configured behavior with a harmless fixture – never a real secret – and
+              keep real secrets outside the checkout.</li>
+          </ol>
+        </div>
+
+        <table>
+          <tr><th>Tool</th><th>File</th></tr>
+          <tr><td>Canonical source</td><td><code>AGENTS.md</code></td></tr>
+          <tr><td>Claude Code</td><td><code>.claude/CLAUDE.md</code> (+ <code>.claude/settings.json</code>)</td></tr>
+          <tr><td>OpenAI Codex</td><td>reads <code>AGENTS.md</code> natively – <code>.codex/config.toml</code> holds config/MCP only (Step 7)</td></tr>
+          <tr><td>Gemini</td><td><code>.gemini/GEMINI.md</code></td></tr>
+          <tr><td>JetBrains Junie</td><td><code>.junie/AGENTS.md</code></td></tr>
+          <tr><td>GitHub Copilot</td><td><code>.github/copilot-instructions.md</code></td></tr>
+          <tr><td>Cursor</td><td><code>.cursorrules</code></td></tr>
+          <tr><td>Cline</td><td><code>.clinerules</code></td></tr>
+          <tr><td>Windsurf</td><td><code>.windsurf/rules/guidelines.md</code></td></tr>
+        </table>
+
+        <details class="solution">
+          <summary>Show solution – <code>AGENTS.md</code> (outline) + a thin per-agent file</summary>
+          <div class="body">
+            <p><code>AGENTS.md</code> in outline – copy the full file from this repo's <code>AGENTS.md</code>:</p>
+            <pre><span class="lang">markdown</span><code>You are an expert in TypeScript, Angular, and scalable web application development. …
+
+## Angular Best Practices
+- Always use standalone components (do NOT set `standalone: true` – default since v20)
+- Use signals for state; `input()`/`output()` functions, not decorators
+- Set `changeDetection: ChangeDetectionStrategy.OnPush`
+- Native control flow (`@if`, `@for`, `@switch`); `inject()` over constructor injection
+- MUST pass all AXE checks and WCAG AA minimums
+
+## Project Style Guide
+- Follow `style-guide/style-guide.md`; load the specific guide for the
+  file being touched (ts / html / scss / npm / md / git).</code></pre>
+            <p>Each per-agent file is intentionally tiny – e.g. <code>.cursorrules</code>:</p>
+            <pre><span class="lang">markdown</span><code># Cursor Rules
+
+Follow `AGENTS.md` as the primary repository instructions.
+
+## Cursor-specific</code></pre>
+            <p>The other per-agent files follow the same pattern (mind the relative path back to
+              <code>AGENTS.md</code>). If using Claude Code, adapt <code>.claude/settings.json</code> for the servers you selected.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> your chosen agent’s instruction file exists and points at <code>AGENTS.md</code>; <code>AGENTS.md</code>
+            maps file types to style-guide files.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s7">
+        <h3><span class="num">7</span> Register MCP servers</h3>
+        <p class="goal"><b>Goal:</b> give agents real tools through the Model Context Protocol – scaffold with the
+          Angular CLI, drive a real browser (Chrome DevTools), generate Spartan UI components, read a Figma design.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Register <code>angular-cli</code> in the configuration your chosen harness reads. The full examples below also include optional servers. Mirror configurations only for additional harnesses you actually use.</p>
+          <p>The five servers registered here (<code>angular-cli</code>, <code>spartan-ui</code>,
+            <code>chrome-devtools</code>, <code>figma</code>, <code>figma-desktop</code>) are examples that fit this
+            workspace – every team should curate its own set. Each MCP server costs context and trust, so only
+            register servers that earn their place in your project.</p>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – <code>.mcp.json</code> + Codex TOML</summary>
+          <div class="body">
+            <p>The shape of <code>.mcp.json</code> – copy the full file from this repo's <code>.mcp.json</code>
+              (it also defines <code>figma-desktop</code> via a stdio→http adapter):</p>
+            <pre><span class="lang">json</span><code>{
+  "mcpServers": {
+    "angular-cli": { "command": "pnpm", "args": ["exec", "ng", "mcp"] },
+    "spartan-ui": { "command": "npx", "args": ["-y", "@spartan-ng/mcp"] },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest", "--browserUrl", "http://127.0.0.1:9222"],
+      "type": "stdio"
+    },
+    "figma": { "url": "https://mcp.figma.com/mcp", "type": "http" }
+  }
+}</code></pre>
+            <p>For Codex, the same servers go into <code>.codex/config.toml</code> in TOML form – copy the full file
+              from this repo's <code>.codex/config.toml</code>:</p>
+            <pre><span class="lang">toml</span><code>[mcp_servers.angular-cli]
+command = "pnpm"
+args = ["exec", "ng", "mcp"]
+# … the other servers follow the same pattern</code></pre>
+            <p>The <code>angular-cli</code> server (<code>ng mcp</code>) is the big win: safe, schema-validated CLI
+              access plus version-correct best practices and docs search.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> your agent lists the <code>angular-cli</code> MCP server and can call e.g.
+            <code>list_projects</code> / <code>get_best_practices</code>.</p>
+        </div>
+      </section>
+
+      <section class="step" id="s8">
+        <h3><span class="num">8</span> Take it for a spin: validate the setup</h3>
+        <p class="goal"><b>Goal:</b> prove the setup works – an agent told only <em>what</em> to build should
+          independently reach for the conventions you encoded, follow <code>AGENTS.md</code> and the style guide
+          <em>without you asking</em>, and sail through <code>pnpm lint</code> and the pre-commit hook.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Ask your agent to implement a small feature – <strong>deliberately don't specify which Angular APIs to
+              use.</strong> E.g.: <em>"Create a standalone <code>counter</code> component in
+              <code>src/app/counter/</code> that shows a count, lets me increment and decrement it, and indicates
+              whether the count is even. Follow the project conventions."</em></li>
+            <li>Review the result against the checklist below – does it match <code>AGENTS.md</code> and the style guide?</li>
+            <li>Run <code>pnpm lint</code>, then stage and commit to confirm the hook formats/fixes automatically.</li>
+            <li>Anything off-style? Don't just correct it in chat – tighten the relevant ESLint rule or style-guide
+              entry so the lesson sticks. <strong>The repo is the prompt.</strong></li>
+          </ol>
+        </div>
+
+        <table>
+          <tr><th>Check the generated code for…</th><th>Comes from</th></tr>
+          <tr><td>Standalone component – no <code>standalone: true</code>, no NgModule</td><td><code>AGENTS.md</code></td></tr>
+          <tr><td><code>changeDetection: ChangeDetectionStrategy.OnPush</code></td><td><code>AGENTS.md</code> + ESLint</td></tr>
+          <tr><td><code>signal()</code> / <code>computed()</code>; <code>input()</code> / <code>output()</code> functions</td><td><code>AGENTS.md</code> + ESLint</td></tr>
+          <tr><td><code>inject()</code> instead of constructor injection</td><td><code>AGENTS.md</code></td></tr>
+          <tr><td>Native control flow <code>@if</code> / <code>@for</code> (with <code>track</code>)</td><td>ESLint + <code>style-guide.html.md</code></td></tr>
+          <tr><td>Naming: booleans <code>is/has</code>, handlers <code>on…</code>; <code>private</code>/<code>readonly</code> defaults; explicit return types</td><td><code>style-guide.ts.md</code> + ESLint</td></tr>
+          <tr><td><code>pnpm lint</code> clean; pre-commit hook reformatted it on commit</td><td>Steps 3–4</td></tr>
+        </table>
+
+        <p>Behavior check: initial count is 0/even; increment shows 1/odd; decrement restores 0/even;
+          a second decrement shows -1/odd. Both controls work by keyboard. Mark input/output, DI and
+          loop tracking as <em>not exercised</em> if the counter does not need them.</p>
+        <p>Controlled experiment: in a disposable worktree, generate the counter before and after adding
+          one project-specific naming rule. Use fresh sessions with the same model and prompt. Record
+          the instruction paths loaded, the resulting names and the behavior checks. One run illustrates
+          an effect; repeat before claiming that a rule reliably changes output. Do not add another rule
+          until you know the existing instruction was discovered and the failure is repeatable.</p>
+
+        <details class="solution">
+          <summary>Show solution – what "on-style" output looks like</summary>
+          <div class="body">
+            <p>An inline excerpt of a counter (put the template in its own HTML file in your project) (<code>src/app/counter/counter.ts</code>):</p>
+            <pre><span class="lang">ts</span><code>import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-counter',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    &lt;p&gt;Count: {{ count() }} ({{ isEven() ? 'even' : 'odd' }})&lt;/p&gt;
+    &lt;button type="button" (click)="onIncrement()"&gt;Increment&lt;/button&gt;
+    &lt;button type="button" (click)="onDecrement()"&gt;Decrement&lt;/button&gt;
+  `,
+})
+export class Counter {
+  protected readonly count = signal(0);
+  protected readonly isEven = computed(() =&gt; this.count() % 2 === 0);
+  protected onIncrement(): void {
+    this.count.update((value) =&gt; value + 1);
+  }
+  protected onDecrement(): void {
+    this.count.update((value) =&gt; value - 1);
+  }
+}</code></pre>
+            <p>Notice what the agent did <em>without being told</em>: OnPush, signals + <code>computed()</code>,
+              <code>protected readonly</code>, <code>on</code>-prefixed handlers, explicit <code>: void</code>,
+              <code>type="button"</code>, the <code>app-</code> prefix. When the agent gets it wrong, treat the miss as
+              a gap in the repo: sharpen a rule, then re-run the experiment.</p>
+            <pre><span class="lang">shell</span><code>pnpm lint        # no errors
+pnpm build       # compiles cleanly</code></pre>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> an agent-generated feature passes <code>pnpm lint</code>, visibly follows
+            <code>AGENTS.md</code> and the style guide, and was auto-formatted by the pre-commit hook on commit.</p>
+        </div>
+      </section>
+
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">You're finished when…</h3>
+        <ul>
+          <li>✅ <code>pnpm start</code> serves the app and <code>pnpm build</code> succeeds.</li>
+          <li>✅ <code>pnpm format</code> and <code>pnpm lint</code> both run clean (warnings OK, no errors).</li>
+          <li>✅ Committing a messy staged file auto-fixes &amp; reformats it via Husky + lint-staged.</li>
+          <li>✅ <code>style-guide/</code> has an index and the relevant topic guides, cross-linked; remaining topics are extensions.</li>
+          <li>✅ <code>AGENTS.md</code> exists and the chosen agent loads it.</li>
+          <li>✅ The chosen agent’s permissions were tested with a harmless fixture; the report records what was blocked and any uncovered access paths.</li>
+          <li>✅ <code>.mcp.json</code> registers the Angular CLI (and other) MCP servers; your agent can use them.</li>
+          <li>✅ An agent-built feature lands on-style and passes <code>pnpm lint</code> without manual fixups.</li>
+        </ul>
+
+        <div class="task" style="margin-top:8px">
+          <h4>Stretch goals</h4>
+          <ul style="margin:0">
+            <li>Add a <code>ng:update</code> script and document your upgrade routine.</li>
+            <li>Configure Vitest + Playwright and an <code>@axe-core/playwright</code> a11y check (see <code>style-guide.spec.md</code> / <code>style-guide.a11y.md</code>).</li>
+          </ul>
+        </div>
+      </section>
+
+      <h2 id="bonus">Bonus lab</h2>
+      <section class="step" id="s-bonus">
+        <h3><span class="num">★</span> Recommended apps for a smoother workshop</h3>
+        <p class="goal"><b>Goal:</b> install a few optional tools that remove friction from the agentic loop.</p>
+
+        <ul>
+          <li><b>Wispr Flow</b> (voice dictation) – far faster than typing for long prompts and review notes.
+            <a href="https://wisprflow.ai/r?ALEXANDER14084" target="_blank" rel="noopener noreferrer">wisprflow.ai/r?ALEXANDER14084</a> (one free month via this link).</li>
+          <li><b>A Git GUI</b> (Fork, Tower, GitKraken, Sourcetree) – review the agent's diff before you accept it.
+            <a href="https://git-scm.com/tools/guis" target="_blank" rel="noopener noreferrer">git-scm.com/tools/guis</a></li>
+          <li><b>A screenshot tool</b> – paste an error, component or Figma frame straight into your agent.
+            <a href="https://shottr.cc" target="_blank" rel="noopener noreferrer">shottr.cc</a> (Mac)
+            · <a href="https://screenrec.com" target="_blank" rel="noopener noreferrer">screenrec.com</a> (Win)</li>
+        </ul>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Install a <strong>Git GUI</strong> and commit now – then commit after every lab from here on.</li>
+            <li>Install a <strong>screenshot tool</strong> and try pasting a screenshot into your agent.</li>
+            <li>Optional: install <strong>Wispr Flow</strong> and dictate your next prompt.</li>
+          </ol>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> you've committed your progress through a Git GUI and can paste a screenshot into your
+            agent for visual context.</p>
+        </div>
+      </section>
+
+      <h2 id="appendix">Appendix – reference</h2>
+      <section class="step">
+        <h3 style="font-size:18px">Final project layout &amp; command cheat sheet</h3>
+        <div class="tree">ng-agentic/
+├── <b>AGENTS.md</b>                     <span class="c"># canonical agent rules – per-agent files defer to it</span>
+├── <b>prettier.config.js</b>  <b>.prettierignore</b>  <b>eslint.config.js</b>  <b>package.json</b>
+├── <b>.mcp.json</b>  .husky/<b>pre-commit</b>   <span class="c"># MCP servers · runs: pnpm exec lint-staged</span>
+├── style-guide/                    <span class="c"># index + per-topic files</span>
+├── .claude/  .codex/  .gemini/  .junie/  .windsurf/  .github/  .clinerules  .cursorrules  .vscode/
+└── src/                            <span class="c"># the Angular app</span></div>
+        <pre><span class="lang">shell</span><code>ng new my-agentic-app --package-manager pnpm # 1  scaffold
+pnpm format                                  # 2  prettier --write .
+pnpm add -D husky &amp;&amp; pnpm exec husky init    # 3  pre-commit hook
+ng add angular-eslint                        # 3  linting
+pnpm add -D lint-staged                       # 3  staged-only fixes
+ng lint --fix                                # 4  apply extended rules
+# 5–7   create style-guide/, AGENTS.md + agent files, .mcp.json
+pnpm lint &amp;&amp; pnpm build                       # 8  final verification + agent test drive</code></pre>
+      </section>
+
+      <footer>
+        <p>Built from the <code>ng-agentic</code> workspace conventions. Review every agent-generated change before
+          committing. Angular is © Google LLC.</p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>

@@ -11,6 +11,8 @@
     "serve:ssr:ng-agentic": "node dist/ng-agentic/server/server.mjs",
     "format": "prettier --write .",
     "lint": "ng lint",
+    "workshop:check": "node scripts/workshop-check.mjs",
+    "workshop:material": "node scripts/check-material.mjs",
     "ng:update": "ng update @angular/cli @angular/core angular-eslint @angular-eslint/builder"
   },
   "lint-staged": {
