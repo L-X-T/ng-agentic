@@ -1,0 +1,73 @@
+@use '../../../../styles/global';
+
+:host {
+  align-items: center;
+  display: flex;
+  gap: var(--g-spacing-x2);
+  justify-content: space-between;
+  white-space: nowrap;
+}
+
+input.page-number {
+  width: auto;
+}
+
+.actions-menu-toggle {
+  display: none;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide arrows on Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+button[lxt-button] {
+  font-size: 0.75rem;
+  padding-inline: var(--g-spacing-x2);
+}
+
+button:not(:disabled) > .ag-icon {
+  color: black;
+}
+
+button:disabled > .ag-icon {
+  color: var(--c-neutral300);
+}
+
+.i-lxt-move-fast-forward::before {
+  content: var(--i-lxt-move-fast-forward);
+}
+
+.i-lxt-move-to-next::before {
+  content: var(--i-lxt-move-to-next);
+}
+
+.i-lxt-move-to-previous::before {
+  content: var(--i-lxt-move-to-previous);
+}
+
+.i-lxt-move-fast-backward::before {
+  content: var(--i-lxt-move-fast-backward);
+}
+
+@container (max-width: 640px) {
+  .actions-menu-toggle {
+    align-items: center;
+    display: flex;
+    height: 28px;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    width: 28px;
+  }
+
+  :host(.invisible) {
+    display: none;
+  }
+}

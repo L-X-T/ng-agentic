@@ -66,6 +66,7 @@ The style guides own the general conventions (strict TypeScript, no `any`, signa
 - **No hardcoded layout values:** Never assume fixed pixel sizes for dynamically sized elements (chips, tags, badges, etc.). Always measure actual rendered dimensions via `offsetWidth`/`offsetHeight`/`getBoundingClientRect()` and account for CSS `gap`, `padding`, and `flex-shrink` behavior.
 - **Attribute order in templates:** the category order in `style-guide/style-guide.html.md` is enforced as an ESLint error (`@angular-eslint/template/attributes-order`).
 - **Templates:** no arrow functions in templates, and no globals such as `new Date()` – templates cannot see them; move the logic into the component class.
+- **Zoneless exercise exception:** this workspace currently ships zone-based change detection (`zone.js` polyfill + `provideZoneChangeDetection()`) as intentional debt for the legacy-table refactoring exercise – see `07-REFACTORING.md`. Do not spread it further; restoring zoneless is part of that exercise.
 
 ## Figma MCP
 

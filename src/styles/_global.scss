@@ -1,0 +1,343 @@
+/* global styles & classes */
+
+/* Reset -------------------------------------------------------------------- */
+
+@layer reset {
+  *,
+  ::after,
+  ::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: inherit;
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  fieldset {
+    border: none;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  ol,
+  ul {
+    list-style: none;
+  }
+
+  textarea {
+    min-height: var(--g-min-textarea-height);
+    resize: vertical;
+  }
+
+  :focus-visible,
+  button:focus {
+    outline-color: var(--t-input-field--focus__outline-color);
+    outline-style: solid;
+    outline-width: var(--g-outline-width);
+    transition:
+      outline-style 0s,
+      outline-width 0s,
+      outline 0s,
+      outline-color 0s;
+  }
+}
+
+/* Base --------------------------------------------------------------------- */
+
+body {
+  background-color: var(--c-neutral50);
+  color: var(--c-black);
+  font-family: var(--g-font-family--default);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--t-headline__foreground-color);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--g-font-size--heading);
+}
+
+h2 {
+  font-size: var(--g-font-size--section-title);
+}
+
+h3 {
+  font-size: var(--g-font-size--default);
+}
+
+input::placeholder {
+  color: var(--t-text_disabled);
+}
+
+.figma {
+  border: 1px dashed purple;
+  border-radius: 1rem;
+  margin: 2rem 1rem 1rem;
+  padding: 1rem;
+
+  .row:not(.figma) + &.row {
+    margin-top: 1rem;
+  }
+
+  :focus-visible {
+    outline-color: var(--t-input-field--focus__outline-color);
+    outline-style: solid;
+    outline-width: var(--g-outline-width);
+    transition:
+      outline-style 0s,
+      outline-width 0s,
+      outline 0s,
+      outline-color 0s;
+  }
+
+  body {
+    background-color: var(--c-neutral50);
+    color: var(--c-black);
+    font-family: var(--g-font-family--default);
+
+    &.preload *,
+    &.preload *::before,
+    &.preload *::after {
+      transition: none !important;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--t-headline__foreground-color);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--g-font-size--heading);
+  }
+
+  h2 {
+    font-size: var(--g-font-size--section-title);
+  }
+
+  h3 {
+    font-size: var(--g-font-size--default);
+  }
+
+  .figma {
+    border: 1px dashed purple;
+    border-radius: 1rem;
+    margin: 2rem 1rem 1rem;
+    padding: 1rem;
+
+    .row:not(.figma) + &.row {
+      margin-top: 1rem;
+    }
+
+    > h2,
+    > h3 {
+      background-color: white;
+      margin-top: -2rem;
+      width: auto;
+
+      body.dark & {
+        background-color: var(--c-black);
+      }
+    }
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .spinner {
+    animation: rotate 0.4s linear infinite;
+    color: var(--c-neutral500);
+    display: inline-block;
+    font-size: 1rem;
+  }
+}
+
+/* Layout ------------------------------------------------------------------- */
+
+@layer layout {
+  .content {
+    display: grid;
+    gap: var(--g-spacing-x4);
+    padding: var(--g-spacing-x4);
+  }
+
+  .container {
+    background-color: var(--c-white);
+    border-radius: var(--g-border-radius-md);
+    box-shadow: var(--g-shadow);
+    display: grid;
+    gap: var(--g-spacing-x4);
+    padding: var(--g-spacing-x8);
+    position: relative;
+  }
+
+  .card {
+    :not(body[browser='Safari']) & {
+      display: flex;
+
+      > .item {
+        flex: 1;
+      }
+    }
+
+    body[browser='Safari'] & {
+      display: flex;
+
+      > .item {
+        flex: 1;
+      }
+    }
+
+    gap: var(--g-spacing-x4);
+
+    &.showcase {
+      align-items: flex-end;
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    }
+
+    &.card--align-items-start {
+      align-items: start;
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    }
+
+    &.inline {
+      grid-auto-flow: column;
+      justify-content: flex-start;
+    }
+
+    .item {
+      display: grid;
+      gap: var(--g-spacing-x);
+      justify-items: start;
+    }
+  }
+
+  .form-group {
+    --l-padding-inline: var(--g-spacing-x4);
+
+    border: var(--g-border-width--slim) solid var(--t-form-group__border-color);
+    border-radius: var(--g-border-radius-sm);
+    display: grid;
+    gap: var(--g-spacing-x2);
+    margin-inline: calc(-1 * var(--l-padding-inline));
+    padding: var(--l-padding-inline);
+    position: relative;
+
+    > .form-group__title {
+      color: var(--t-form-group__title__foreground-color);
+      font-weight: bold;
+      margin-inline-start: calc(-1 * var(--g-spacing-x2));
+      padding-inline: var(--g-spacing-x2);
+    }
+  }
+
+  /* Modal */
+  .modal {
+    border-radius: var(--g-border-radius-sm);
+    filter: var(--g-drop-shadow);
+
+    &__header {
+      align-items: center;
+      background-color: var(--t-modal__header__background-color);
+      color: var(--t-modal__header__foreground-color);
+      display: flex;
+      gap: var(--g-spacing-x2);
+
+      &__name {
+        color: inherit;
+        flex-grow: 1;
+        padding-block: var(--g-spacing-x);
+        padding-inline: var(--g-spacing-x2);
+      }
+
+      &__controls {
+        display: flex;
+
+        button[lxt-button] {
+          color: inherit;
+          padding: var(--g-spacing-x2);
+        }
+      }
+    }
+
+    &__body {
+      background-color: var(--t-modal__body__background-color);
+    }
+  }
+
+  /* Filter */
+  .filter {
+    &__header {
+      align-items: center;
+      border-block-end: var(--g-border-width--slim) solid var(--t-filter__header__border-color);
+      display: flex;
+      gap: var(--g-spacing-x4);
+      margin-inline: var(--g-spacing-x4);
+      padding-block: var(--g-spacing-x2);
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: var(--g-spacing-x4);
+      padding-block: var(--g-spacing-x4);
+      padding-inline: var(--g-spacing-x8);
+    }
+
+    &__row {
+      display: grid;
+      gap: var(--g-spacing-x4);
+      grid-template-columns: 1fr 1fr minmax(10ch, 2fr);
+
+      &__label {
+        align-items: center;
+        display: flex;
+        gap: var(--g-spacing-x4);
+      }
+
+      &__type {
+        align-items: center;
+        display: flex;
+        gap: var(--g-spacing-x4);
+      }
+
+      &__value {
+        align-items: center;
+        display: grid;
+        gap: var(--g-spacing-x4);
+      }
+    }
+  }
+}

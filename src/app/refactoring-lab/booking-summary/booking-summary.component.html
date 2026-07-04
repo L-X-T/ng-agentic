@@ -1,0 +1,14 @@
+<h1>Booking summary refactoring lab</h1>
+<p>Replace synchronized derived state while preserving the behavior below.</p>
+<div class="lxt-booking-summary__controls" role="group" aria-label="Booking status">
+  <button type="button" [attr.aria-pressed]="!showActive()" (click)="onShowAll()">Show all</button>
+  <button type="button" [attr.aria-pressed]="showActive()" (click)="onShowActive()">Show active</button>
+</div>
+<p role="status">Bookings shown: {{ visibleCount() }}</p>
+<ul aria-label="Bookings">
+  @for (booking of visibleBookings(); track booking.id) {
+    <li>{{ booking.label }}</li>
+  } @empty {
+    <li>No bookings match the filter</li>
+  }
+</ul>

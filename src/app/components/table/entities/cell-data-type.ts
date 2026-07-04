@@ -1,0 +1,17 @@
+export enum CellData {
+  BOOLEAN = 'boolean',
+  CHECKBOX = 'checkbox',
+  DATE = 'date',
+  DATE_STRING = 'dateString',
+  DATE_TIME = 'dateTime',
+  EMAIL = 'email',
+  FAX = 'fax',
+  IMAGE = 'image',
+  NUMBER = 'number',
+  OBJECT = 'object',
+  ORDINAL_NUMBER = 'ordinalNumber',
+  PHONE = 'phone',
+  PROGRESS = 'progress',
+  STATUS = 'status',
+  TEXT = 'text',
+}

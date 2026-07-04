@@ -1,0 +1,30 @@
+import { Component, computed, input, signal } from '@angular/core';
+import { Booking } from './booking.model';
+
+@Component({
+  selector: 'lxt-booking-summary',
+  templateUrl: './booking-summary.component.html',
+  styleUrl: './booking-summary.component.scss',
+})
+export class BookingSummaryComponent {
+  readonly bookings = input<readonly Booking[]>([
+    { id: 'B2', status: 'cancelled', label: 'Lin' },
+    { id: 'B1', status: 'active', label: 'Ada' },
+    { id: 'B3', status: 'active', label: 'Sam' },
+  ]);
+
+  protected readonly showActive = signal(false);
+  // The starter synchronized these values; the solution derives them from source state.
+  protected readonly visibleBookings = computed(() =>
+    this.showActive() ? this.bookings().filter((booking) => booking.status === 'active') : this.bookings(),
+  );
+  protected readonly visibleCount = computed(() => this.visibleBookings().length);
+
+  protected onShowActive(): void {
+    this.showActive.set(true);
+  }
+
+  protected onShowAll(): void {
+    this.showActive.set(false);
+  }
+}

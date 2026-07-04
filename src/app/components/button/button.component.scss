@@ -1,0 +1,201 @@
+@layer button.base, button.feature;
+
+@layer button.base {
+  button[lxt-button] {
+    /* Button (Ghost/Base) ---------------------------------------------------- */
+
+    align-items: center;
+    background-color: var(--c-transparent);
+    block-size: 1.5rem;
+    border-color: var(--c-transparent);
+    border-radius: var(--g-radius-sm);
+    border-style: solid;
+    border-width: var(--g-border-width--slim);
+    color: var(--c-neutral900);
+    cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    gap: var(--g-spacing-x3);
+    height: 2rem;
+    line-height: 1;
+    max-width: var(--g-button__label-max-width);
+    overflow: hidden;
+    padding-inline: var(--g-spacing-x3);
+    text-overflow: ellipsis;
+
+    &:disabled {
+      background-color: var(--c-transparent);
+      border-color: var(--c-transparent);
+      color: var(--c-neutral300);
+      cursor: default;
+    }
+
+    &:not([disabled]) {
+      &:hover {
+        background-color: var(--c-neutral50);
+      }
+
+      &:focus-visible {
+        background-color: var(--c-neutral50);
+        outline-color: var(--c-neutral100);
+      }
+
+      &:active {
+        background-color: var(--c-neutral150);
+        border-color: var(--c-transparent);
+      }
+    }
+
+    /* Button (Ghost/Base) Destructive */
+
+    &.destructive {
+      background-color: var(--c-transparent);
+      border-color: var(--c-transparent);
+      color: var(--c-danger600);
+
+      &:not(:disabled) {
+        &:hover {
+          background-color: var(--c-danger50);
+        }
+
+        &:focus-visible {
+          background-color: var(--c-danger50);
+          outline-color: var(--c-danger150);
+        }
+
+        &:active {
+          background-color: var(--c-danger100);
+          border-color: var(--c-transparent);
+        }
+      }
+    }
+
+    /* Button Primary --------------------------------------------------------- */
+
+    &.primary {
+      background-color: oklch(53.18% 0.28 296.97);
+      border-color: oklch(53.18% 0.28 296.97);
+      color: var(--c-white);
+
+      &:disabled {
+        background-color: oklch(75% 0.14 296.97);
+        border-color: oklch(75% 0.14 296.97);
+        color: var(--c-white);
+      }
+
+      &:not(:disabled) {
+        &:hover {
+          background-color: oklch(45% 0.28 296.97);
+          border-color: oklch(45% 0.28 296.97);
+        }
+
+        &:focus-visible {
+          background-color: var(--c-accent600);
+          outline-color: var(--c-accent100);
+        }
+
+        &:active {
+          background-color: oklch(38% 0.28 296.97);
+          border-color: oklch(38% 0.28 296.97);
+        }
+      }
+
+      /* Button Primary Destructive */
+
+      &.destructive {
+        background-color: var(--c-danger600);
+        border-color: var(--c-transparent);
+        color: var(--c-white);
+
+        &:disabled {
+          background-color: var(--c-danger200);
+          border-color: var(--c-transparent);
+          color: var(--c-white);
+        }
+
+        &:not(:disabled) {
+          &:hover {
+            background-color: var(--c-danger700);
+          }
+
+          &:focus-visible {
+            background-color: var(--c-danger700);
+            outline-color: var(--c-danger150);
+          }
+
+          &:active {
+            background-color: var(--c-danger800);
+            border-color: var(--c-transparent);
+          }
+        }
+      }
+    }
+
+    /* Button Outline --------------------------------------------------------- */
+
+    &.outline {
+      background-color: var(--c-white);
+      border-color: var(--c-neutral300);
+      color: var(--c-neutral900);
+
+      &:disabled {
+        background-color: var(--c-white);
+        border-color: var(--c-neutral250);
+        color: var(--c-neutral300);
+      }
+
+      &:not(:disabled) {
+        &:hover {
+          background-color: var(--c-neutral50);
+        }
+
+        &:focus-visible {
+          background-color: var(--c-neutral50);
+          outline-color: var(--c-neutral100);
+        }
+
+        &:active {
+          background-color: var(--c-neutral150);
+          border-color: var(--c-neutral900);
+        }
+      }
+
+      /* Button Outline Destructive */
+      &.destructive {
+        background-color: var(--c-white);
+        border-color: var(--c-danger200);
+        color: var(--c-danger600);
+
+        &:not(:disabled) {
+          &:hover {
+            background-color: var(--c-danger50);
+          }
+
+          &:focus-visible {
+            background-color: var(--c-danger50);
+            outline-color: var(--c-danger150);
+          }
+
+          &:active {
+            background-color: var(--c-danger100);
+            border-color: var(--c-danger600);
+          }
+        }
+      }
+    }
+
+    /* -------------------------------------------------------------------- */
+
+    &.icon-only .label {
+      display: none;
+    }
+
+    /* Label ------------------------------------------------------------------ */
+
+    .label {
+      line-height: var(--g-button-line-height);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}

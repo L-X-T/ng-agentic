@@ -1,0 +1,211 @@
+@use 'sass:string';
+/* --------------------------------
+
+LXT Icon Font icon font
+Generated using nucleoapp.com
+
+-------------------------------- */
+
+@font-face {
+  font-family: 'LXT Icon Font';
+  src: url('icons.woff2') format('woff2');
+}
+
+/* base class */
+.icon {
+  color: inherit;
+  display: inline-block;
+  flex-shrink: 0;
+  font: normal normal normal 1em/1 'LXT Icon Font';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* size examples - relative units */
+.icon-sm {
+  font-size: 0.8em;
+}
+
+.icon-lg {
+  font-size: 1.2em;
+}
+
+/* size examples - absolute units */
+.icon-16 {
+  font-size: 16px;
+}
+
+.icon-32 {
+  font-size: 32px;
+}
+
+/* rotate the icon infinitely */
+.icon-is-spinning {
+  animation: icon-spin 1s infinite linear;
+}
+
+@keyframes icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* transform */
+.icon-rotate-90 {
+  transform: rotate(90deg);
+}
+
+.icon-rotate-180 {
+  transform: rotate(180deg);
+}
+
+.icon-rotate-270 {
+  transform: rotate(270deg);
+}
+
+.icon-flip-y {
+  transform: scaleY(-1);
+}
+
+.icon-flip-x {
+  transform: scaleX(-1);
+}
+
+/* icons */
+$icons: (
+  'status-emergency-stopp': 'ea05',
+  'cancel-circled': 'ea08',
+  'error': 'ea0b',
+  'close': 'ea0c',
+  'edit': 'ea0d',
+  'dropdown': 'ea0f',
+  'hide': 'ea11',
+  'repack': 'ea12',
+  'send-to-repack': 'ea13',
+  'receive-and-repack': 'ea15',
+  'check': 'ea17',
+  'cancel': 'ea18',
+  'keyboard-capslock': 'ea1d',
+  'keyboard-command': 'ea1e',
+  'keyboard-backspace': 'ea20',
+  'keyboard-control': 'ea21',
+  'keyboard-home': 'ea22',
+  'keyboard-arrow-right': 'ea23',
+  'keyboard-return': 'ea24',
+  'keyboard-tabulator': 'ea25',
+  'keyboard-arrow-left': 'ea26',
+  'keyboard-arrow-down': 'ea27',
+  'keyboard-end': 'ea28',
+  'keyboard-shift': 'ea29',
+  'keyboard-page-up': 'ea2a',
+  'keyboard-page-down': 'ea2b',
+  'keyboard-arrow-up': 'ea2c',
+  'keyboard-enter': 'ea2d',
+  'keyboard-insert': 'ea2e',
+  'keyboard-delete': 'ea2f',
+  'keyboard-option': 'ea30',
+  'keyboard-numlock': 'ea31',
+  'keyboard-escape': 'ea32',
+  'print': 'ea33',
+  'missing-icon': 'ea34',
+  'keyboard-hide': 'ea35',
+  'keyboard-show': 'ea36',
+  'filter': 'ea39',
+  'sigma': 'ea3a',
+  'pivot-table': 'ea3b',
+  'move-fast-backward': 'ea3d',
+  'move-fast-forward': 'ea3e',
+  'move-to-previous': 'ea3f',
+  'move-to-last': 'ea40',
+  'move-to-first': 'ea41',
+  'move-to-next': 'ea42',
+  'minimize': 'ea43',
+  'maximize': 'ea44',
+  'layout-columns': 'ea45',
+  'banned': 'ea46',
+  'pin': 'ea47',
+  'loading': 'ea48',
+  'move': 'ea49',
+  'upload': 'ea4a',
+  'download': 'ea4b',
+  'import-document': 'ea4c',
+  'export-document': 'ea4d',
+  'import': 'ea4e',
+  'export': 'ea4f',
+  'copy': 'ea50',
+  'paste': 'ea51',
+  'cut': 'ea52',
+  'reset': 'ea53',
+  'reload': 'ea54',
+  'redo': 'ea55',
+  'undo': 'ea56',
+  'add': 'ea58',
+  'delete': 'ea59',
+  'save': 'ea5a',
+  'multimedia-pause': 'ea5f',
+  'multimedia-play': 'ea60',
+  'multimedia-fast-backward': 'ea61',
+  'multimedia-fast-forward': 'ea62',
+  'status-inactive': 'ea63',
+  'status-jam': 'ea64',
+  'status-ready': 'ea65',
+  'status-active': 'ea66',
+  'status-suspended': 'ea67',
+  'status-deactivated': 'ea68',
+  'status-unkown': 'ea69',
+  'status-maintenance': 'ea6a',
+  'table': 'ea6b',
+  'calender': 'ea6d',
+  'more': 'ea6e',
+  'grip': 'ea6f',
+  'warning': 'ea71',
+  'show': 'ea73',
+  'clock': 'ea77',
+  'search': 'ea78',
+  'sort-descending': 'ea79',
+  'sort-ascending': 'ea7a',
+  'grid': 'ea7b',
+  'external-applications': 'ea7c',
+  'info': 'ea7d',
+  'lock': 'ea7e',
+  'home': 'ea7f',
+  'barcode': 'ea80',
+  'help': 'ea81',
+  'settings': 'ea82',
+  'microsoft-teams': 'ea83',
+  'bell': 'ea84',
+  'hamburger': 'ea85',
+  'table-group-area': 'ea86',
+  'language': 'ea87',
+  'expand-menu': 'ea88',
+  'collapse-menu': 'ea89',
+  'backwards': 'ea8a',
+  'forwards': 'ea8b',
+  'datetime': 'ea8c',
+  'move-up': 'ea8d',
+  'move-down': 'ea8e',
+  'indetermined': 'ea90',
+  'power-button': 'ea91',
+  'offline': 'ea92',
+  'online': 'ea93',
+);
+
+@function unicode($str) {
+  @return string.unquote('"\\#{$str}"');
+}
+
+@each $name, $code in $icons {
+  .i-lxt-#{'' + $name}::before {
+    content: unicode($code);
+  }
+}
+
+:root {
+  @each $name, $code in $icons {
+    --i-lxt-#{'' + $name}: #{"'\\" + $code + "'"};
+  }
+}

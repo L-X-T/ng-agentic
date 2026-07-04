@@ -296,6 +296,28 @@ invariant is only deferred, never waived.
 
 Climb the ladder in [Lab 06 – Autonomous Workflows](labs/06-autonomous-workflows.html).
 
+## Refactoring Angular
+
+Turning a dusty, legacy component into modern, signal-based Angular has its own playbook in
+[`07-REFACTORING.md`](07-REFACTORING.md): a repeatable **7-step blueprint** – Analyse → Declutter →
+Update → Modernize → Type → Refactor → Review – wrapped in AI guardrails and a verify-every-step
+gauntlet (build → lint → format → test); step 3, Update, runs once per workspace, not per
+component. It is driven by the
+[`ng-refactor`](.agents/skills/ng-refactor/SKILL.md) skill (which pairs with
+[`ng-migrate`](.agents/skills/ng-migrate/SKILL.md) for the official migration schematics), and you
+can work it end-to-end on a real component in
+[Lab 07 – Refactoring a Dusty Angular Component](labs/07-refactoring.html).
+
+The fallback table feature in this workspace intentionally carries lint debt for the refactoring
+exercise; record that red baseline before changing production code. The intentional debt extends
+to the workspace shell: the app deliberately runs zone-based change detection (an explicit,
+documented exception to [`AGENTS.md`](AGENTS.md)'s zoneless rule) and relaxed build budgets in
+`angular.json` to host the legacy table. The legacy table components are explicitly pinned to
+`ChangeDetectionStrategy.Eager` – the v22 name for the former default semantics, and what `ng update`
+pins on migrated legacy components. The exercise's core target is moving them to `OnPush`; restoring zoneless and
+tightening the budgets is the bonus round, since legacy code usually depends on zone-driven
+timing and only survives the jump to zoneless after OnPush and the signal migration have landed.
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -316,3 +338,6 @@ day so the sessions start with a working toolchain:
   for tasks, features, and app-sized work – and gate every step of it.
 - [Lab 06 – Autonomous Workflows](labs/06-autonomous-workflows.html): run a goal-driven session, then a
   recurring loop or an orchestrated fan-out unattended, and review the accumulated diff.
+- [Lab 07 – Refactoring a Dusty Angular Component](labs/07-refactoring.html): run the 30-minute
+  booking-summary exercise in this workspace, then use the `ng-refactor` skill on your own legacy
+  codebase; the workspace's `src/app/components/table/` feature is the advanced continuation.

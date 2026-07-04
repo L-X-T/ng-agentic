@@ -1,0 +1,72 @@
+.status-ellipse {
+  align-items: center;
+  border-radius: var(--g-border-radius-rounded);
+  display: flex;
+  gap: var(--g-spacing-x);
+  padding: 2px;
+  padding-left: var(--g-spacing-x2);
+  padding-right: var(--g-spacing-x2);
+  width: fit-content;
+
+  & > span:not(.icon) {
+    font-weight: bold;
+  }
+}
+
+.progress-bar {
+  background-color: var(--t-c-primary600);
+  color: var(--c-black);
+
+  & span {
+    padding-left: 5px;
+  }
+}
+
+.cell--center {
+  display: block;
+  text-align: center;
+}
+
+.cell--right {
+  display: block;
+  text-align: right;
+}
+
+.cell--checkbox {
+  display: flex;
+  justify-content: center;
+}
+
+.status--ready {
+  background-color: var(--c-success900);
+  color: var(--c-white);
+}
+
+.status--active {
+  background-color: var(--c-success500);
+  color: var(--c-white);
+}
+
+.status--warning {
+  background-color: var(--c-warning250);
+}
+
+.status--error {
+  background-color: var(--t-status--deactivated__background-color);
+  color: var(--c-white);
+}
+
+.status--maintanence {
+  background-color: var(--c-accent300);
+  color: var(--c-white);
+}
+
+.status--unknown {
+  background-color: var(--c-neutral200);
+}
+
+.icon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

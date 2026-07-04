@@ -159,7 +159,7 @@ template; each diff gauntlet-green + checkpointed.
 **Checklist**
 
 - Reads top-to-bottom; one clear responsibility; canonical member order.
-- No `any`; small named functions; no file > ~400 LoC; OnPush; no leftover lifecycle hooks.
+- No `any`; small named functions; no file > ~400 LoC; OnPush; no unexplained lifecycle or synchronization logic.
 - Comments and domain logic intact; tests green **and still meaningful** (not asserting internals).
 - Each change delivered a real gain – **less complexity, clearer responsibility, or modern**.
 

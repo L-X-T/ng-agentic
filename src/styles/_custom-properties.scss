@@ -1,0 +1,128 @@
+:root {
+  /* ------------------------------------------------------------------------- */
+  /* #region MARK: Common
+  */
+
+  --g-animation-duration--default: 0.2s;
+
+  /* Border Radius */
+  --g-border-radius-sm: 2px;
+  --g-border-radius-md: 4px;
+  --g-border-radius-rounded: 100vmax;
+
+  /* Border Width */
+  --g-border-width--slim: 1px;
+
+  /* Shadow */
+  --g-shadow: 0 0 var(--g-spacing-x) color-mix(in srgb, var(--c-neutral700) calc(100% / 3), transparent);
+  --g-drop-shadow: drop-shadow(var(--g-shadow));
+
+  /* Font Size */
+  --g-font-size--heading: 2rem;
+  --g-font-size--section-title: 1.25rem;
+  --g-font-size--default: 1rem;
+  --g-font-size--secondary: 0.875rem;
+
+  /* Font Family */
+  --g-font-family--default: 'Roboto', 'Arial', sans-serif;
+  --g-font-family--icons: 'LXT Icon Font';
+
+  /* Line Height */
+  --g-line-height--default: 1.2em;
+
+  /* Outline */
+  --g-outline-width: 3px;
+
+  /* Spacing */
+  --g-spacing-x: 0.25rem;
+  --g-spacing-x2: 0.5rem;
+  --g-spacing-x3: 0.75rem;
+  --g-spacing-x4: 1rem;
+  --g-spacing-x8: 2rem;
+
+  /* Radius */
+  --g-radius-xs: 0.125rem;
+  --g-radius-sm: 0.25rem;
+
+  /* #endregion Common */
+
+  /* ------------------------------------------------------------------------- */
+  /* #region MARK: Component
+  */
+
+  /* Button */
+  --g-button-line-height: 1.25;
+  --g-button__label-max-width: 8rem;
+
+  /* #endregion Component */
+
+  /* ------------------------------------------------------------------------- */
+  /* #region MARK: Calculated
+  */
+
+  --g-input-text__line-and-padding-width: calc((var(--g-spacing-x) + var(--g-border-width--slim)) * 2);
+  --g-min-textarea-height: calc(var(--g-font-size--default) * 4 + var(--g-input-text__line-and-padding-width));
+
+  /* #endregion Calculated */
+
+  /* ------------------------------------------------------------------------- */
+  /* #region MARK: Colors
+  */
+
+  /* Colors */
+  --c-transparent: transparent;
+  --c-white: white;
+  --c-black: black;
+
+  /* Neutral */
+  --c-neutral50: hsl(240deg 5% 95%);
+  --c-neutral100: hsl(240deg 5% 90%);
+  --c-neutral150: hsl(240deg 5% 85%);
+  --c-neutral200: hsl(240deg 5% 80%);
+  --c-neutral250: hsl(240deg 5% 70%);
+  --c-neutral300: hsl(240deg 5% 60%);
+  --c-neutral400: hsl(240deg 5% 45%);
+  --c-neutral500: hsl(240deg 5% 30%);
+  --c-neutral900: hsl(240deg 5% 5%);
+
+  /* Accent */
+  --c-accent100: hsl(220deg 100% 85%);
+  --c-accent300: hsl(220deg 100% 60%);
+  --c-accent600: hsl(220deg 100% 40%);
+
+  /* Danger */
+  --c-danger50: hsl(350deg 100% 95%);
+  --c-danger100: hsl(350deg 100% 90%);
+  --c-danger150: hsl(350deg 100% 85%);
+  --c-danger200: hsl(350deg 100% 80%);
+  --c-danger500: hsl(350deg 100% 45%);
+  --c-danger600: hsl(350deg 100% 40%);
+  --c-danger700: hsl(350deg 100% 35%);
+  --c-danger800: hsl(350deg 100% 30%);
+
+  /* Purple */
+  --c-purple50: oklch(95% 0.28 300deg);
+  --c-purple100: oklch(90% 0.28 300deg);
+  --c-purple150: oklch(85% 0.28 300deg);
+  --c-purple200: oklch(80% 0.28 300deg);
+  --c-purple250: oklch(73% 0.28 300deg);
+  --c-purple300: oklch(66% 0.28 300deg);
+  --c-purple400: oklch(58% 0.28 300deg);
+  --c-purple500: oklch(53.18% 0.28 300deg);
+  --c-purple600: oklch(45% 0.28 300deg);
+  --c-purple700: oklch(38% 0.28 300deg);
+  --c-purple800: oklch(30% 0.28 300deg);
+  --c-purple900: oklch(20% 0.28 300deg);
+
+  /* Warning */
+  --c-warning250: hsl(35deg 100% 70%);
+
+  /* Success */
+  --c-success500: hsl(125deg 55% 45%);
+  --c-success900: hsl(125deg 55% 25%);
+
+  /* Interactive */
+  --c-interactive--default_bg: hsla(240deg 5% 95% 1);
+
+  /* #endregion Colors */
+}

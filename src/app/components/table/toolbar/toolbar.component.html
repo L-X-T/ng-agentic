@@ -1,0 +1,76 @@
+<div class="actions">
+  <div class="actions-list">
+    @if (filterAction) {
+      <button
+        class="actions-list__item filter-button"
+        lxt-button
+        [buttonType]="'outline'"
+        [disabled]="!callableStatus[filterAction.key]"
+        title="{{ filterAction.title }}"
+        (click)="onExecuteAction(filterAction)"
+      >
+        <span class="icon i-lxt-filter"></span>
+        <p class="text">{{ filterAction.title }}</p>
+      </button>
+      <div class="divider"></div>
+    }
+    <div #actionslist class="actions-list">
+      @for (action of toolbar.actions | limit: actionLimit; track action) {
+        @if (action?.type !== ActionType.Filter) {
+          <button
+            class="actions-list__item"
+            lxt-button
+            [buttonType]="action.hierarchy"
+            [class.destructive]="action.destructive"
+            [disabled]="!callableStatus[action.key]"
+            title="{{ action.title }}"
+            (click)="onExecuteAction(action)"
+          >
+            <span class="icon i-lxt-{{ action.icon }}"></span>
+            <p class="text">{{ action.title }}</p>
+          </button>
+        }
+      }
+    </div>
+  </div>
+  @if (toolbar.actions.length > 0 && hasOverflow) {
+    <div class="actions-menu-wrapper">
+      <button
+        #actionsMenuToggle
+        class="toolbar-actions-menu-toggle"
+        lxt-button
+        [buttonType]="'outline'"
+        (click)="toggleActionsMenu()"
+      >
+        <span class="icon i-lxt-more"></span>
+      </button>
+      <div #actionsMenu class="actions-menu" [style.display]="actionsMenuOpen ? 'flex' : 'none'">
+        @for (action of toolbar.actions; track action) {
+          <!-- [TODO] Use a dedicated context menu component for this -->
+          <button
+            lxt-button
+            [buttonType]="'ghost'"
+            [class.destructive]="action.destructive"
+            [class.disabled]="!callableStatus[action.key]"
+            [disabled]="!callableStatus[action.key]"
+            (click)="onExecuteAction(action)"
+          >
+            <span class="icon i-lxt-{{ action.icon }}"></span>
+            <p class="text">{{ action.title }}</p>
+            <p class="key-binding">{{ action.keyBinding }}</p>
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<div class="search-side">
+  <div class="info flex-item">{{ infoMessage }}</div>
+
+  <div class="search flex-item">
+    <form>
+      <input placeholder="Search" type="text" [formControl]="searchControl" />
+    </form>
+  </div>
+</div>

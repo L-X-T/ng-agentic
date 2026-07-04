@@ -1,0 +1,21 @@
+<div class="page-size-selection" [ngClass]="tableService.isMoreButtonClicked() ? 'visible' : 'invisible'">
+  <div>Show rows:</div>
+  <ng-select
+    bindLabel="label"
+    bindValue="value"
+    class="combobox"
+    [items]="pageSizeOptions"
+    [clearable]="false"
+    [searchable]="false"
+    [(ngModel)]="pageSizeSelected"
+    (change)="onSizeChange()"
+  />
+  <div class="">
+    <b>{{ rangeStart }}</b> to <b>{{ rangeEnd }}</b> of <b>{{ totalRows }}</b>
+  </div>
+  @if (tableService.isMoreButtonClicked()) {
+    <button class="actions-menu-toggle" lxt-button [buttonType]="'ghost'" (click)="onCancelClicked()">
+      <span class="icon i-lxt-close"></span>
+    </button>
+  }
+</div>

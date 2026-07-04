@@ -78,6 +78,14 @@ template `cyclomatic-complexity` rule), `explicit-function-return-type`, `sort-i
 green with `any` left in – treat remaining `any` as a manual check, not something the gauntlet
 catches. A step that is "done" but red is not done.
 
+## Choose the scope and dependency order
+
+For a timed session, agree one behavior-preserving change that can reach review. Use the small
+booking-summary exercise when present; the full legacy table is an advanced continuation.
+Characterize behavior first. Bring boundary typing forward when modernization needs it.
+Classify derivation, user action and imperative synchronization before choosing computed, linkedSignal,
+an event handler, effect or a render callback. Reducing hook count or lines alone is not the gain.
+
 ## Workflow
 
 Each step is summarized to its intent and its checkable `_Done when_`; full actions, prompt

@@ -1,0 +1,26 @@
+lxt-design-system-root {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'nav    content';
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: max-content 1fr;
+  height: 100%;
+  overflow: hidden;
+
+  > * {
+    grid-area: content;
+    overflow-x: hidden;
+  }
+
+  lxt-design-system-navbar {
+    background-color: var(--t-header__background-color);
+    grid-area: header;
+    overflow-x: initial;
+  }
+
+  lxt-design-system-sidebar {
+    grid-area: nav;
+    overflow-x: hidden;
+  }
+}

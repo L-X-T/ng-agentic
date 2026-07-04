@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  padding: var(--g-spacing-x4);
+}
+
+.lxt-booking-summary__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--g-spacing-x2);
+}

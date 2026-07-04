@@ -1,0 +1,48 @@
+@if (toolbar) {
+  <lxt-toolbar
+    [infoMessage]="selectionMessage"
+    [selectedRowCount]="selectedRowCount"
+    [selectedRows]="selectedRows"
+    [toolbar]="toolbar"
+    (actionExecuted)="actionExecuted.emit($event)"
+    (searchExecuted)="onSearch($event)"
+  />
+}
+
+@if (tableData || componentDefaultColumns.length) {
+  <ag-grid-angular
+    #myGrid
+    class="ag-theme-alpine"
+    [animateRows]="false"
+    [autoSizeStrategy]="autoSizeStrategy"
+    [class.grouping-disabled]="!allowRowGrouping"
+    [columnDefs]="columns"
+    [columnMenu]="'new'"
+    [columnTypes]="columnTypes"
+    [defaultColDef]="defaultColDef"
+    [gridOptions]="gridOptions"
+    [groupSelectsChildren]="true"
+    [headerHeight]="rowHeight"
+    [overlayLoadingTemplate]="overlayLoadingTemplate"
+    [overlayNoRowsTemplate]="overlayNoRowsTemplate"
+    [pagination]="pagination"
+    [paginationPageSize]="paginationPageSize"
+    [paginationPageSizeSelector]="[20, 30, 40]"
+    [pinnedBottomRowData]="showAggRow ? bottomRowData : []"
+    [rowBuffer]="50"
+    [rowData]="rows"
+    [rowGroupPanelShow]="allowRowGrouping ? rowGroupPanelShow : 'never'"
+    [rowHeight]="rowHeight"
+    [rowSelection]="allowMultiSelection ? 'multiple' : 'single'"
+    [getRowId]="primaryKeyColumns.length ? getRowId : undefined"
+    [sideBar]="sideBar"
+    [suppressPaginationPanel]="true"
+    (rowDataUpdated)="onRowDataUpdated()"
+    (columnEverythingChanged)="reload()"
+    (columnRowGroupChanged)="onColumnGroupChanged()"
+    (columnValueChanged)="onColumnChanged()"
+    (filterChanged)="reload()"
+    (firstDataRendered)="onFirstDataRendered($event)"
+    (selectionChanged)="onSelectionChanged()"
+  />
+}

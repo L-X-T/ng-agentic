@@ -19,7 +19,7 @@ is the map of what to adopt and why, and the manual changes the schematics don't
 - Data binding with **`input`**, **`output`**, and **`model`**; signal **queries**; the
   **resource** API for async reads.
 
-**Replace every lifecycle hook**
+**Classify lifecycle responsibilities before replacing them**
 
 | Old                              | Modern replacement                                                           |
 | :------------------------------- | :--------------------------------------------------------------------------- |

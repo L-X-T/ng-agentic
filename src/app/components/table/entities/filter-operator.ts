@@ -1,0 +1,16 @@
+export type FilterOperator =
+  | 'none'
+  | 'eq'
+  | 'like'
+  | 'ne'
+  | 'less'
+  | 'greater'
+  | 'lessOrEqual'
+  | 'greaterOrEqual'
+  | 'between'
+  | 'in'
+  | 'isNull'
+  | 'isNotNull'
+  | 'notIn'
+  | 'bitSet'
+  | 'bitNotSet';
