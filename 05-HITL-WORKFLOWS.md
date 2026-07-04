@@ -186,6 +186,10 @@ human checkpoint, but BMAD also offers an unattended build unit, so the choice t
 Consider them when a team wants a shared, tool-enforced process instead of every developer dialing
 the pyramid by hand; for work the top of the pyramid already covers, they are overhead.
 
+When the work is well-bounded and machine-verifiable, you can loosen the loop and let the agent
+continue without a prompt at every boundary – that mode has its own guide in
+[`06-AUTONOMOUS-WORKFLOWS.md`](06-AUTONOMOUS-WORKFLOWS.md).
+
 ## Using This in the Workshop
 
 Work through [Lab 05 – Human-in-the-Loop Workflows](labs/05-hitl-workflows.html) after you have

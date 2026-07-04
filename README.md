@@ -2,7 +2,7 @@
 
 ![Agentic Engineering workshop overview](AE-workshop-overview.png)
 
-This sketch outlines the Agentic Engineering workshop arc: choosing AI models and harnesses, setting up an Angular AI workspace with best practices and style guides, building reusable AI skills, mastering prompting and reviewing – the two bookends of every agentic loop – applying AI supported workflows, and using those foundations for targeted Angular refactoring. The workshop intro slides are available in [AE-intro.pdf](AE-intro.pdf). It connects directly to my recent [Agentic Engineering blog post series](https://www.angulararchitects.io/blog/best-llms-for-angular/), where I walk through the model choices, app and harness tradeoffs, costs, data privacy questions, and final setup recommendations behind the workshop.
+This sketch outlines the Agentic Engineering workshop arc: choosing AI models and harnesses, setting up an Angular AI workspace with best practices and style guides, building reusable AI skills, mastering prompting and reviewing – the two bookends of every agentic loop – applying AI-supported workflows – with a human in the loop or fully autonomous – and using those foundations for targeted Angular refactoring. The workshop intro slides are available in [AE-intro.pdf](AE-intro.pdf). It connects directly to my recent [Agentic Engineering blog post series](https://www.angulararchitects.io/blog/best-llms-for-angular/), where I walk through the model choices, app and harness tradeoffs, costs, data privacy questions, and final setup recommendations behind the workshop.
 
 A practical Angular workspace starter with modern best practices, AI-ready tooling, and scalable project setup guidance.
 
@@ -284,6 +284,18 @@ continues.
 
 Practice that decision in [Lab 05 – Human-in-the-Loop Workflows](labs/05-hitl-workflows.html).
 
+## Autonomous Workflows
+
+The opposite mode is working **away from keyboard**:
+[`06-AUTONOMOUS-WORKFLOWS.md`](06-AUTONOMOUS-WORKFLOWS.md) covers the autonomy ladder – goal-driven runs
+that iterate until a verifiable condition holds, recurring loops that babysit CI and PRs,
+orchestrators that fan work out to subagents, and always-on agents running 24/7 on a dedicated
+machine with systems like OpenClaw or Hermes. Autonomy is earned by verifiability: it needs a
+checkable definition of done, feedback signals inside the run, and guardrails – and the review
+invariant is only deferred, never waived.
+
+Climb the ladder in [Lab 06 – Autonomous Workflows](labs/06-autonomous-workflows.html).
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -302,3 +314,5 @@ day so the sessions start with a working toolchain:
   an independent agent review, and act on the findings by severity.
 - [Lab 05 – Human-in-the-Loop Workflows](labs/05-hitl-workflows.html): choose the right workflow
   for tasks, features, and app-sized work – and gate every step of it.
+- [Lab 06 – Autonomous Workflows](labs/06-autonomous-workflows.html): run a goal-driven session, then a
+  recurring loop or an orchestrated fan-out unattended, and review the accumulated diff.

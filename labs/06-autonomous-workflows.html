@@ -1,0 +1,410 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Autonomous Workflows</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>Running <span class="grad">Autonomous Workflows</span></h1>
+        <p class="lede">
+          Lab 05 kept you at every checkpoint. This lab flips the mode: you hand the agent a verifiable goal and the guardrails, walk away, and come back to review finished work. You'll climb the autonomy ladder – a goal-driven run, then a loop or an orchestrator – plus a bonus look at agents that run 24/7 without your laptop.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Focus</b> Autonomous workflows</span>
+          <span class="chip"><b>Builds on</b> Labs 00–05</span>
+          <span class="chip"><b>Est. time</b> ~30 min</span>
+          <span class="chip"><b>Bonus</b> always-on agent</span>
+        </div>
+      </header>
+
+      <!-- ABOUT -->
+      <h2>About this lab</h2>
+      <p>
+        This is <strong>Lab 06</strong>. In <a href="05-hitl-workflows.html">Lab 05</a> you gated every step yourself. Autonomous workflows replace those human gates with checks the agent runs on its own – a passing suite, a green build, a clean lint. The full guide is <a href="../06-AUTONOMOUS-WORKFLOWS.md"><code>06-AUTONOMOUS-WORKFLOWS.md</code></a>.
+      </p>
+      <p>
+        The <a href="../05-HITL-WORKFLOWS.md#the-workflow-invariant">invariant</a> is not waived, only <strong>deferred</strong>: every run still ends with your review and your sign-off – your commit, or your merge of the run's working branch – against the accumulated diff instead of at each step. Treat the output as a draft for <a href="04-reviewing.html">Lab 04</a>'s reviewing practice, never as approved work.
+      </p>
+      <p>
+        This is a guided <strong>~30 min</strong> run; assignment 1 – the goal-driven run – is the priority. One of
+        assignments 2 / 3 is required but fine to finish as homework if time runs out; the bonus is optional.
+      </p>
+
+      <div class="callout why">
+        <span class="tag">The contract</span>
+        <p style="margin:6px 0 0">
+          Autonomous work only converges when three things hold: a <b>verifiable goal</b> the agent can check itself, a <b>feedback signal inside the run</b> (the checks after each iteration), and <b>guardrails</b> so a wrong turn stays contained. If one is missing, stay in the loop – Lab 05's workflows are the right mode for unverifiable work.
+        </p>
+      </div>
+
+      <h2>The autonomy ladder</h2>
+      <table>
+        <tr><th>Level</th><th>Use it for</th><th>Shape</th></tr>
+        <tr><td><b>Goal-driven run</b></td><td>One bounded task with a checkable definition of done</td><td>One agent iterates against the checks until the goal is met</td></tr>
+        <tr><td><b>Recurring loop</b></td><td>Babysitting: CI, deploys, open PRs, flaky suites</td><td>The same prompt re-runs on an interval or trigger until a condition holds</td></tr>
+        <tr><td><b>Orchestrator with subagents</b></td><td>Work too big or too parallel for one context</td><td>A lead decomposes the goal, fans out subagents, verifies and synthesizes</td></tr>
+        <tr><td><b>Always-on agent</b></td><td>Standing duties independent of you and your laptop</td><td>An agent runs 24/7 on a dedicated machine, picking up scheduled work</td></tr>
+      </table>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Turn a task into a verifiable goal statement: definition of done, feedback checks, scope, guardrails.</li>
+        <li>Run a goal-driven session unattended and review the accumulated diff afterwards.</li>
+        <li>Set up a recurring loop <em>or</em> an orchestrator that fans work out and verifies results.</li>
+        <li>Know what it takes – and what it risks – to run an agent 24/7 on its own machine, in CI, or as a PR review bot, and how to harden the harness for unattended runs.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Finished <a href="00-getting-started.html">Lab 00</a>–<a href="05-hitl-workflows.html">Lab 05</a> – your project is agent-ready and you know the human gates before you remove them.</li>
+        <li>A task with real checks: a test suite, lint, or build that can tell the agent it is done.</li>
+        <li>A clean Git working tree, and a branch or worktree the agent can safely own.</li>
+      </ul>
+
+      <div class="callout warn">
+        <span class="tag">Guardrails before you leave</span>
+        <p style="margin:6px 0 0">
+          Before every unattended run: put the agent on its own branch or <a href="../05-HITL-WORKFLOWS.md#parallelizing-with-git-worktrees">worktree</a>, deny push and destructive commands, keep production credentials out of reach, and scope the task so a wrong turn stays contained. The agent must not be able to do irreversible damage while you are away.
+        </p>
+      </div>
+
+      <!-- PREPARED CASES -->
+      <h2 id="prepared-cases">Prepared cases</h2>
+      <section class="step">
+        <h3 style="font-size:18px">Fallback path: repair, then stop at a blocker</h3>
+        <p>Use <a href="cases/autonomy/README.md">the prepared autonomy cases</a> when your project has no
+          suitable failing test. They include a real red, a solvable repair, a missing-rule blocker and
+          harmless instruction/enforcement probes. On this path, assignment 1 is Case 1 (a bounded repair
+          verified by <code>node --test</code>) followed by Case 2 (a correct blocker report). Case 3 and
+          scheduled or orchestrated runs on the cases are optional extras.</p>
+        <p>Before any run, record the five dimensions from the chapter – authority, trigger, workers, hosting
+          and limits – and confirm in <a href="../06-AUTONOMOUS-WORKFLOWS.md#capability-check-before-a-run">the
+          capability check</a> which goal and scheduling commands your installed harness actually offers
+          rather than assuming a slash command exists.</p>
+      </section>
+
+      <!-- TOC -->
+      <h2>Assignments</h2>
+      <nav class="toc">
+        <ol>
+          <li><a href="#s1">Goal-driven run – leave one task to finish itself</a> <em>(priority)</em></li>
+          <li><a href="#s2">Recurring loop – babysit something real</a> <em>(pick one of 2 / 3)</em></li>
+          <li><a href="#s3">Orchestrator – fan out subagents, synthesize results</a> <em>(pick one of 2 / 3)</em></li>
+          <li><a href="#s4">Bonus – an agent that never sleeps</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#prepared-cases">Prepared cases</a> · <a href="#done">Definition of Done</a> · <a href="../06-AUTONOMOUS-WORKFLOWS.md">Autonomous guide</a></p>
+      </nav>
+
+      <!-- ASSIGNMENT 1 -->
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Goal-driven run</h3>
+        <p class="goal"><b>Goal:</b> hand the agent one bounded task with a verifiable definition of done, and be elsewhere while it finishes.</p>
+
+        <p>
+          Pick a task a machine can verify: make a failing test pass, drive a lint rule to zero, raise coverage on one module, or fix a bug that has a regression test. No such task in your project right now? Create a real red before the run: add a focused regression test for missing behavior, or introduce a disposable production defect on a throwaway branch that makes a passing test fail, then watch the check fail. Commenting out or weakening a passing test is not a red signal. Write the goal statement as carefully as a Lab 03 prompt – it carries everything you would normally say at the checkpoints.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Write a goal statement: definition of done, the checks to run each iteration, and the files in scope.</li>
+            <li>Put the agent on its own branch or worktree and allow the check commands up front: a goal does not change the permission mode, so in Claude Code run it in auto mode or pre-allow the build, lint and test commands in your settings, or the run blocks on the first permission prompt while you are away.</li>
+            <li>Start the run with the goal command your capability check confirmed (<code>/goal</code> in current Claude Code and Codex CLI builds) and walk away – no steering.</li>
+            <li>When it stops, review the accumulated diff Lab 04 style: machines first, one scope, two passes – then commit it yourself.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show example goal</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>/goal Fix orderTotal in labs/cases/autonomy/order-total.mjs without editing its test.
+
+Definition of done: `node --test labs/cases/autonomy/order-total.test.mjs` passes all three tests.
+After each change, re-run that command and iterate on the failures.
+Scope: that one file only; tests, scripts and configuration are read-only.
+Do not delete, skip, or weaken tests to make the check pass.
+Stay on this branch; never stage, commit, or push; never delete files outside the scope.
+Stop after 10 minutes or 3 failed repairs.
+On a blocker, preserve the diff and report the missing information instead of guessing.</code></pre>
+            <p>
+              In your own project, swap in your failing check (for example <code>pnpm test --watch=false</code>) and the files in scope. If the run drifts or stalls, that is a finding, not a failure: tighten the goal or the scope and run it again. A run is only as good as its definition of done.
+            </p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> the agent reached the verifiable goal without you, and you reviewed the accumulated diff and made the commit.</p>
+        </div>
+      </section>
+
+      <!-- ASSIGNMENT 2 -->
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Recurring loop <span style="font-size:13px;color:var(--ink-faint);font-weight:400">· pick one of 2 / 3</span></h3>
+        <p class="goal"><b>Goal:</b> set up a loop that re-runs a small check on an interval while your attention is elsewhere.</p>
+
+        <p>
+          Loops fit work whose trigger is time or an external event: watch CI, check whether a deploy landed, babysit an open PR, re-run a flaky suite until it fails and capture the evidence. Pick one that is real right now.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Choose a condition worth watching and an interval – frequent enough to be useful, rare enough not to spam.</li>
+            <li>Start the loop using your installed harness: <code>/loop</code> in Claude Code, or a scheduled task created from a Codex chat in the desktop app (the Codex CLI has no loop command), with a prompt saying what to check and what to do on each outcome.</li>
+            <li>Let it run two or three iterations while you do something else, then review what it did and cancel it yourself: a fixed-interval loop runs until you cancel it or seven days pass, so confirm it is gone from the scheduled task list.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show example loop</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>/loop 10m Check the CI status of the current branch.
+If still running or unchanged, stay quiet. Report a meaningful success or failure once.
+If it failed, read the failing job's log, identify the cause, and propose
+a fix as a diff – but do not apply it until I approve.
+Stop reporting after two checks or 20 minutes.</code></pre>
+            <p>
+              Note the asymmetry: the loop may <em>observe</em> autonomously, but the fix still waits for you. Widen its permissions only when the repair itself is machine-verifiable. The loop cannot end itself: cancel the task when you are done.
+            </p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> the loop ran unattended for several iterations, its reports were useful, and you reviewed everything it produced.</p>
+        </div>
+      </section>
+
+      <!-- ASSIGNMENT 3 -->
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Orchestrator <span style="font-size:13px;color:var(--ink-faint);font-weight:400">· pick one of 2 / 3</span></h3>
+        <p class="goal"><b>Goal:</b> decompose one goal across several subagents and merge only verified results.</p>
+
+        <p>
+          Pick a job that genuinely decomposes: a review of assignment 1's diff from three lenses (correctness, security, performance), a mechanical migration across many files, or research that fans out over sources. The orchestrator plans and synthesizes; the subagents do the parallel work in fresh contexts.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Ask the lead to decompose the goal into independent work items and show you the split before it fans out.</li>
+            <li>Let it spawn one subagent per item – parallel reviewers with different lenses, or one implementer per worktree.</li>
+            <li>Require verification before synthesis: findings are checked (ideally by an adversarial subagent) before they reach the summary you review.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show example prompt</summary>
+          <div class="body">
+            <pre><span class="lang">prompt</span><code>Review the diff of my last commit with three parallel subagents,
+one lens each: correctness against the spec, security, performance.
+Then have a fourth subagent try to refute each finding.
+Report only the findings that survive, ranked by severity –
+I will decide what gets fixed.</code></pre>
+            <p>
+              Orchestration buys wall-clock speed and independent verification, and costs tokens and review volume. If the job does not decompose, one agent on one branch is simpler and usually faster.
+            </p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> the work was split, executed in parallel, and verified before synthesis – and you reviewed the merged result, not the raw fan-out.</p>
+        </div>
+      </section>
+
+      <!-- ASSIGNMENT 4 -->
+      <section class="step" id="s4">
+        <h3><span class="num">4</span> Bonus – an agent that never sleeps</h3>
+        <p class="goal"><b>Goal:</b> design (or build) an always-on agent setup that works without you or your laptop.</p>
+
+        <p>
+          Local execution depends on its session or scheduler and host staying available. The top of the ladder is an agent on a dedicated machine – the classic is a Mac mini in a closet, but any small server or VPS works – running 24/7 with <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer">OpenClaw</a> (a personal assistant gateway with messaging and scheduled tasks) or <a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener noreferrer">Hermes Agent</a> (self-hosted, persistent memory, recurring tasks). CI schedules give the same property without the hardware.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Pick one standing duty: nightly dependency triage, a morning issue summary, babysitting long jobs, a scheduled refactoring sweep.</li>
+            <li>Write the runbook: which machine or service, which system (OpenClaw, Hermes, a CI schedule), which schedule, and how results reach you.</li>
+            <li>Harden it on paper: dedicated accounts, scoped credentials, no production secrets, a spend cap, an audit trail. If you have spare hardware – set it up for real.</li>
+          </ol>
+        </div>
+
+        <div class="callout tip">
+          <span class="tag">Alternative: put the agent in CI instead</span>
+          <p style="margin:6px 0 0">
+            Instead of the always-on runbook, set up – or design on paper – a <b>CI agent workflow</b> or a
+            <b>PR review bot</b> for your own repository: an issue-triggered implementation job, a nightly
+            maintenance run, or an independent review on every PR (see
+            <a href="../06-AUTONOMOUS-WORKFLOWS.md#agents-in-ci">Agents in CI</a> and
+            <a href="../06-AUTONOMOUS-WORKFLOWS.md#pr-review-bots">PR review bots</a> in the guide). Apply the
+            guardrails from <a href="../06-AUTONOMOUS-WORKFLOWS.md#hardening-the-harness">Hardening the harness</a>:
+            scoped credentials and permissions, no secret reads, untrusted content treated as data, and a human on
+            the merge button – bots comment, humans merge.
+          </p>
+        </div>
+
+        <div class="callout warn">
+          <span class="tag">Standing autonomy is standing risk</span>
+          <p style="margin:6px 0 0">
+            An always-on agent is an employee you never watch – onboard it like one. Everything it commits still lands
+            in front of a human before it merges; 24/7 execution does not mean 24/7 approval.
+          </p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> you have a concrete, hardened runbook for one always-on duty – or a spare machine actually running it – or a hardened CI agent / review bot design for your own repository.</p>
+        </div>
+      </section>
+
+      <!-- DONE -->
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">You've completed Lab 06 when…</h3>
+        <ul>
+          <li>✅ One goal-driven run finished a verifiable task unattended – in your project, or Case 1 of the prepared cases – and you reviewed the result and, in your own project, committed it.</li>
+          <li>✅ If you used the prepared cases: Case 2 stopped with an evidence-backed blocker report and the protected files are unchanged.</li>
+          <li>✅ One of assignments 2 / 3 – a bounded loop or an orchestrated review – produced verified results, in class or as homework, and any schedule you created is cancelled.</li>
+          <li>✅ You can name the three parts of the contract – verifiable goal, feedback signal, guardrails – and what happens when one is missing.</li>
+          <li>✅ Bonus: you designed (or built) an always-on agent setup – or a CI agent / PR review bot for your own repository – with hardened credentials and an audit trail.</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>
+          Built from the <code>ng-agentic</code> workshop materials. Autonomy is earned by verifiability – the review is still yours. Angular is © Google LLC.
+        </p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>
