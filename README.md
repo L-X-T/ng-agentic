@@ -227,6 +227,22 @@ Agentic workflows produce a lot of Markdown – plans, reviews, docs like this o
 
 Agent, editor, and browser side by side is the standard layout – [Rectangle](https://rectangleapp.com) (mac) or [FancyZones](https://learn.microsoft.com/en-us/windows/powertoys/fancyzones) (win, part of PowerToys) get you there with one shortcut.
 
+## Angular Skills
+
+Beyond the shared conventions, this workspace ships a library of **agent skills** under
+`.agents/skills/` – focused, reusable capabilities an AI agent can invoke for Angular work
+(signal forms, data access, SignalStore state, migrations, refactoring, accessibility,
+performance and security reviews, prototyping, unit and e2e tests, verifying a feature in the
+browser) and for the agentic process itself (skill authoring, brainstorming and grilling, plan
+execution, test-driven development, bug diagnosis, code review, prose de-slopping, handover, git
+stack rewrites). Each skill is a folder with a `SKILL.md` plus optional `references/`,
+`scripts/`, or `assets/` support files loaded just in time, split into **custom** skills
+authored here (MIT-licensed) and **third-party** skills adapted from public sources with their
+origins and local adaptations recorded.
+
+See [`02-SKILLS.md`](02-SKILLS.md) for the full directory – every skill with a one-line description,
+grouped into custom and third-party.
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -237,3 +253,5 @@ day so the sessions start with a working toolchain:
   toolchain, and choose the project you will carry through the workshop.
 - [Lab 01 – Set up an Angular project for Agentic Engineering](labs/01-setup.html): recreate this
   workspace's agentic setup in your own project.
+- [Lab 02 – Agent Skills](labs/02-skills.html): use one or two skills on your own project, then
+  create a custom skill for a repeatable process.

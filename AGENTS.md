@@ -16,7 +16,7 @@ You are a Senior Angular Developer building scalable web applications. Code styl
   - [NPM packages](style-guide/style-guide.npm.md) – dependency and package changes.
   - [Git](style-guide/style-guide.git.md) – branch, commit, and review workflow.
   - [Markdown](style-guide/style-guide.md.md) – documentation and Markdown edits.
-- **Skills:** agent skills live in `.agents/skills/` once the workshop adds them (Lab 02); `02-SKILLS.md` is their catalogue. Run the `update-skills-directory` skill after adding, renaming, or removing a skill.
+- **Skills:** agent skills live in `.agents/skills/` (Lab 02 teaches how to use and author them); `02-SKILLS.md` is their catalogue. Run the `update-skills-directory` skill after adding, renaming, or removing a skill.
 
 ## Git
 

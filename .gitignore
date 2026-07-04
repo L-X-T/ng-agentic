@@ -46,3 +46,7 @@ Thumbs.db
 
 # Agent-local settings, written per machine by Claude Code
 .claude/settings.local.json
+
+# Skill run artifacts (ng-review-style-guide reports, brainstorming visual companion state)
+/reports
+.superpowers/
