@@ -243,6 +243,22 @@ origins and local adaptations recorded.
 See [`02-SKILLS.md`](02-SKILLS.md) for the full directory – every skill with a one-line description,
 grouped into custom and third-party.
 
+## Prompting & Context
+
+Skills give the agent repeatable processes; the prompt decides which process runs and against
+what understanding. [`03-PROMPTING.md`](03-PROMPTING.md) covers the anatomy of a good prompt –
+observation, goal, constraints, scope, check – and the three levels used throughout this
+workshop: the **simple prompt**, the **interactive prompt** where the agent asks you clarifying
+questions one at a time, and the **intense session** driven by the
+[`grill-me`](.agents/skills/grill-me/SKILL.md),
+[`grill-with-style`](.agents/skills/grill-with-style/SKILL.md), or
+[`brainstorming`](.agents/skills/brainstorming/SKILL.md) skills. It also covers managing the
+session itself – treating the context window as a budget, preferring one task per session, and
+carrying work across sessions with the [`handover`](.agents/skills/handover/SKILL.md) skill.
+
+Practice up to three levels on your own project in
+[Lab 03 – Prompting & Context](labs/03-prompting.html).
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -255,3 +271,5 @@ day so the sessions start with a working toolchain:
   workspace's agentic setup in your own project.
 - [Lab 02 – Agent Skills](labs/02-skills.html): use one or two skills on your own project, then
   create a custom skill for a repeatable process.
+- [Lab 03 – Prompting & Context](labs/03-prompting.html): run the same task as a simple prompt,
+  an interactive prompt, and a grilling session, and learn when each level pays off.

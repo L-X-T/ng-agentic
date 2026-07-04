@@ -16,6 +16,8 @@ Suggest the skills to be used, if any, by the next session – pick from the cat
 
 Do not duplicate content already captured in other artifacts (PRDs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
 
+Include the repository revision, uncommitted work, accepted decisions, rejected alternatives, verification results and unresolved questions. Distinguish facts checked against files from assumptions. Tell the next agent to preserve those decisions and to flag contradictory repository evidence before changing them.
+
 If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
 
 If the next session involves implementation, prototyping, architecture, or documentation, mention that the agent should follow `style-guide/style-guide.md` and load the relevant specific guide.
