@@ -1,0 +1,6 @@
+type Booking = { id: string; status: 'active' | 'cancelled' | 'pending'; label: string };
+type Filter = 'all' | 'active';
+
+export function visibleBookings(bookings: Booking[], filter: Filter): Booking[] {
+  return bookings;
+}

@@ -1,0 +1,7 @@
+type Booking = { id: string; status: 'active' | 'cancelled' | 'pending'; label: string };
+type Filter = 'all' | 'active';
+
+export function visibleBookings(bookings: Booking[], filter: Filter): Booking[] {
+  bookings.sort((left, right) => left.label.localeCompare(right.label));
+  return filter === 'all' ? [...bookings] : bookings.filter((booking) => booking.status !== 'cancelled');
+}

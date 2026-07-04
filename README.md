@@ -259,6 +259,18 @@ carrying work across sessions with the [`handover`](.agents/skills/handover/SKIL
 Practice up to three levels on your own project in
 [Lab 03 – Prompting & Context](labs/03-prompting.html).
 
+## Reviewing
+
+The prompt opens the loop; review closes it. The agent can prepare the diff and explain the
+tradeoffs, but the human owns the final judgment – and, in this workshop's default flow, the
+commit. [`04-REVIEWING.md`](04-REVIEWING.md)
+covers the practice: let the feedback loops go first, pick an explicit review scope, run the two
+passes (correctness against requirements, then style-guide conformance), dispatch an independent
+reviewer with the [`code-review`](.agents/skills/code-review/SKILL.md) skill, and act on findings
+by severity – verifying each one before touching the code.
+
+Review a real diff end-to-end in [Lab 04 – Reviewing](labs/04-reviewing.html).
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -273,3 +285,5 @@ day so the sessions start with a working toolchain:
   create a custom skill for a repeatable process.
 - [Lab 03 – Prompting & Context](labs/03-prompting.html): run the same task as a simple prompt,
   an interactive prompt, and a grilling session, and learn when each level pays off.
+- [Lab 04 – Reviewing](labs/04-reviewing.html): gate a real diff through the feedback loops, run
+  an independent agent review, and act on the findings by severity.

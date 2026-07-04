@@ -1,0 +1,340 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Reviewing</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>Owning the <span class="grad">Review</span></h1>
+        <p class="lede">
+          Agents made writing code cheap; reviewing it is now where quality is decided. You'll review one real diff three ways – machines first, then an independent agent reviewer, then your own judgment on its findings – and practice the step you never delegate: the final call.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Angular</b> v22</span>
+          <span class="chip"><b>Focus</b> Reviewing</span>
+          <span class="chip"><b>Est. time</b> ~30 min</span>
+          <span class="chip"><b>Level</b> all levels</span>
+          <span class="chip"><b>Builds on</b> Labs 00–03</span>
+        </div>
+      </header>
+
+      <!-- ABOUT -->
+      <h2>About this lab</h2>
+      <p>
+        <a href="03-prompting.html">Lab 03</a> was about opening the loop well; this lab closes it. You'll take one real diff, gate it through the feedback loops, run the <a href="../.agents/skills/code-review/SKILL.md"><code>code-review</code></a> skill for an independent second opinion, then act on the findings without rubber-stamping them. The full guide is <a href="../04-REVIEWING.md"><code>04-REVIEWING.md</code></a>.
+      </p>
+      <p>
+        Every workflow ends with review including the commit – the agent prepares the diff, the human owns the judgment. When code ships in minutes, a repeatable review process is what keeps agentic speed from shipping regressions.
+      </p>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Gate a diff through the feedback loops (build, lint, format, test) before spending human attention.</li>
+        <li>Pick one explicit review scope and run two passes: correctness, then style-guide conformance.</li>
+        <li>Dispatch an independent agent reviewer with the <code>code-review</code> skill.</li>
+        <li>Verify findings before acting, fix by severity, and push back on false positives with evidence.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Finished <a href="00-getting-started.html">Lab 00</a> and <a href="01-setup.html">Lab 01</a> – a project of your own with the feedback loops running.</li>
+        <li>Finished <a href="02-skills.html">Lab 02</a>. Copy code-review from the workshop clone into your local skills folder and confirm your agent discovers it.</li>
+        <li>A diff to review: work in progress, or your <a href="03-prompting.html">Lab 03</a> result. No diff? Use <a href="cases/review/requirements.md">the prepared booking-filter review</a> with known defects and a facilitator key.</li>
+      </ul>
+
+      <!-- TOC -->
+      <h2>Steps</h2>
+      <nav class="toc">
+        <ol>
+          <li><a href="#s1">Machines first, then pick your scope</a></li>
+          <li><a href="#s2">Run an independent agent review</a></li>
+          <li><a href="#s3">Verify findings, act by severity, close the loop</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#review-evidence">Review evidence</a> · <a href="#done">Definition of Done</a></p>
+      </nav>
+
+      <!-- STEP 1 -->
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Machines first, then pick your scope</h3>
+        <p class="goal"><b>Goal:</b> spend zero human attention on problems the tools find for free, and make the review target explicit.</p>
+        <p>
+          Run the feedback loops from your Lab 01 setup – the <code>build → lint → format → test</code> chain Lab 07
+          will name <em>the gauntlet</em>. Read <a href="../VERIFICATION.md">the verification contract</a>. Repair new failures, recheck the final files and record intentional baseline debt. Tool silence alone does not prove the requirement. Then pick <em>exactly one</em> scope from <a href="../04-REVIEWING.md"><code>04-REVIEWING.md</code></a>: current work, staged work, last commit, or a merge/PR range.
+          If your own project has no test script or a pre-existing red baseline, note that and gate on the checks your
+          project actually has.
+        </p>
+        <p>
+          On the <a href="cases/review/requirements.md">prepared case</a> there is nothing to build: record that the fixtures were not compiled or browser-tested, and use its <code>git diff --no-index</code> command as your scope, reading the new template as a plain file.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Run the loops: <code>build</code>, <code>lint</code>, <code>format</code>, <code>test</code>.</li>
+            <li>Investigate failures, record intentional baseline diagnostics, and repair new failures within scope. Re-run checks on the final files.</li>
+            <li>Choose your scope and write down the exact git commands that show it (prepared case: the <code>--no-index</code> diff plus the template file).</li>
+            <li>Read the raw diff once yourself, uninterrupted, before any agent opinion touches it.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – gating and scoping</summary>
+          <div class="body">
+            <pre><span class="lang">shell</span><code># the feedback loops – adjust to your project's scripts
+pnpm workshop:check
+
+# scope: current work
+git status --short
+git diff --stat
+git diff
+
+# scope: prepared case – no loops to run, the fixtures live outside the app
+git diff --no-index labs/cases/review/before.ts.txt labs/cases/review/after.ts.txt
+cat labs/cases/review/after.html.txt</code></pre>
+            <p>Reading the diff yourself first anchors your judgment before the reviewer's framing arrives. You'll disagree better in Step 3 for it.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p><b>Checkpoint:</b> checks pass or match the recorded exercise baseline (or you've recorded that the prepared fixtures were not compiled), you've named one scope with its exact git commands, and you've read the raw diff once yourself.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Run an independent agent review</h3>
+        <p class="goal"><b>Goal:</b> get a second opinion from a reviewer that did not write the code – fresh context, read-only, two passes.</p>
+        <p>
+          Invoke the <a href="../.agents/skills/code-review/SKILL.md"><code>code-review</code></a> skill. It gathers a handoff (description, requirements, verification state, scope, diff commands), dispatches a read-only reviewer subagent, and returns findings ranked <b>Critical / Important / Minor</b> across two passes: correctness against the requirements, then style-guide conformance for every touched file type.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Confirm <code>code-review</code> is available – copy it from the workshop clone if it is not installed yet.</li>
+            <li>Invoke it on your chosen scope and let it drive the handoff and dispatch. On the prepared case, hand it the contract from <code>requirements.md</code> and the three fixture paths, and say the fixtures were not compiled.</li>
+            <li>While it runs, list your own top three concerns from your Step 1 read.</li>
+            <li>Compare: what did it find that you missed – and what did you catch that it didn't?</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – invoking the review</summary>
+          <div class="body">
+            <pre><span class="lang">text</span><code>Run the code-review skill on my current work: I added a status filter
+to the bookings table. Requirements: hide cancelled bookings, keep the
+BookingService API and sorting behavior unchanged.
+Verification: pnpm lint and pnpm test are green.</code></pre>
+            <p>Naming the requirements is what powers the correctness pass – without them the reviewer can only judge style. A decision list from your Lab 03 grilling session is exactly the requirements input a reviewer needs.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p><b>Checkpoint:</b> you have a findings list ranked by severity, plus your own three concerns to hold it against.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Verify findings, act by severity, close the loop</h3>
+        <p class="goal"><b>Goal:</b> turn the findings list into judgment – confirm, fix, defer, or push back – and finish with a commit you own, or, on the prepared case, a written disposition for every finding.</p>
+        <p>
+          Findings are claims, not facts. For each: open the file, read the line, reproduce the problem. Fix valid <b>Critical</b> issues immediately and valid <b>Important</b> ones before proceeding; note <b>Minor</b> ones for later. Reject wrong findings with file/line evidence or test output – agent reviewers are confident false-positive machines, and accepting a wrong finding damages the code as surely as missing a real one.
+        </p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <ol>
+            <li>Verify every finding against the code before touching anything.</li>
+            <li>Fix the valid Critical and Important findings (let the agent do the edits – you judge them). On the prepared case, do not edit the fixtures: record the fix you would make instead.</li>
+            <li>Push back on at least one finding you can refute with evidence – or document why all held up.</li>
+            <li>Re-run the loops, re-review the fixed portion, and commit the result yourself. The prepared case has nothing to commit: compare your dispositions with the facilitator key instead.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – pushing back with evidence</summary>
+          <div class="body">
+            <pre><span class="lang">text</span><code>Finding 2 claims the filter breaks for undefined status. That path
+can't occur: BookingStatus is a required union type, and the mapper
+in booking.mapper.ts:34 defaults unknown values to "unknown".
+Rejecting this one – show me a failing input if you disagree.</code></pre>
+            <p>Note the shape: a concrete counter-reason plus an invitation to prove otherwise. If the reviewer produces a failing input, confirm the defect and assess severity from its impact.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint">
+          <span class="ico"></span>
+          <p><b>Checkpoint:</b> every finding is fixed, deferred, or rejected with evidence; checks pass or match the recorded exercise baseline; and <em>you</em> made the commit – or, on the prepared case, every finding has a written disposition that you compared with the facilitator key.</p>
+        </div>
+      </section>
+
+      <!-- REVIEW EVIDENCE -->
+      <h2 id="review-evidence">Review evidence</h2>
+      <section class="step">
+        <h3 style="font-size:18px">Record every disposition</h3>
+        <p>For each finding, record requirement, file/line, reproduction, impact and disposition.
+          For the prepared case, compare your result with its facilitator key only after reviewing.
+          Count confirmed defects, misses and false positives. A credible uncertain finding can ask
+          for a missing check; it must not claim an unexecuted test passed.</p>
+        <p>Live completion for the text fixture means a scoped review and evidence-based dispositions.
+          There is no implementation to commit in that path. For your own project, finish with the
+          final verified diff and your reviewed commit.</p>
+      </section>
+
+      <!-- DONE -->
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">You've completed Lab 04 when…</h3>
+        <ul>
+          <li>✅ You recorded check results and requirement-specific evidence before reviewing the diff.</li>
+          <li>✅ You reviewed against an <b>explicit scope</b> with named git commands.</li>
+          <li>✅ An <b>independent agent review</b> ran via the <code>code-review</code> skill, two passes, ranked findings.</li>
+          <li>✅ You <b>verified every finding</b> before acting and fixed by severity.</li>
+          <li>✅ You <b>pushed back on a finding with evidence</b> – or confirmed they all held.</li>
+          <li>✅ You reviewed the final diff before committing your own project, or completed evidence-based dispositions for the prepared text fixture.</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>
+          Built from the <code>ng-agentic</code> workshop materials. Review early, review often – the invariant never
+          moves. Angular is © Google LLC.
+        </p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>

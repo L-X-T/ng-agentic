@@ -1,0 +1,8 @@
+<label for="booking-filter">Booking status</label>
+<select id="booking-filter" [value]="filter()" (change)="onFilterChange($event)">
+  <option value="all">All</option>
+  <option value="active">Active</option>
+</select>
+<button type="button" (click)="onReset()">
+  <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2-6" /></svg>
+</button>
