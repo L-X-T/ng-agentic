@@ -271,6 +271,19 @@ by severity – verifying each one before touching the code.
 
 Review a real diff end-to-end in [Lab 04 – Reviewing](labs/04-reviewing.html).
 
+## Human-in-the-Loop Workflows
+
+Prompting opens the loop and reviewing closes it; workflows decide how much structure belongs
+between those bookends before an agent starts editing. The workflow pyramid in
+[`05-HITL-WORKFLOWS.md`](05-HITL-WORKFLOWS.md) – illustrated in
+[`05-HITL-WORKFLOWS.png`](05-HITL-WORKFLOWS.png) – is the decision model: every level starts with a
+[prompt](03-PROMPTING.md) and optional grilling, then adds the right middle steps for the size of the
+work, and ends with [review](04-REVIEWING.md) including the user commit or commits. The human stays
+in the loop throughout: every spec, plan, phase, and diff passes your review before the agent
+continues.
+
+Practice that decision in [Lab 05 – Human-in-the-Loop Workflows](labs/05-hitl-workflows.html).
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -287,3 +300,5 @@ day so the sessions start with a working toolchain:
   an interactive prompt, and a grilling session, and learn when each level pays off.
 - [Lab 04 – Reviewing](labs/04-reviewing.html): gate a real diff through the feedback loops, run
   an independent agent review, and act on the findings by severity.
+- [Lab 05 – Human-in-the-Loop Workflows](labs/05-hitl-workflows.html): choose the right workflow
+  for tasks, features, and app-sized work – and gate every step of it.

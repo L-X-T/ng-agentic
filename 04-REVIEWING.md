@@ -30,7 +30,7 @@ never as already-approved work. Three rules follow:
 - **The human in the loop commits – my default.** I personally like to stage and commit myself
   as the human in the loop; others validly let their agents work more autonomously – how much
   autonomy to grant is the topic of the workflow chapters right after this one
-  (`05-HITL-WORKFLOWS.md` and `06-AUTONOMOUS-WORKFLOWS.md`, still to come).
+  ([`05-HITL-WORKFLOWS.md`](05-HITL-WORKFLOWS.md), then `06-AUTONOMOUS-WORKFLOWS.md`).
 - **Review at each boundary.** For phased work, review and commit at each phase boundary, not
   one large commit at the end. Ten small reviewed diffs beat one thousand-line archaeology dig.
 - **No diff is too simple.** The five-minute change that "obviously works" is exactly the one
