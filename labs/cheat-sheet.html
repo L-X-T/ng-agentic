@@ -1,0 +1,194 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agentic Engineering – Cheat Sheet</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --line: #2b3454;
+        --radius: 12px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.45; }
+      a { color: #8ea2ff; }
+      h2 .lab a { text-decoration: none; }
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+
+      header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px; border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 18px; }
+      .kicker { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+      h1 { font-size: 26px; margin: 2px 0 0; }
+      h1 .grad { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .tagline { color: var(--ink-dim); font-size: 13px; }
+
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+      section { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; break-inside: avoid; }
+      section.wide { grid-column: 1 / -1; }
+      h2 { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 8px; color: var(--ink); }
+      h2 .lab { float: right; font-weight: 600; color: var(--ink-faint); letter-spacing: 0; text-transform: none; font-size: 12px; }
+      p { margin: 6px 0; font-size: 13px; color: var(--ink-dim); }
+      p b, li b { color: var(--ink); }
+      ol, ul { margin: 6px 0; padding-left: 20px; font-size: 13px; color: var(--ink-dim); }
+      li { margin: 3px 0; }
+      code { font-family: var(--mono); font-size: 0.88em; background: #ffffff12; padding: 0 5px; border-radius: 5px; }
+      table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 6px 0 2px; }
+      th, td { border: 1px solid var(--line); padding: 4px 8px; text-align: left; vertical-align: top; color: var(--ink-dim); }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td b { color: var(--ink); }
+      .rule { border-left: 3px solid var(--accent); background: var(--bg-soft); border-radius: 6px; padding: 6px 10px; margin: 8px 0 2px; font-size: 13px; color: var(--ink); }
+      .cmd { font-family: var(--mono); font-size: 12px; background: #0b0f1c; border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; margin: 8px 0 2px; color: #dfe6ff; overflow-x: auto; white-space: nowrap; }
+      footer { margin-top: 16px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 12px; }
+      .print-hint { margin-left: 10px; background: none; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; color: #8ea2ff; font: inherit; cursor: pointer; }
+
+      @media print {
+        :root { --bg: #ffffff; --bg-soft: #f2f4f8; --card: #ffffff; --ink: #16181d; --ink-dim: #3c4250; --ink-faint: #6b7280; --line: #c9cfda; }
+        body { background: #fff; }
+        .wrap { max-width: none; padding: 0; }
+        .grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+        section { border: 1px solid var(--line); padding: 9px 11px; }
+        header { padding-bottom: 6px; margin-bottom: 10px; }
+        h1 { font-size: 20px; }
+        h2 { font-size: 11px; }
+        h2 .lab { font-size: 9px; }
+        p, ol, ul { font-size: 11px; }
+        table { font-size: 10.5px; }
+        th, td { padding: 3px 6px; }
+        .rule { font-size: 11px; padding: 5px 8px; }
+        .cmd { font-size: 10px; padding: 5px 8px; }
+        footer { font-size: 9.5px; margin-top: 8px; padding-top: 6px; }
+        code { background: #eef0f5; }
+        .cmd { background: #f2f4f8; color: #16181d; }
+        a { color: inherit; }
+        h1 .grad { background: none; -webkit-text-fill-color: initial; color: var(--ink); }
+        .print-hint { display: none; }
+        @page { margin: 12mm; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div>
+          <span class="kicker">NG Agentic Engineering</span>
+          <h1>The <span class="grad">Cheat Sheet</span></h1>
+        </div>
+        <span class="tagline">One page. Eight modules. One invariant. <button type="button" class="print-hint" onclick="window.print()">Print ⎙</button></span>
+      </header>
+
+      <div class="grid">
+        <!-- INVARIANT -->
+        <section class="wide">
+          <h2>The Invariant <span class="lab">every lab</span></h2>
+          <div class="rule">
+            Every piece of agentic work opens with a <b>prompt</b> and closes with <b>your review and your
+            approval</b> – your commit in a live session; in an autonomous run, your commit of the run's diff or your merge of its branch.
+            Workflows change what happens in between; autonomy changes how closely you watch – the bookends never move.
+          </div>
+        </section>
+
+        <!-- PROMPTING -->
+        <section>
+          <h2>The Five-Part Prompt <span class="lab">Lab 03 · <a href="../03-PROMPTING.md">03-PROMPTING.md</a></span></h2>
+          <ol>
+            <li><b>Observation</b> – what you see: the bug, the smell, the missing behavior.</li>
+            <li><b>Goal</b> – the outcome, not the method.</li>
+            <li><b>Constraints</b> – what must not change.</li>
+            <li><b>Scope</b> – the files and folders; name paths.</li>
+            <li><b>Check</b> – a definition of done the agent can verify itself.</li>
+          </ol>
+          <p><b>Levels:</b> simple prompt → interactive ("plan and ask me questions, <em>one at a time</em>, before any code") → session: grilling (<code>grill-me</code>, <code>grill-with-style</code>) or <code>brainstorming</code>. Escalate with ambiguity, de-escalate when it's resolved.</p>
+        </section>
+
+        <!-- REVIEWING -->
+        <section>
+          <h2>Review – Close the Loop <span class="lab">Lab 04 · <a href="../04-REVIEWING.md">04-REVIEWING.md</a></span></h2>
+          <ol>
+            <li><b>Machines first</b> – build, lint, format, test; red output goes back to the agent.</li>
+            <li><b>One explicit scope</b> – current / staged / last commit / PR range.</li>
+            <li><b>Two passes</b> – correctness against requirements, then style-guide conformance.</li>
+            <li><b>Independent reviewer</b> – <code>code-review</code> skill, fresh context, ranked findings.</li>
+            <li><b>Verify before acting</b> – findings are claims; fix by severity, push back with evidence.</li>
+          </ol>
+          <div class="rule">You own the final call – commit or merge. Always.</div>
+        </section>
+
+        <!-- PYRAMID -->
+        <section>
+          <h2>The Workflow Pyramid <span class="lab">Lab 05 · <a href="../05-HITL-WORKFLOWS.md">05-HITL-WORKFLOWS.md</a></span></h2>
+          <table>
+            <tr><th>Level</th><th>Middle steps (each arrow = your gate)</th></tr>
+            <tr><td><b>Task / bugfix</b></td><td>Implement</td></tr>
+            <tr><td><b>Work package</b></td><td>Spec → Implement</td></tr>
+            <tr><td><b>Feature</b></td><td>Spec → Plan → Implement</td></tr>
+            <tr><td><b>Epic</b></td><td>Spec → Plan → Phases → Implement</td></tr>
+            <tr><td><b>App</b></td><td>Idea → Research → Spec → Plan → Phases → Implement → QA</td></tr>
+          </table>
+          <p>Add a spec when the outcome needs writing down, a plan when sequencing matters, phases when one diff would be too large. Parallelize independent tasks with <b>git worktrees</b>.</p>
+        </section>
+
+        <!-- LADDER -->
+        <section>
+          <h2>The Autonomy Ladder <span class="lab">Lab 06 · <a href="../06-AUTONOMOUS-WORKFLOWS.md">06-AUTONOMOUS-WORKFLOWS.md</a></span></h2>
+          <table>
+            <tr><th>Rung</th><th>Shape</th></tr>
+            <tr><td><b>Goal-driven run</b></td><td><code>/goal</code> – confirm the command in the capability check first; iterate until the checks pass</td></tr>
+            <tr><td><b>Recurring loop</b></td><td><code>/loop</code> (Claude Code; in Codex a desktop scheduled task) – re-run a check on an interval; cancel it yourself</td></tr>
+            <tr><td><b>Orchestrator</b></td><td>decompose → fan out subagents → verify → synthesize</td></tr>
+            <tr><td><b>Always-on agent</b></td><td>24/7 on a dedicated machine (OpenClaw, Hermes) or CI schedule</td></tr>
+          </table>
+          <p><b>The contract</b> before you leave: a <b>verifiable goal</b> + a <b>feedback signal</b> inside the run + <b>guardrails</b> (own branch/worktree, no push, no prod credentials). The invariant is deferred, not waived: review the accumulated diff.</p>
+        </section>
+
+        <!-- BLUEPRINT -->
+        <section class="wide">
+          <h2>The 7-Step Refactoring Blueprint <span class="lab">Lab 07 · <a href="../07-REFACTORING.md">07-REFACTORING.md</a></span></h2>
+          <table>
+            <tr>
+              <td><b>1 Analyse</b><br />plan, smells, safety net, baseline</td>
+              <td><b>2 Declutter</b><br />delete dead code – keep comments &amp; domain</td>
+              <td><b>3 Update</b><br />ng update, automatic migrations</td>
+              <td><b>4 Modernize</b><br />schematics; signals, control flow, OnPush</td>
+              <td><b>5 Type</b><br />kill <code>any</code>, explicit types</td>
+              <td><b>6 Refactor</b><br />shrink, DRY, SRP, ≤400 LoC</td>
+              <td><b>7 Review</b><br />confirm gains, you commit</td>
+            </tr>
+          </table>
+          <div class="cmd">pnpm workshop:check&nbsp;&nbsp;# the gauntlet – after every step</div>
+          <p><b>Guardrails:</b> treat the agent like a junior · no big-bang rewrite · every change earns its keep · preserve meaning · plan first · checkpoint per step · you commit, never the agent.</p>
+        </section>
+
+        <!-- OUTLOOK -->
+        <section class="wide">
+          <h2>The First Week After <span class="lab">Lab 08 · <a href="../08-OUTLOOK.md">08-OUTLOOK.md</a></span></h2>
+          <p><b>Promote</b> one convention into your own <code>AGENTS.md</code> · <b>port</b> one skill · <b>pick</b> your first autonomous task (contract in hand) · <b>wire</b> one CI check an agent can use · <b>decide</b> your model &amp; budget strategy.</p>
+          <p><b>Economics:</b> compare configurations on the same acceptance cases; record review time, repairs and available usage/cost evidence. Distinguish enforced caps from alerts. Measure useful accepted outcomes, including correct diagnoses and justified rejections. Evaluate instructions before changing them.</p>
+        </section>
+      </div>
+
+      <p>Checks: <a href="../VERIFICATION.md">verification contract</a>.
+        Choose authority, trigger, worker count, hosting and limits independently. Stop at verified success,
+        a stated limit or an evidence-backed blocker. The live refactoring target is the small
+        booking summary; the full legacy table is an extension.</p>
+
+      <footer>
+        Setup: <a href="01-setup.html">Lab 01</a> (<code>AGENTS.md</code> + style guide + ESLint + hooks + MCP – <em>the repo is the prompt</em>) ·
+        Skills: <a href="../02-SKILLS.md">02-SKILLS.md</a> (narrow skill beats general rules) ·
+        Built from the <code>ng-agentic</code> workshop materials. Angular is © Google LLC.
+      </footer>
+    </div>
+  </body>
+</html>

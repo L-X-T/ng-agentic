@@ -2,7 +2,7 @@
 
 ![Agentic Engineering workshop overview](AE-workshop-overview.png)
 
-This sketch outlines the Agentic Engineering workshop arc: choosing AI models and harnesses, setting up an Angular AI workspace with best practices and style guides, building reusable AI skills, mastering prompting and reviewing – the two bookends of every agentic loop – applying AI-supported workflows – with a human in the loop or fully autonomous – and using those foundations for targeted Angular refactoring. The workshop intro slides are available in [AE-intro.pdf](AE-intro.pdf). It connects directly to my recent [Agentic Engineering blog post series](https://www.angulararchitects.io/blog/best-llms-for-angular/), where I walk through the model choices, app and harness tradeoffs, costs, data privacy questions, and final setup recommendations behind the workshop.
+This sketch outlines the Agentic Engineering workshop arc: choosing AI models and harnesses, setting up an Angular AI workspace with best practices and style guides, building reusable AI skills, mastering prompting and reviewing – the two bookends of every agentic loop – applying AI-supported workflows – with a human in the loop or fully autonomous – using those foundations for targeted Angular refactoring, and closing with an outlook: what agentic engineering costs, how it scales to teams and monorepos, and where it is heading. The workshop intro slides are available in [AE-intro.pdf](AE-intro.pdf). It connects directly to my recent [Agentic Engineering blog post series](https://www.angulararchitects.io/blog/best-llms-for-angular/), where I walk through the model choices, app and harness tradeoffs, costs, data privacy questions, and final setup recommendations behind the workshop.
 
 A practical Angular workspace starter with modern best practices, AI-ready tooling, and scalable project setup guidance.
 
@@ -318,6 +318,20 @@ pins on migrated legacy components. The exercise's core target is moving them to
 tightening the budgets is the bonus round, since legacy code usually depends on zone-driven
 timing and only survives the jump to zoneless after OnPush and the signal migration have landed.
 
+## Outlook
+
+The closing module steps back from technique: [`08-OUTLOOK.md`](08-OUTLOOK.md) sums up the arc –
+the harness where the repo is the prompt, the skills, the five-part prompt, the two review passes,
+the pyramid, the ladder, and the blueprint, all held together by one invariant – and adds the
+economics the other modules only touched: flat subscriptions vs. token pricing, evaluating model
+configurations on your own acceptance cases, and spend caps before you climb the autonomy ladder,
+with value measured in accepted outcomes – reviewed changes, correct diagnoses, justified rejections –
+rather than tokens burned. From there it looks outward: bringing the setup
+to your team as shared, PR-reviewed contracts, scaling it to Nx monorepos, what improving model
+generations mean for your instruction files, and a first-week todo list.
+
+Close the loop on your own project in [Lab 08 – Outlook](labs/08-outlook.html).
+
 ## Hands-on Labs
 
 The workshop labs are designed to be applied to your own Angular workspace, not just this
@@ -341,3 +355,19 @@ day so the sessions start with a working toolchain:
 - [Lab 07 – Refactoring a Dusty Angular Component](labs/07-refactoring.html): run the 30-minute
   booking-summary exercise in this workspace, then use the `ng-refactor` skill on your own legacy
   codebase; the workspace's `src/app/components/table/` feature is the advanced continuation.
+- [Lab 08 – Outlook](labs/08-outlook.html): close the workshop – hold your project against the
+  Lab 00 goal, write your adoption plan, and decide your model and budget strategy.
+
+Keep the [workshop cheat sheet](labs/cheat-sheet.html) at hand – one printable page with the
+five prompt parts, the two review passes, the workflow pyramid, the autonomy ladder, the
+7-step refactoring blueprint, and the first-week checklist.
+
+## Keeping the Material Fresh
+
+The agentic ecosystem moves faster than any workshop schedule, so give the material a freshness
+pass before each delivery: re-check the external tools and links the modules cite (OpenClaw,
+Hermes Agent, SkillSpector, the companion apps), re-run the capability check behind `/goal` and
+`/loop` on the installed agents, and re-run [Lab 01's validation loop](labs/01-setup.html#s8) on the newest
+model generation – [`08-OUTLOOK.md`](08-OUTLOOK.md#where-this-is-heading) explains how to evaluate instruction changes across models. The link and capability checks are bounded
+enough for a [recurring loop](06-AUTONOMOUS-WORKFLOWS.md#recurring-loops) to report on; judging what a
+newer model still needs stays a human pass.

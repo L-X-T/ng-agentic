@@ -1,0 +1,418 @@
+<!-- eslint-disable -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab – Outlook</title>
+    <style>
+      :root {
+        --bg: #0e1220;
+        --bg-soft: #161c2f;
+        --card: #1b2238;
+        --card-2: #212a45;
+        --ink: #e8ecf6;
+        --ink-dim: #a7b0c7;
+        --ink-faint: #7d87a3;
+        --accent: #dd0031; /* Angular red */
+        --accent-2: #6f5cff;
+        --ok: #2ecc8f;
+        --warn: #ffce54;
+        --line: #2b3454;
+        --code-bg: #0b0f1c;
+        --radius: 14px;
+        --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--sans);
+        background: radial-gradient(1200px 600px at 80% -10%, #25305220, transparent),
+          radial-gradient(900px 500px at -10% 10%, #dd003118, transparent), var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      a { color: #8ea2ff; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+
+      /* Header */
+      header.hero {
+        padding: 56px 0 26px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 28px;
+      }
+      .kicker {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      h1 { font-size: clamp(28px, 5vw, 44px); line-height: 1.12; margin: 0 0 14px; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lede { font-size: 18px; color: var(--ink-dim); max-width: 70ch; }
+      .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+      .chip {
+        font-size: 12.5px; padding: 5px 11px; border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink-dim); background: var(--bg-soft);
+      }
+      .chip b { color: var(--ink); font-weight: 600; }
+
+      /* Layout helpers */
+      h2 { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin: 44px 0 14px; }
+      section.step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 26px 22px; margin: 18px 0; scroll-margin-top: 20px; }
+      section.step > h3 { display: flex; align-items: center; gap: 14px; margin: 0 0 6px; font-size: 22px; }
+      .num {
+        flex: none; width: 38px; height: 38px; border-radius: 11px;
+        display: grid; place-items: center; font-weight: 800; font-size: 16px;
+        background: linear-gradient(140deg, var(--accent), var(--accent-2)); color: #fff;
+        box-shadow: 0 6px 16px -8px var(--accent);
+      }
+      .step .goal { color: var(--ink-dim); margin: 0 0 18px; }
+      .step .goal b { color: var(--ink); }
+
+      p { margin: 12px 0; }
+      ul, ol { padding-left: 22px; }
+      li { margin: 6px 0; }
+      code { font-family: var(--mono); font-size: 0.9em; background: #ffffff12; padding: 1px 6px; border-radius: 6px; }
+      pre {
+        position: relative; background: var(--code-bg); border: 1px solid var(--line);
+        border-radius: 10px; padding: 16px 16px; overflow-x: auto; margin: 14px 0;
+      }
+      pre code { background: none; padding: 0; font-size: 13px; line-height: 1.55; color: #dfe6ff; }
+      .lang { position: absolute; top: 8px; right: 12px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+
+      .callout { border-radius: 10px; padding: 12px 16px; margin: 16px 0; border: 1px solid var(--line); background: var(--bg-soft); }
+      .callout .tag { font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .callout.why { border-left: 4px solid var(--accent-2); }
+      .callout.why .tag { color: #b3a9ff; }
+      .callout.warn { border-left: 4px solid var(--warn); }
+      .callout.warn .tag { color: var(--warn); }
+      .callout.tip { border-left: 4px solid var(--ok); }
+      .callout.tip .tag { color: var(--ok); }
+
+      .task { border: 1px dashed var(--accent-2); background: #6f5cff10; border-radius: 10px; padding: 14px 18px; margin: 18px 0; }
+      .task h4 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase; color: #b3a9ff; }
+
+      details.solution { margin: 14px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--card-2); overflow: hidden; }
+      details.solution > summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--ink); list-style: none; user-select: none; }
+      details.solution > summary::-webkit-details-marker { display: none; }
+      details.solution > summary::before { content: "▸ "; color: var(--accent); }
+      details.solution[open] > summary::before { content: "▾ "; }
+      details.solution .body { padding: 0 16px 8px; border-top: 1px solid var(--line); }
+
+      .checkpoint { display: flex; gap: 12px; align-items: flex-start; border-top: 1px solid var(--line); margin-top: 20px; padding-top: 16px; }
+      .checkpoint .ico { color: var(--ok); font-weight: 800; }
+      .checkpoint .ico::before { content: "✓"; }
+      .checkpoint p { margin: 0; color: var(--ink-dim); }
+      .checkpoint b { color: var(--ink); }
+
+      /* TOC */
+      nav.toc { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; }
+      nav.toc ol { margin: 6px 0 0; padding-left: 20px; }
+      nav.toc a { text-decoration: none; color: var(--ink-dim); }
+      nav.toc a:hover { color: var(--ink); }
+
+      table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+      th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+      th { background: var(--bg-soft); color: var(--ink); font-weight: 600; }
+      td code { white-space: nowrap; }
+
+      .tree { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); white-space: pre; line-height: 1.5; }
+      .tree b { color: var(--ink); font-weight: 600; }
+      .tree .c { color: var(--ink-faint); }
+
+      footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13.5px; }
+
+      .totop { position: fixed; bottom: 22px; right: 22px; background: var(--card-2); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 9px 14px; text-decoration: none; font-size: 13px; opacity: 0.85; }
+      .totop:hover { opacity: 1; }
+      hr.soft { border: none; border-top: 1px solid var(--line); margin: 8px 0 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero" id="top">
+        <span class="kicker">Hands-on Lab · Agentic Engineering</span>
+        <h1>From Workshop to <span class="grad">Everyday Workflow</span></h1>
+        <p class="lede">
+          The closing lab. No new tooling, no new technique – this one turns seven modules of machinery into decisions:
+          did the setup move the goal you wrote before the workshop, what do you adopt first, and what will you let it
+          cost? You leave with a written plan, not good intentions.
+        </p>
+        <div class="meta-row">
+          <span class="chip"><b>Focus</b> Outlook</span>
+          <span class="chip"><b>Builds on</b> Labs 00–07</span>
+          <span class="chip"><b>Est. time</b> ~15–20 min</span>
+          <span class="chip"><b>Level</b> all levels</span>
+          <span class="chip"><b>Bonus</b> team rollout</span>
+        </div>
+      </header>
+
+      <!-- ABOUT -->
+      <h2>About this lab</h2>
+      <p>
+        This is <strong>Lab 08</strong> – the send-off. In <a href="00-getting-started.html">Lab 00</a> you wrote a
+        project brief and a goal before any of the tooling existed; every lab since has been building the machinery to
+        reach it. Now you close that loop and open the next one: everything in this lab is <em>writing, not coding</em> –
+        three short artifacts that decide whether the workshop survives contact with Monday. The guide behind it is
+        <a href="../08-OUTLOOK.md"><code>08-OUTLOOK.md</code></a>.
+      </p>
+
+      <div class="callout why">
+        <span class="tag">Why this matters</span>
+        <p style="margin:6px 0 0">Workshops fade; defaults stick. A plan written in the room – with names, paths, and a
+          budget – is what turns "we should use agents more" into a convention in <em>your</em> <code>AGENTS.md</code>
+          next week. The horizon will keep moving (better models, shorter instruction files, longer leashes); what you
+          write now decides how your setup moves with it.</p>
+      </div>
+
+      <h2>Learning objectives</h2>
+      <ul>
+        <li>Hold your workshop project against the Lab 00 goal – and name what actually blocked the stretch.</li>
+        <li>Turn the workshop into an <strong>adoption plan</strong> with four concrete firsts.</li>
+        <li>Decide a <strong>model &amp; budget strategy</strong>: pricing shape, a configuration per task type, and a spend cap for autonomy.</li>
+        <li><em>Bonus:</em> sketch how the setup rolls out to a whole team – ownership, sharing, and PR etiquette.</li>
+      </ul>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Labs <a href="00-getting-started.html">00</a>–<a href="07-refactoring.html">07</a> done (or at least 00–04 plus one workflow lab).</li>
+        <li>Your <strong>Lab 00 brief</strong> and the required goal written before the exercises.</li>
+        <li>Somewhere durable to write: a <code>docs/</code> note in your repo, your team wiki – not a scratchpad you'll lose.</li>
+      </ul>
+
+      <!-- ADOPTION SHEET -->
+      <h2 id="adoption-sheet">Adoption sheet</h2>
+      <section class="step">
+        <h3 style="font-size:18px">Your take-home record</h3>
+        <p>Complete <a href="cases/adoption.md">the evaluation and adoption sheet</a> as you work through the steps.
+          It records acceptance results, review time, repair attempts, available cost evidence, enforced limits and
+          first-week owners. The live task is to design the comparison, fill in the limits table and name an owner per
+          practice; running repeated model comparisons is an extension.</p>
+      </section>
+
+      <!-- TOC -->
+      <h2>Steps</h2>
+      <nav class="toc">
+        <ol>
+          <li><a href="#s1">Look back – your Lab 00 brief and goal</a></li>
+          <li><a href="#s2">Your adoption plan – four firsts</a></li>
+          <li><a href="#s3">Your model &amp; budget strategy</a></li>
+          <li><a href="#s4">Sketch the team rollout (Bonus)</a></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#adoption-sheet">Adoption sheet</a> · <a href="#done">Definition of Done</a> · <a href="#closing">Closing words</a> · <a href="../08-OUTLOOK.md">Outlook guide</a></p>
+      </nav>
+
+      <!-- STEP 1 -->
+      <section class="step" id="s1">
+        <h3><span class="num">1</span> Look back – your Lab 00 brief and goal</h3>
+        <p class="goal"><b>Goal:</b> measure the workshop against the target you set before it started – honestly.</p>
+
+        <p>Before any agent touched your project, you wrote a one-paragraph brief (<a
+            href="00-getting-started.html#s3">Lab 00, step 3</a>) and a mandatory goal to aim for.
+          That was the point of writing them down: they are the only measurement of this workshop that isn't
+          hindsight. If the original goal is missing, record that limitation. Do not reconstruct a supposed before-class goal from memory.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Reopen your brief and goal, and answer three questions in writing:</p>
+          <ol>
+            <li>Did you reach the <strong>realistic goal</strong>? If not, how far did you get?</li>
+            <li>If you wrote a <strong>stretch goal</strong>, what blocked it – missing verification (tests, checks), an unclear spec, a setup gap, or genuinely the model? If you did not, what would the next step beyond the realistic goal have needed?</li>
+            <li>Which lab moved your project <strong>most</strong> – and which one will you re-read first?</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – an example reflection</summary>
+          <div class="body">
+            <p>Continuing Lab 00's <em>recipe box</em> example:</p>
+            <ul>
+              <li><b>Realistic goal</b> ("agent builds list + detail following conventions") – reached in Lab 05: the
+                feature workflow (spec → plan → implement) produced both views, on-style, lint-clean.</li>
+              <li><b>Stretch goal</b> ("accessible, tested app with search and tagging") – blocked on
+                <em>verification</em>: without e2e coverage there was no safety net for a Lab 06 autonomous run at
+                search, so it stayed manual. Not a model problem – a checks problem.</li>
+              <li><b>Biggest mover</b> – Lab 01: once <code>AGENTS.md</code> and the linter carried the conventions,
+                every later prompt got shorter.</li>
+            </ul>
+            <p>Use the evidence from your run to identify the blocker. Missing checks, model capability, time and scope can each be real constraints.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> three written answers, and the gap beyond the realistic goal named as a <b>specific gap</b>
+            (a missing check, an unwritten spec, a setup hole) – include time and scope when they actually limited the result.</p>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" id="s2">
+        <h3><span class="num">2</span> Your adoption plan – four firsts</h3>
+        <p class="goal"><b>Goal:</b> pick the first concrete instance of each workshop practice for <em>your</em> project – small enough to happen this week.</p>
+
+        <p>Everything you used here lives in this repo; nothing transfers by itself. The transfer mechanism is picking
+          one small, named first for each practice – a convention, a skill, an autonomous task, a CI hook – and doing it
+          while the workshop is fresh.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Write four lines, each naming one concrete first (the adoption sheet's first-week table has a row for each):</p>
+          <ol>
+            <li><b>First convention</b> to promote into your own <code>AGENTS.md</code> – then validate it with
+              <a href="01-setup.html#s8">Lab 01's validation loop</a>, don't just trust it.</li>
+            <li><b>First skill</b> to port from <code>.agents/skills/</code> – or to write, for a process your team actually repeats.</li>
+            <li><b>First task</b> you'd trust to a goal-driven run – it must pass
+              <a href="../06-AUTONOMOUS-WORKFLOWS.md#the-contract-what-must-be-true-before-you-leave">the Lab 06
+                guide's contract</a>: verifiable goal, feedback signal, guardrails.</li>
+            <li><b>First CI or PR-bot candidate</b> – one check or babysitting duty an agent could own in your pipeline.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – an example adoption plan</summary>
+          <div class="body">
+            <table>
+              <tr><th>First…</th><th>Example entry</th></tr>
+              <tr><td><b>Convention</b></td><td>Signals-first rule + canonical member order → our <code>AGENTS.md</code>; validate with the no-API-hints counter experiment.</td></tr>
+              <tr><td><b>Skill</b></td><td>Port <code>code-review</code>; adapt its style-guide pass to our lint rules.</td></tr>
+              <tr><td><b>Autonomous task</b></td><td>Drive <code>pnpm lint</code> to zero on <code>feature/reports</code> – checkable, bounded, own worktree, no push.</td></tr>
+              <tr><td><b>CI / PR bot</b></td><td>A recurring loop babysitting our flaky e2e suite: investigate red runs, open an issue with the trace.</td></tr>
+            </table>
+            <p>Notice the shape: every entry is deliberately <em>small</em> and names a file, a branch, or a suite. A
+              plan you could finish in one sitting is a plan that gets finished.</p>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> four firsts written down, each naming a <b>concrete target</b> (a rule, a skill, a task,
+            a pipeline job) – categories like "improve testing" don't count.</p>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" id="s3">
+        <h3><span class="num">3</span> Your model &amp; budget strategy</h3>
+        <p class="goal"><b>Goal:</b> decide how you'll pay, which model does which work, and where the cap sits – before the first invoice decides for you.</p>
+
+        <p>Use the chapter’s comparison method: choose configurations from observed task results and risk, then account for usage, review and rework. Keep unknown costs explicit.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Write your strategy as three decisions:</p>
+          <ol>
+            <li><b>Pricing shape</b> – subscription, metered API, or both? If both: who runs on the subscription, and what runs on the meter?</li>
+            <li><b>Configuration per task type</b> – compare two configurations on fixed acceptance cases and record correctness, review time and repairs before selecting a default.</li>
+            <li><b>The cap</b> – a spend limit for everything autonomous (loops, orchestrators, bots), and where it's enforced: an enforced provider/runner limit or a notification-only alert; label the difference.</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – an example strategy</summary>
+          <div class="body">
+            <table>
+              <tr><th>Work</th><th>Pricing</th><th>Model tier</th></tr>
+              <tr><td>Interactive daily work – prompting, grilling, HITL workflows</td><td>Subscription</td><td>Strong (it's what you talk to all day)</td></tr>
+              <tr><td>Mechanical changes, assessed for impact</td><td>Metered</td><td>Mid tier by default: our two-run comparison showed equal acceptance at a third of the review time; escalate when the impact is high</td></tr>
+              <tr><td>Planning, review and implementation</td><td>Either</td><td>Strongest tier: fewer repairs and shorter reviews in the comparison outweighed the higher run cost</td></tr>
+              <tr><td>CI jobs, PR bots, always-on agents</td><td>Metered <b>with a monthly cap + alert</b></td><td>Match to the duty; cap regardless</td></tr>
+            </table>
+            <p>Measure useful accepted outcomes and the human work required to judge them. A correct diagnosis or justified rejection can be valuable without a merged diff.</p>
+          </div>
+        </details>
+
+        <div class="callout warn">
+          <span class="tag">Caps before climbing</span>
+          <p style="margin:6px 0 0">Set the spend cap <b>before</b> your first unattended run, not after the first
+            surprising invoice. It belongs to Lab 06's guardrails, right next to "no push" and "no prod credentials".</p>
+        </div>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> three decisions written down – pricing shape, a configuration per task type, and a numeric cap with
+            an enforcement point for anything autonomous.</p>
+        </div>
+      </section>
+
+      <!-- STEP 4 (BONUS) -->
+      <section class="step" id="s4">
+        <h3><span class="num">4</span> Sketch the team rollout <span style="font-size:13px; color:var(--ink-faint); font-weight:400">· Bonus</span></h3>
+        <p class="goal"><b>Goal:</b> decide how the harness becomes the <em>team's</em> harness – ownership, sharing, and etiquette.</p>
+
+        <p>One person with a harness is faster; a team sharing one compounds. The setup was built for that – it lives in
+          the repo, not in your head – but sharing it takes four explicit agreements.</p>
+
+        <div class="task">
+          <h4>Your task</h4>
+          <p>Sketch answers to four questions:</p>
+          <ol>
+            <li><b>Who owns <code>AGENTS.md</code> and the style guide?</b> They're shared contracts – changed via PR, reviewed like code. Who merges?</li>
+            <li><b>How do skills get shared and reviewed?</b> Committed under <code>.agents/skills/</code> so improvements reach everyone – reviewed with what care?</li>
+            <li><b>Which artifacts get committed?</b> Specs, plans, ADRs from the workflow pyramid – which land in the repo, and where?</li>
+            <li><b>What's your PR etiquette for agent-assisted work?</b> The human who opens the PR owns it – the invariant, team-sized. How do you disclose agent involvement?</li>
+          </ol>
+        </div>
+
+        <details class="solution">
+          <summary>Show solution – an example rollout sketch</summary>
+          <div class="body">
+            <ul>
+              <li><b>Ownership:</b> <code>AGENTS.md</code> + style guide have a named maintainer; anyone proposes changes via PR; when an agent goes off-style for one person, the fix is a rule PR that reaches everyone.</li>
+              <li><b>Skills:</b> live in <code>.agents/skills/</code>; skill PRs get the same review as code – a skill steers every agent on the team.</li>
+              <li><b>Artifacts:</b> feature specs and plans land in <code>docs/specs/</code>; architecture calls become ADRs; chat transcripts don't get committed.</li>
+              <li><b>Etiquette:</b> PR author owns every line, agent-written or not; "the AI wrote it" is never a defense in review; an <code>AI-assisted</code> label is welcome, accountability transfer is not.</li>
+              <li><b>Onboarding:</b> new teammates run <a href="01-setup.html#s8">Lab 01's validation loop</a> instead of getting a lecture – twenty minutes that show how the harness works and where it leaks.</li>
+            </ul>
+          </div>
+        </details>
+
+        <div class="checkpoint"><span class="ico"></span>
+          <p><b>Checkpoint:</b> a named owner for the shared contracts, a review path for skills, a home for committed
+            artifacts, and one sentence of PR etiquette your team would actually sign.</p>
+        </div>
+      </section>
+
+      <!-- DONE -->
+      <h2 id="done">Definition of Done</h2>
+      <section class="step">
+        <h3 style="font-size:18px">You've completed Lab 08 – and the workshop – when…</h3>
+        <ul>
+          <li>✅ You held your project against the Lab 00 brief and goal, and named the specific gap beyond the realistic goal.</li>
+          <li>✅ Your adoption plan names four concrete firsts: a convention, a skill, an autonomous task, a CI/PR-bot candidate.</li>
+          <li>✅ Your model &amp; budget strategy is written: pricing shape, a configuration per task type, and a cap for anything autonomous.</li>
+          <li>✅ The evaluation and adoption sheet is filled in: comparison design, the limits table with enforcement points, and an owner per first-week practice.</li>
+          <li>✅ The plan lives somewhere durable – your repo or team wiki, not a scratchpad.</li>
+          <li>✅ <em>Bonus:</em> the team rollout is sketched – ownership, skill sharing, committed artifacts, PR etiquette.</li>
+          <li>✅ You've taken the <a href="cheat-sheet.html">cheat sheet</a> – the whole workshop on one page.</li>
+        </ul>
+      </section>
+
+      <!-- CLOSING -->
+      <h2 id="closing">Closing words</h2>
+      <section class="step">
+        <h3 style="font-size:18px">The horizon moves – the bookends don't</h3>
+        <p style="margin:6px 0 0">
+          That's the workshop. You built a harness where the repo is the prompt, a skills library, the five-part prompt,
+          the two review passes, the pyramid, the ladder, and the blueprint – and every one of them will age. Models get
+          smarter, instruction files get shorter, leashes get longer; re-run
+          <a href="01-setup.html#s8">Lab 01's validation loop</a> on every new model generation and prune what the model
+          no longer needs. What won't age is the invariant you practiced in every single lab: <strong>the prompt opens
+          the loop, and your review closes it.</strong> Everything else in your setup should change over time – that
+          part shouldn't. Now go move your project. Thanks for building along.
+        </p>
+      </section>
+
+      <footer>
+        <p>Built from the <code>ng-agentic</code> workshop materials. Whatever the next model generation can do
+          unattended, you still own the final judgment on every diff. Angular is © Google LLC.</p>
+      </footer>
+    </div>
+    <a href="#top" class="totop">↑ Top</a>
+  </body>
+</html>

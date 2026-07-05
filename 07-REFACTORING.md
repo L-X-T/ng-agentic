@@ -360,6 +360,10 @@ legacy codebase available, use this workspace's `src/app/components/table/` feat
 deliberately dusty example component at
 [`L-X-T/ng-days-refactoring-ai`](https://github.com/L-X-T/ng-days-refactoring-ai).
 
+This is the last technique module; the workshop closes with [`08-OUTLOOK.md`](08-OUTLOOK.md) and
+[Lab 08 – Outlook](labs/08-outlook.html), where you hold your project against your
+[Lab 00](labs/00-getting-started.html) goal and plan what you take home.
+
 ## References
 
 - Skill: [`ng-refactor`](.agents/skills/ng-refactor/SKILL.md) ·
