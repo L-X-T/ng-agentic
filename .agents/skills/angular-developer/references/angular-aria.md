@@ -329,11 +329,23 @@ Groups related controls (like text formatting).
 
 **Directives:** `ngToolbar`, `ngToolbarWidget`, `ngToolbarWidgetGroup`.
 
+The component owns `bold` and `italic` as writable boolean signals initialized to `false`; the toolbar handles keyboard focus.
+
 ```html
 <div ngToolbar class="toolbar">
-  <div ngToolbarWidgetGroup [multi]="true" role="group" aria-label="Formatting">
-    <button ngToolbarWidget value="bold" class="tool-btn">B</button>
-    <button ngToolbarWidget value="italic" class="tool-btn">I</button>
+  <div ngToolbarWidgetGroup role="group" aria-label="Formatting">
+    <button ngToolbarWidget type="button" class="tool-btn" [attr.aria-pressed]="bold()" (click)="bold.set(!bold())">
+      B
+    </button>
+    <button
+      ngToolbarWidget
+      type="button"
+      class="tool-btn"
+      [attr.aria-pressed]="italic()"
+      (click)="italic.set(!italic())"
+    >
+      I
+    </button>
   </div>
 </div>
 ```

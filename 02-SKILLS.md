@@ -28,9 +28,10 @@ A skill may call a script. It should not regenerate that script on every run or 
 
 ## Blog coverage
 
-The [skills blog post](https://www.angulararchitects.io/blog/ae-skills-for-angular/) and this
-catalogue cover the same 29 skills: 10 third-party (including `unslop`, `implement-plan` and
-`ng-verify-feature`) and 19 custom. The post also mentions `angular-new-app` as intentionally unadopted and two private
+The [skills blog post](https://www.angulararchitects.io/blog/ae-skills-for-angular/) covers
+29 skills: 10 third-party (including `unslop`, `implement-plan` and `ng-verify-feature`) and
+19 custom. This catalogue also includes `update-skills` and `frontend-design`, bringing it to
+31 skills: 11 third-party and 20 custom. The post also mentions `angular-new-app` as intentionally unadopted and two private
 bookkeeping skills outside this Angular catalogue.
 
 `angular-developer` and `test-driven-development` remain available as optional examples, even
@@ -46,7 +47,7 @@ independent reviewer; the post's three-model setup describes a personal customiz
 
 Start with `create-a-skill` and one task skill. Install `code-review` when reviewing a diff; use
 `grill-me` or `brainstorming` only when design uncertainty justifies it. The remaining catalogue
-is available when needed; installing all 29 is not a prerequisite for learning the pattern.
+is available when needed; installing every skill is not a prerequisite for learning the pattern.
 
 | Activity            | First choice                                                              | Boundary                                                     |
 | ------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------ |
@@ -81,15 +82,16 @@ Copied or adapted from public sources; the origin column records where each skil
 | Skill                                                                      | What it does                                                                                                                                                            | Origin                                                                                               |
 | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | [angular-developer](.agents/skills/angular-developer/SKILL.md)             | The _Angular_ team's **official developer skill** – generates code and architectural guidance across signals, forms, DI, routing, SSR, testing, and CLI/MCP tooling.    | [`angular/skills`](https://github.com/angular/skills)                                                |
-| [brainstorming](.agents/skills/brainstorming/SKILL.md)                     | **Design-first gate**: explores intent and requirements, then drives an idea to an approved written spec before any code is written.                                    | [`obra/superpowers`](https://github.com/obra/superpowers)                                            |
+| [brainstorming](.agents/skills/brainstorming/SKILL.md)                     | **Design-first workflow**: chooses a feasibility spike, a short design, or a full specification according to the request.                                               | [`obra/superpowers`](https://github.com/obra/superpowers)                                            |
 | [code-review](.agents/skills/code-review/SKILL.md)                         | Reviews current, staged, last-commit, or merge/PR work in **two passes – requirements, then style-guide and _Angular_ v22+ conformance** – via a reviewer subagent.     | [`obra/superpowers`](https://github.com/obra/superpowers) (adapted)                                  |
 | [diagnosing-bugs](.agents/skills/diagnosing-bugs/SKILL.md)                 | Six-phase bug hunt that **builds a red-capable feedback loop before hypothesising** – vitest/Playwright/`curl`/`git bisect` – then fixes behind a regression test.      | [`mattpocock/skills`](https://github.com/mattpocock/skills) (adapted)                                |
+| [frontend-design](.agents/skills/frontend-design/SKILL.md)                 | Anthropic's visual design guidance for distinctive UI – aesthetic direction, typography, layout, motion, and interface copy.                                            | [`anthropics/skills`](https://github.com/anthropics/skills/tree/main/skills/frontend-design)         |
 | [grill-me](.agents/skills/grill-me/SKILL.md)                               | Interrogates a plan **one question at a time** – recommending an answer for each – until shared understanding; no building until you confirm.                           | [`mattpocock/skills`](https://github.com/mattpocock/skills)                                          |
 | [implement-plan](.agents/skills/implement-plan/SKILL.md)                   | Executes an approved plan in small working slices, verifies each slice, and reconciles the final result with the acceptance criteria.                                   | [`obra/superpowers`](https://github.com/obra/superpowers) (adapted from `executing-plans`)           |
 | [ng-verify-feature](.agents/skills/ng-verify-feature/SKILL.md)             | Verifies a running Angular feature against acceptance criteria in Chrome, reporting coverage and reproduction evidence.                                                 | [`vercel-labs/agent-browser`](https://github.com/vercel-labs/agent-browser) (adapted from `dogfood`) |
 | [spartan](.agents/skills/spartan/SKILL.md)                                 | Adds, composes, styles, and debugs spartan/ui components across **Brain (headless) and Helm (styled)** via the `@spartan-ng/cli` generators and MCP tools.              | [`spartan-ng/spartan`](https://github.com/spartan-ng/spartan)                                        |
 | [test-driven-development](.agents/skills/test-driven-development/SKILL.md) | Enforces **red-green-refactor discipline** – no production code without a failing test you watched fail – delegating test mechanics to ng-testing and create-e2e-tests. | [`obra/superpowers`](https://github.com/obra/superpowers) (adapted)                                  |
-| [unslop](.agents/skills/unslop/SKILL.md)                                   | Edits prose to **cut AI-writing tells** – puffery, AI vocabulary, formulaic structure, chatbot phrases – and add human voice.                                           | [`cursor/plugins`](https://github.com/cursor/plugins) (adapted)                                      |
+| [unslop](.agents/skills/unslop/SKILL.md)                                   | Edits prose to **cut AI-writing tells**, mannered language, and over-compression while preserving meaning and improving clarity.                                        | [`cursor/plugins`](https://github.com/cursor/plugins) (adapted)                                      |
 
 ### Local adaptations
 
@@ -101,26 +103,31 @@ selection), formatting follows the repo's Prettier settings, commands use pnpm (
 commits". Normalization is not an adaptation. The table records each vendored skill's status;
 the bullets below hold the behavioral details to preserve when re-syncing with upstream.
 
-| Skill                   | Status                            | Preserve on re-sync                                                                                                                                   |
-| ----------------------- | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| angular-developer       | normalized + content corrections  | `signal-forms.md` on the stable v22 API; `tailwind-css.md` gated on detection; e2e setup deferred to create-e2e-tests whenever a runner is configured |
-| brainstorming           | normalized + privacy hardening    | visual-companion scripts bind `127.0.0.1`, per-session key, branding image opt-in                                                                     |
-| code-review             | adapted                           | see bullet                                                                                                                                            |
-| diagnosing-bugs         | adapted                           | see bullet                                                                                                                                            |
-| grill-me                | normalized (instructions inlined) | upstream became a stub for a `/grilling` command that doesn't exist here                                                                              |
-| implement-plan          | adapted from `executing-plans`    | see bullet                                                                                                                                            |
-| ng-verify-feature       | adapted from `dogfood`            | see bullet                                                                                                                                            |
-| spartan                 | normalized only                   | exact copy apart from layout and pnpm commands (`pnpm exec nx g`, `pnpm add`); `user-invocable: false` upstream, so it triggers implicitly            |
-| test-driven-development | adapted                           | see bullet                                                                                                                                            |
-| unslop                  | adapted                           | see bullet                                                                                                                                            |
+| Skill                   | Status                           | Preserve on re-sync                                                                                                                                   |
+| ----------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| angular-developer       | normalized + content corrections | `signal-forms.md` on the stable v22 API; `tailwind-css.md` gated on detection; e2e setup deferred to create-e2e-tests whenever a runner is configured |
+| brainstorming           | adapted + privacy hardening      | visual-companion scripts bind `127.0.0.1`, per-session key, branding image opt-in                                                                     |
+| code-review             | adapted                          | see bullet                                                                                                                                            |
+| diagnosing-bugs         | adapted                          | see bullet                                                                                                                                            |
+| frontend-design         | normalized only                  | upstream design workflow retained; trigger wording, typography, formatting, and license path normalized                                               |
+| grill-me                | adapted (instructions inlined)   | retains one-question-at-a-time interviews; upstream now delegates to round-based `grilling`                                                           |
+| implement-plan          | adapted from `executing-plans`   | see bullet                                                                                                                                            |
+| ng-verify-feature       | adapted from `dogfood`           | see bullet                                                                                                                                            |
+| spartan                 | normalized only                  | exact copy apart from layout and pnpm commands (`pnpm exec nx g`, `pnpm add`); `user-invocable: false` upstream, so it triggers implicitly            |
+| test-driven-development | adapted                          | see bullet                                                                                                                                            |
+| unslop                  | adapted                          | see bullet                                                                                                                                            |
 
 Behavioral adaptations:
 
+- **brainstorming** – adopts spike, bounded, and architectural paths while retaining the narrow
+  design-first trigger, existing session authorization, local planning fallback, and hardened
+  visual-companion scripts. Small, already-specified tasks do not trigger brainstorming.
 - **code-review** – renamed from `requesting-code-review`: four review scopes (current / staged /
   last-commit / merge-PR), a no-subagent fallback, and a second pass against the project style
   guides and _Angular_ v22+ baseline. Reviews report findings first; edits require authorization
   for the relevant implementation or fixes. A harness file (for example `.claude/CLAUDE.md`) may
-  prescribe more reviewers or specific models; the skill follows it when present.
+  prescribe more reviewers or specific models; the skill follows it when present. Reviewers receive
+  a self-contained handoff without conversation history and do not dispatch further reviewers.
 - **diagnosing-bugs** – feedback loops named for this stack (vitest, Playwright, `curl`,
   `git bisect run`); upstream's `CONTEXT.md` and handoff commands repointed to an `ADR.md` (when present) and the
   local `ng-review-architecture` / `grill-me` / `handover` skills.
@@ -133,7 +140,9 @@ Behavioral adaptations:
 - **test-driven-development** – pnpm/vitest commands; test-writing mechanics delegated to
   [ng-testing](.agents/skills/ng-testing/SKILL.md) and
   [create-e2e-tests](.agents/skills/create-e2e-tests/SKILL.md) so discipline and how-to stay
-  separate.
+  separate. The new `writing-good-tests.md` reference adds test-quality guidance; the older mocking
+  examples remain available. Fixtures match the real typed contract and the exercised scenario;
+  optional fields are not added speculatively.
 - **unslop** – pattern 13 preserves the spaced en dash ( – ), pattern 17 leaves heading case to the
   project's Markdown guide instead of forcing sentence case, and pattern 18 keeps intentional
   emojis, including podium markers. Em dashes remain banned. The skill is model-invocable for
@@ -169,24 +178,25 @@ Use it to vet any third-party skill before adopting it here. See the
 
 Authored in this repository; each row summarizes what the skill does and links to its `SKILL.md`.
 
-| Skill                                                                      | What it does                                                                                                                                                                                                     |
-| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [create-a-skill](.agents/skills/create-a-skill/SKILL.md)                   | **Meta-skill** for authoring, editing, pruning, and reviewing agent skills – invocation model, information hierarchy, completion criteria.                                                                       |
-| [create-e2e-tests](.agents/skills/create-e2e-tests/SKILL.md)               | Writes **one behaviour-level e2e spec** for an _Angular_ component on the installed platform (Playwright or Cypress), with a bounded run-and-fix loop.                                                           |
-| [git-stack-rewrite](.agents/skills/git-stack-rewrite/SKILL.md)             | Folds staged changes or a commit into an older commit and **rebases every dependent branch stack**, with backup refs and a verification pass.                                                                    |
-| [grill-with-style](.agents/skills/grill-with-style/SKILL.md)               | Grilling session that stress-tests a plan against **the code's actual domain model and the project style guides**, sharpening terminology as it goes.                                                            |
-| [handover](.agents/skills/handover/SKILL.md)                               | Compacts the conversation into a **handover document** pointing the next agent at existing artifacts, skills, and style guides.                                                                                  |
-| [ng-accessibility](.agents/skills/ng-accessibility/SKILL.md)               | Makes _Angular_ apps accessible – semantic HTML, keyboard/focus, ARIA bindings, CDK a11y – **verified against WCAG 2.x AA with automated AXE checks**.                                                           |
-| [ng-data-access](.agents/skills/ng-data-access/SKILL.md)                   | Builds the typed server-communication layer for _Angular_ v22+ – **httpResource/resource/rxResource over HttpClient** – with functional interceptors, loading/error/reload state, and SSR-safe transfer caching. |
-| [ng-forms](.agents/skills/ng-forms/SKILL.md)                               | Builds **type-safe Signal Forms** (_Angular_ v22+) – model/schema, validation, dynamic fields – through a lean router with just-in-time references.                                                              |
-| [ng-migrate](.agents/skills/ng-migrate/SKILL.md)                           | Runs `ng update` and official migration schematics **one gauntlet-verified checkpoint at a time**, with a residual-pattern check so nothing is skipped.                                                          |
-| [ng-performance](.agents/skills/ng-performance/SKILL.md)                   | Optimizes _Angular_ initial-load and runtime performance – bundles, `@defer`, SSR/hydration, zoneless – **measure-first with a re-measure verify loop**.                                                         |
-| [ng-prototype](.agents/skills/ng-prototype/SKILL.md)                       | Builds a **clearly-marked throwaway** _Angular_ prototype – terminal logic app or toggleable UI variations – to answer a design question, then absorb or delete it.                                              |
-| [ng-refactor](.agents/skills/ng-refactor/SKILL.md)                         | Refactors a dusty _Angular_ component into a clean, signal-based one via a **7-step, gauntlet-verified blueprint** with a human checkpoint every step.                                                           |
-| [ng-review-architecture](.agents/skills/ng-review-architecture/SKILL.md)   | Reviews _Angular_ architecture through **two composed lenses – DDD boundaries and module depth** – then drills into findings via a grilling loop.                                                                |
-| [ng-review-style-guide](.agents/skills/ng-review-style-guide/SKILL.md)     | Sweeps the **whole codebase against every project style guide** (auto-selected by file type), reports severity-ranked drift, then fixes on approval.                                                             |
-| [ng-security](.agents/skills/ng-security/SKILL.md)                         | Hardens _Angular_ apps – sanitization/XSS, **nonce-based CSP and Trusted Types**, HttpClient XSRF, SSR allowed hosts, and dependency hygiene.                                                                    |
-| [ng-signal-store](.agents/skills/ng-signal-store/SKILL.md)                 | Manages genuinely shared state with NgRx SignalStore – entities, `rxMethod`, store testing – **gated behind a local-signals-first decision tree** so a store is added only when state is truly multi-consumer.   |
-| [ng-styling](.agents/skills/ng-styling/SKILL.md)                           | Audits _Angular_ styling – bindings, encapsulation, SCSS architecture, tokens, **framework-class leakage** – against three sources, fixing in verified batches.                                                  |
-| [ng-testing](.agents/skills/ng-testing/SKILL.md)                           | Writes **Vitest unit and component tests** for _Angular_ – TestBed on zoneless, signal assertions, HTTP mocking, CDK harnesses – with a red→green verify loop.                                                   |
-| [update-skills-directory](.agents/skills/update-skills-directory/SKILL.md) | Audits `.agents/skills/` so every skill has **valid frontmatter, lean structure, and a one-to-one index link** – reports gaps, fixes on approval.                                                                |
+| Skill                                                                      | What it does                                                                                                                                                                                                               |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [create-a-skill](.agents/skills/create-a-skill/SKILL.md)                   | **Meta-skill** for authoring, editing, pruning, and reviewing agent skills – invocation model, information hierarchy, completion criteria. Combines and extends Matt Pocock's and Minko Gechev's skill-authoring guidance. |
+| [create-e2e-tests](.agents/skills/create-e2e-tests/SKILL.md)               | Writes **one behaviour-level e2e spec** for an _Angular_ component on the installed platform (Playwright or Cypress), with a bounded run-and-fix loop.                                                                     |
+| [git-stack-rewrite](.agents/skills/git-stack-rewrite/SKILL.md)             | Folds staged changes or a commit into an older commit and **rebases every dependent branch stack**, with backup refs and a verification pass.                                                                              |
+| [grill-with-style](.agents/skills/grill-with-style/SKILL.md)               | Grilling session that stress-tests a plan against **the code's actual domain model and the project style guides**, sharpening terminology as it goes.                                                                      |
+| [handover](.agents/skills/handover/SKILL.md)                               | Compacts the conversation into a **handover document** pointing the next agent at existing artifacts, skills, and style guides.                                                                                            |
+| [ng-accessibility](.agents/skills/ng-accessibility/SKILL.md)               | Makes _Angular_ apps accessible – semantic HTML, keyboard/focus, ARIA bindings, CDK a11y – **verified against WCAG 2.x AA with automated AXE checks**.                                                                     |
+| [ng-data-access](.agents/skills/ng-data-access/SKILL.md)                   | Builds the typed server-communication layer for _Angular_ v22+ – **httpResource/resource/rxResource over HttpClient** – with functional interceptors, loading/error/reload state, and SSR-safe transfer caching.           |
+| [ng-forms](.agents/skills/ng-forms/SKILL.md)                               | Builds **type-safe Signal Forms** (_Angular_ v22+) – model/schema, validation, dynamic fields – through a lean router with just-in-time references.                                                                        |
+| [ng-migrate](.agents/skills/ng-migrate/SKILL.md)                           | Runs `ng update` and official migration schematics **one gauntlet-verified checkpoint at a time**, with a residual-pattern check so nothing is skipped.                                                                    |
+| [ng-performance](.agents/skills/ng-performance/SKILL.md)                   | Optimizes _Angular_ initial-load and runtime performance – bundles, `@defer`, SSR/hydration, zoneless – **measure-first with a re-measure verify loop**.                                                                   |
+| [ng-prototype](.agents/skills/ng-prototype/SKILL.md)                       | Builds a **clearly-marked throwaway** _Angular_ prototype – terminal logic app or toggleable UI variations – to answer a design question, then absorb or delete it.                                                        |
+| [ng-refactor](.agents/skills/ng-refactor/SKILL.md)                         | Refactors a dusty _Angular_ component into a clean, signal-based one via a **7-step, gauntlet-verified blueprint** with a human checkpoint every step.                                                                     |
+| [ng-review-architecture](.agents/skills/ng-review-architecture/SKILL.md)   | Reviews _Angular_ architecture through **two composed lenses – DDD boundaries and module depth** – then drills into findings via a grilling loop.                                                                          |
+| [ng-review-style-guide](.agents/skills/ng-review-style-guide/SKILL.md)     | Sweeps the **whole codebase against every project style guide** (auto-selected by file type), reports severity-ranked drift, then fixes on approval.                                                                       |
+| [ng-security](.agents/skills/ng-security/SKILL.md)                         | Hardens _Angular_ apps – sanitization/XSS, **nonce-based CSP and Trusted Types**, HttpClient XSRF, SSR allowed hosts, and dependency hygiene.                                                                              |
+| [ng-signal-store](.agents/skills/ng-signal-store/SKILL.md)                 | Manages genuinely shared state with NgRx SignalStore – entities, `rxMethod`, store testing – **gated behind a local-signals-first decision tree** so a store is added only when state is truly multi-consumer.             |
+| [ng-styling](.agents/skills/ng-styling/SKILL.md)                           | Audits _Angular_ styling – bindings, encapsulation, SCSS architecture, tokens, **framework-class leakage** – against three sources, fixing in verified batches.                                                            |
+| [ng-testing](.agents/skills/ng-testing/SKILL.md)                           | Writes **Vitest unit and component tests** for _Angular_ – TestBed on zoneless, signal assertions, HTTP mocking, CDK harnesses – with a red→green verify loop.                                                             |
+| [update-skills](.agents/skills/update-skills/SKILL.md)                     | Checks vendored skills for upstream changes and applies requested updates while preserving local adaptations, recording reviewed revisions, and verifying snapshot digests.                                                |
+| [update-skills-directory](.agents/skills/update-skills-directory/SKILL.md) | Audits `.agents/skills/` so every skill has **valid frontmatter, lean structure, and a one-to-one index link** – reports gaps, fixes on approval.                                                                          |

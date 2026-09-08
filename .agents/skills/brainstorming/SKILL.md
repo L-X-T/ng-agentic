@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: 'Explores user intent, requirements and design before implementation, turning an idea into an approved spec. Use when the user has an idea but no concrete plan yet, wants to brainstorm, or asks for a design-first session - not for small, well-specified tasks.'
+description: 'Explores user intent and design through a feasibility spike, a short design, or a full specification. Use when the user has an idea but no concrete plan yet, wants to brainstorm, or asks for a design-first session – not for small, well-specified tasks.'
 license: MIT
 metadata:
   upstream: obra/superpowers brainstorming (see references/LICENSE.txt)
@@ -10,19 +10,49 @@ metadata:
 
 Help turn ideas into fully formed designs and specs through natural collaborative dialogue.
 
-Start by understanding the current project context, then ask questions one at a time to refine the idea. Once you understand what you're building, present the design and get user approval.
+First classify the request using the paths below, then explore the project context and ask the
+questions needed for that path. Keep the narrow trigger: routine, well-specified work does not
+become a brainstorming session merely because it changes code.
 
 <HARD-GATE>
-Do NOT invoke any implementation skill, write any code, scaffold any project, or take any implementation action until you have presented a design and the user has approved it. This applies to EVERY project regardless of perceived simplicity.
+For a design-first session, present the proposed work and obtain approval before implementing it.
+Existing explicit approval for the same work counts; do not ask for it again. Follow the selected
+path's completion criterion. A spike authorizes a throwaway probe, not retaining it as production code.
 </HARD-GATE>
 
-## Anti-Pattern: "This Is Too Simple To Need A Design"
+## Choose a path
 
-Every project goes through this process. A todo list, a single-function utility, a config change – all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
+Announce the path and why it fits so the user can correct it. If complexity grows, reassess the path
+before expanding the work; an unfamiliar area needs investigation before calling the change bounded.
 
-## Checklist
+### Spike
 
-You MUST create a task for each of these items and complete them in order:
+Use for a feasibility question whose deliverable is an answer. Inspect enough context to propose
+the question and probe in two or three sentences. After approval, investigate with the smallest
+useful throwaway experiment. No specification or implementation-plan document is required.
+
+_Done when_ findings and a recommendation are reported, and any code is clearly marked throwaway.
+Keeping that code is a separate implementation decision.
+
+### Bounded
+
+Use when the flow to change already exists and can be read in this repository. Ask the relevant
+questions, then present a short design in chat covering the approach, affected files, and verification.
+After approval, proceed through the normal implementation workflow without a specification or plan file.
+
+_Done when_ the short design is approved and ready for implementation. This path applies when the
+user requested brainstorming for the change; it does not broaden this skill's trigger.
+
+### Architectural
+
+Use for a new project, subsystem, or changes to interfaces and component relationships. Follow the
+full checklist below: explore, compare approaches, agree on the design, write a specification, and plan.
+
+_Done when_ the written specification is approved and a concrete implementation plan is the next step.
+
+## Architectural checklist
+
+Create a task for each of these items and complete them in order:
 
 1. **Explore project context** – check files, docs, recent commits
 2. **Offer the visual companion just-in-time** – NOT upfront. The first time a question would genuinely be clearer shown than described, offer it then (its own message); on approval its browser tab opens for you. If no visual question ever arises, never offer it. See the Visual Companion section below.
@@ -34,7 +64,7 @@ You MUST create a task for each of these items and complete them in order:
 8. **User reviews written spec** – ask user to review the spec file before proceeding
 9. **Transition to implementation planning** – write a concrete implementation plan or invoke a planning skill only if one is available
 
-## Process Flow
+## Architectural process flow
 
 ```dot
 digraph brainstorming {
@@ -61,9 +91,12 @@ digraph brainstorming {
 }
 ```
 
-**The terminal state is implementation planning.** Do not invoke implementation skills yet. If a planning skill exists, use it; otherwise write the implementation plan in the current thread.
+**The architectural path ends with implementation planning.** If a planning skill exists, use it; otherwise write the implementation plan in the current thread. Bounded work proceeds directly after design approval; spikes end with findings.
 
 ## The Process
+
+Use the exploration guidance for bounded and architectural work. The sectioned design and written
+specification steps belong to the architectural path.
 
 **Understanding the idea:**
 
@@ -102,7 +135,7 @@ digraph brainstorming {
 - Where existing code has problems that affect the work (e.g., a file that's grown too large, unclear boundaries, tangled responsibilities), include targeted improvements as part of the design - the way a good developer improves code they're working in.
 - Don't propose unrelated refactoring. Stay focused on what serves the current goal.
 
-## After the Design
+## After the architectural design
 
 **Documentation:**
 

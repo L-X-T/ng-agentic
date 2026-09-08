@@ -49,9 +49,11 @@ Configuration syntax is not evidence that an end-to-end skill run was tested on 
 ## Upstream ledger
 
 [skill-sources.json](skill-sources.json) records the local snapshot digest for every vendored skill,
-its origin, and whether the upstream revision is known. Existing copies did not record upstream commit
-IDs; those fields are deliberately null. A current upstream HEAD is not the revision these copies
-came from. Digests identify local snapshots, not upstream authenticity.
+its origin, and the recorded upstream revision. `revisionNote` distinguishes an original vendoring
+revision from a later reviewed baseline. When original vendoring did not record a commit, a refresh
+can establish a reviewed baseline without claiming to recover that original revision. Selective
+adoption and intentional differences remain documented. Digests identify local snapshots, not
+upstream authenticity.
 
 Before an upstream refresh, record the exact upstream commit, inspect the diff, preserve the adaptations
 listed in 02-SKILLS.md, review scripts and tool permissions, and repeat the evaluation cases. Update the
@@ -98,3 +100,35 @@ do not grant permission for additional side effects.
 - Independent evaluator calls returned no results before they were stopped. No fresh-host routing or
   cross-model reliability claim is made. Environment: Codex desktop, inherited model configuration
   (model identifier not recorded), Node 22.23.2, pnpm 10.29.3.
+
+## Upstream refresh on September 8, 2026
+
+Checked all 10 vendored skills against immutable snapshots of their six upstream repositories.
+The eight previously unpinned entries now record reviewed baselines; their original vendoring
+revisions remain unknown. See `revisionNote` in [skill-sources.json](skill-sources.json) for the
+selective adoption decisions. No global skills or installed plugins were changed.
+
+| Skill                   | Adopted change or retained behavior                                                                                                                          |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| angular-developer       | Explicit signal-driven selection and `aria-pressed` in the toolbar example.                                                                                  |
+| brainstorming           | Spike, bounded, and architectural paths with local trigger, authorization, and planning rules. Hardened visual-companion files retained.                     |
+| code-review             | Review context excludes conversation history; reviewers cannot dispatch further reviewers.                                                                   |
+| diagnosing-bugs         | Redacted commands and evidence; human-in-the-loop scripts capture observations instead of credentials. Existing script retained.                             |
+| spartan                 | Chart catalogue entry and TanStack dependency guidance.                                                                                                      |
+| test-driven-development | New test-quality reference, adapted to typed scenario fixtures and local evaluation guidance. Existing characterization rules and mocking examples retained. |
+| unslop                  | Removed adding-soul guidance and retired rules; added mannered-prose and over-compression rules. Local typography and invocation retained.                   |
+| grill-me                | Intentionally retained one-question-at-a-time interviews instead of upstream round-based questioning.                                                        |
+| implement-plan          | No upstream skill content change at the recorded revision.                                                                                                   |
+| ng-verify-feature       | The complete upstream dogfood folder matches the recorded revision despite repository HEAD advancing.                                                        |
+
+Manual instruction review covered the following cases: a spike ends in findings; bounded design
+work needs no spec file; an architectural session proceeds to a written spec and plan; prior approval
+for the same work is not requested again; a reviewer handles its own full scope; diagnostic evidence
+omits credentials; TDD expectations do not reuse production helpers; and prose editing preserves
+meaning and the local typography rules. These were instruction reviews, not fresh-session runs.
+
+All eight vendored license files match upstream blobs; Angular's license remains declared in its
+entrypoint, and unslop retains its existing attribution without a published upstream license.
+No upstream executable scripts were adopted or run during the refresh; only the local digest checker ran. The new test-quality examples
+were reviewed as documentation, not compiled as an Angular feature. Fresh-host routing and behavioral
+evaluations of the changed skills remain untested.

@@ -395,9 +395,14 @@ Bug found? Write failing test reproducing it. Follow TDD cycle. Test proves fix 
 
 Never fix bugs without a test.
 
-## Testing Anti-Patterns
+## Writing Good Tests
 
-When adding mocks or test utilities, read [references/testing-anti-patterns.md](references/testing-anti-patterns.md) to avoid common pitfalls:
+Before writing or changing tests, read [references/writing-good-tests.md](references/writing-good-tests.md).
+Name the production bug each test would catch, derive expectations independently, and exercise the
+real behavior. This reference governs test quality; `ng-testing` and `create-e2e-tests` still own
+framework mechanics.
+
+For additional mocking examples, read [references/testing-anti-patterns.md](references/testing-anti-patterns.md):
 
 - Testing mock behavior instead of real behavior
 - Adding test-only methods to production classes

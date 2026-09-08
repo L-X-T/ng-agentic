@@ -1,7 +1,6 @@
 ---
 name: git-stack-rewrite
 description: Fold staged changes or an existing commit into an older Git commit and rebase every affected dependent branch stack onto the rewritten commit. Use when the user says prompts like "use git stack rewrite to squash commit [source] into [target]", or asks to squash, fixup, amend, or move staged changes back into an earlier commit and then rebase branches that were on top of it.
-disable-model-invocation: true
 license: MIT
 metadata:
   author: Alexander Thalhammer

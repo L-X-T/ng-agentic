@@ -45,6 +45,12 @@ Subagent (general-purpose):
     (e.g. `git worktree add /tmp/review-[SHA] [SHA]`) – never move HEAD on
     this checkout.
 
+    ## No Further Delegation
+
+    Do this review yourself. Do not spawn subagents to review part of the
+    diff or request another opinion. The coordinating agent owns the reviewer
+    setup. If the diff is large, review it in passes and state that in your report.
+
     ## Style Guide and Angular Baseline
 
     Review in two passes:

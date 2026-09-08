@@ -14,6 +14,14 @@ When exploring the codebase, check for an `ADR.md` at the repo root (or `docs/ad
 read the decisions in the area you're touching. Skim the narrowest relevant `style-guide/` file – so
 your mental model matches the intended design, not just the current code.
 
+## Redact evidence
+
+Before showing commands, outputs, or captured artifacts, replace secrets with `<REDACTED>`.
+Read credentials from environment variables without printing their values. Quote only the lines
+needed to diagnose the failure, excluding authentication headers from captured requests.
+For human-in-the-loop scripts, capture observations; leave signing in to the user as a step rather
+than capturing credentials. If the redacted evidence is insufficient, say what information is missing.
+
 ## Phase 1 – Build a feedback loop
 
 **This is the skill.** Everything else is mechanical. If you have a **tight**

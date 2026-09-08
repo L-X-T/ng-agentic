@@ -1,42 +1,29 @@
 ---
 name: unslop
-description: Edit text to remove AI-writing tells – puffery, AI vocabulary, formulaic structure, chatbot phrases – and add human voice. Use when writing or revising prose (docs, READMEs, commit messages, blog posts, UI copy), or when the user says text sounds like AI, or asks to unslop, de-AI, or humanize it.
+description: Edit prose to remove AI-writing tells and improve clarity. Use when writing or revising prose (docs, READMEs, commit messages, blog posts, UI copy), or when the user says text sounds like AI, or asks to unslop, de-AI, or humanize it.
 metadata:
   upstream: cursor/plugins unslop (no license file published upstream as of 2026-09-07)
 ---
 
 # Unslop
 
-Edit text to remove AI patterns and add human voice.
+Edit text to remove AI patterns and improve clarity.
 
 ## Process
 
 1. Scan for the patterns below.
 2. Rewrite. Preserve meaning, match intended tone.
-3. Add soul (see next section).
-4. Self-audit: "What makes this obviously AI generated?" Fix remaining tells.
-
-## Adding soul
-
-Removing patterns is half the job. Sterile, voiceless writing is just as obvious.
-
-- **Have opinions.** React to facts instead of neutrally listing pros and cons.
-- **Vary rhythm.** Short sentences. Then longer ones that take their time. Mix it up.
-- **Acknowledge complexity.** "Impressive but also kind of unsettling" beats "impressive."
-- **Use "I" when it fits.** First person isn't unprofessional.
-- **Let some mess in.** Perfect structure looks machine-made.
-- **Be specific.** Not "this is concerning" but "there's something unsettling about agents churning away at 3am."
+3. Self-audit: "What makes this obviously AI generated?" Fix remaining tells.
 
 ## Patterns to detect and fix
 
+Rule numbers are stable IDs. A removed rule leaves a gap.
+
 ### Content
 
-1. **Puffery.** "pivotal moment", "testament to", "evolving landscape", "setting the stage for", "indelible mark", "deeply rooted". Cut puffery, state what happened.
-2. **Name-dropping.** Listing media outlets without context. Pick one, say what was said.
+<!-- prettier-ignore -->
 3. **Superficial -ing phrases.** "highlighting...", "ensuring...", "reflecting...", "showcasing...", "fostering...". Delete or expand with real sources.
-4. **Promotional language.** "nestled", "vibrant", "breathtaking", "groundbreaking", "renowned", "stunning", "must-visit". Use neutral descriptions.
 5. **Vague attributions.** "Experts believe", "Industry reports suggest", "Some critics argue". Name the source or delete.
-6. **Formulaic challenges.** "Despite challenges... continues to thrive." Replace with specific facts.
 
 ### Language
 
@@ -59,8 +46,8 @@ Removing patterns is half the job. Sterile, voiceless writing is just as obvious
 
 ### Communication artifacts
 
+<!-- prettier-ignore -->
 20. **Chatbot phrases.** "I hope this helps!", "Let me know if...", "Of course!", "Certainly!", "Found the smoking gun!" Remove.
-21. **Cutoff disclaimers.** "While specific details are limited..." Find sources or remove.
 22. **Sycophantic tone.** "Great question! You're absolutely right!" Respond directly.
 
 ### Filler
@@ -80,3 +67,5 @@ Removing patterns is half the job. Sterile, voiceless writing is just as obvious
 29. **Active voice.** Prefer it. Catch "is/are/was/were + past participle" and name the actor: "queries are validated" becomes "the compiler validates queries", "the file is parsed by the loader" becomes "the loader parses the file". Passive is fine only when the actor is unknown or genuinely doesn't matter.
 30. **Cut adverbs, or use a stronger verb.** "runs quickly" becomes "is fast" or the number. "significantly improves" becomes the measured delta. An adverb propping up a weak verb means the verb is wrong.
 31. **Prefer the plain word.** "utilize" becomes "use", "leverage" becomes "use", "facilitate" becomes "help", "numerous" becomes "many", "in the event that" becomes "if". The fancier synonym is rarely clearer.
+32. **Mannered prose.** Metaphor or flourish where a literal phrase exists: aphorisms ("wire it or delete it"), rhetorical fragments for effect, personified code ("the plan holds it"), figurative verbs ("rides along", "stands on"), stock framing phrases. "A dial worth turning" becomes "a parameter worth varying". Say what you mean. Rule 26 covers the metaphor nouns.
+33. **Over-compression.** Dropped articles, verbless fragments, symbol-speak, and abbreviations that make the reader decode instead of read. "Parser rejects bad date → exit 2, no write" becomes "The parser rejects a bad date, exits with code 2, and writes nothing." Write whole sentences with their articles and verbs, and spell out arrows and abbreviations.

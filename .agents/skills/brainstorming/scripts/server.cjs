@@ -441,7 +441,7 @@ function handleRequest(req, res) {
   } else if (req.method === 'GET' && pathname.startsWith('/files/')) {
     const fileName = path.basename(pathname.slice(7));
     const filePath = path.join(CONTENT_DIR, fileName);
-    // Reject empty/dotfile names and anything that isn't a regular file – 
+    // Reject empty/dotfile names and anything that isn't a regular file –
     // `/files/` would otherwise resolve to CONTENT_DIR and crash readFileSync (EISDIR).
     if (!fileName || fileName.startsWith('.') || !isRegularFileInsideContentDir(filePath)) {
       res.writeHead(404, securityHeaders());

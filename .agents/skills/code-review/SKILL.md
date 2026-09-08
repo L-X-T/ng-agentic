@@ -72,6 +72,9 @@ Write a compact handoff for the reviewer:
 - `{REVIEW_SCOPE}` – Current work, Staged work, Last commit, or Merge or PR range
 - `{DIFF_COMMANDS}` – Exact commands the reviewer should use
 
+Pass this handoff without the session's conversation history so the reviewer evaluates the work
+independently of the coordinator's reasoning.
+
 _Done when_ the reviewer can understand the intended behavior, changed range, and verification
 state without reading this session's history.
 
